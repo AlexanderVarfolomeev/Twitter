@@ -10,8 +10,9 @@ public static class DuendeConfiguration
         })
             .AddInMemoryApiScopes(DuendeConfig.Scopes)
             .AddInMemoryIdentityResources(DuendeConfig.Resources)
-            .AddInMemoryClients(DuendeConfig.Clients);
-        
+            .AddInMemoryClients(DuendeConfig.Clients)
+            .AddTestUsers(DuendeConfig.Users);
+
         return services;
     }
 

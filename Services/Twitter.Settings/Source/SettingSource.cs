@@ -39,7 +39,7 @@ public class SettingSource : ISettingSource
     
     public string GetConnectionString(string? source = null)
     {
-        return GetAsString(_configuration.GetConnectionString(source ?? "ConnectionString"));
+        return ApplyEnvironmentVariable(_configuration.GetConnectionString(source ?? "ConnectionString"));
     }
 
     public string GetAsString(string source, string? defaultValue = null)

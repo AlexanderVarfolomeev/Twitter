@@ -1,13 +1,18 @@
 using Twitter.DuendeServer.Configuration;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+builder.Host.UseSerilog((host, cfg) =>
+{
+    cfg.ReadFrom.Configuration(host.Configuration);
+});
 
 // Add services to the container.
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDuende();
-builder.Services.AddSwaggerGen();
+services.AddControllers();
+services.AddEndpointsApiExplorer();
+services.AddDuende();
+services.AddSwaggerGen();
 
 var app = builder.Build();
 
