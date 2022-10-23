@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Twitter.Api.Configuration;
+namespace Twitter.Api.Configuration.ApplicationExtensions;
 
 public static class VersioningConfiguration
 {
@@ -12,7 +12,7 @@ public static class VersioningConfiguration
             options.SubstituteApiVersionInUrl = true;
         });
         
-        services.AddApiVersioning(options =>
+        services.AddApiVersioning(setupAction: options =>
             {
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;

@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Twitter.Context.Context;
-using Twitter.Settings.Interfaces;
 using Twitter.Settings.Source;
 
-namespace Twitter.Api.Configuration;
+namespace Twitter.Api.Configuration.ServicesExtensions;
 
-public static class DbConfiguration
+public static partial class DbConfiguration
 {
     public static IServiceCollection AddTwitterDbContext(this IServiceCollection services, ISettingSource dbSettings)
     {
@@ -17,9 +16,5 @@ public static class DbConfiguration
 
         return services;
     }
-
-    public static IApplicationBuilder UseTwitterDbContext(this IApplicationBuilder app)
-    {
-        return app;
-    }
+    
 }

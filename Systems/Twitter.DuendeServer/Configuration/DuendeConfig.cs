@@ -11,7 +11,7 @@ public static class DuendeConfig
 {
     public static IEnumerable<ApiScope> Scopes = new[]
     {
-        new ApiScope("Api", "My api")
+        new ApiScope("twitter_api", "twitter api")
     };
 
     public static IEnumerable<IdentityResource> Resources = new IdentityResource[]
@@ -27,7 +27,7 @@ public static class DuendeConfig
             ClientId = "swagger",
             ClientSecrets = {new Secret("secret".Sha256())},
             AllowedGrantTypes = GrantTypes.ClientCredentials,
-            AllowedScopes = {"Api"}
+            AllowedScopes = {"twitter_api"}
         },
         new Client()
         {
@@ -43,7 +43,7 @@ public static class DuendeConfig
             {
                 IdentityServerConstants.StandardScopes.OpenId,
                 IdentityServerConstants.StandardScopes.Profile,
-                "Api"
+                "twitter_api"
             }
         }
     };

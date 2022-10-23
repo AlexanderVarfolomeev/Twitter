@@ -1,9 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using Twitter.Api;
-using Twitter.Api.Configuration;
 using Serilog;
-using Twitter.Context.Context;
-using Twitter.Settings.Settings;
+using Twitter.Api.Configuration.ApplicationExtensions;
+using Twitter.Api.Configuration.ServicesExtensions;
 using Twitter.Settings.Source;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,21 +12,29 @@ builder.Host.UseSerilog((host, cfg) =>
     cfg.ReadFrom.Configuration(host.Configuration);
 });
 
-//services.AddTwitterDbContext(new SettingSource());
+services.AddTwitterCors();
 
-//services.AddAppServices();
+services.AddTwitterDbContext(new SettingSource());
 
-//services.AddEndpointsApiExplorer();
+services.AddAppServices();
+
+services.AddEndpointsApiExplorer();
 
 services.AddTwitterVersions();
 
+services.AddTwitterAuth();
+
 services.AddControllers();
 
-services.AddAppSwagger();
+services.AddTwitterSwagger();
 
 var app = builder.Build();
 
-app.UseAppSwagger();
+app.UseTwitterCors();
+
+app.UseTwitterAuth();
+
+app.UseTwitterSwagger();
 
 app.UseHttpsRedirection();
 
@@ -38,6 +44,3 @@ app.MapControllers();
 
 app.Run();
 
-/*
- * В configuration делают 2 папки для services и app extensions
- */

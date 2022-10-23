@@ -9,6 +9,7 @@ builder.Host.UseSerilog((host, cfg) =>
 });
 
 // Add services to the container.
+services.AddTwitterCors();
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddDuende();
@@ -16,6 +17,7 @@ services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseTwitterCors();
 
 app.UseHttpsRedirection();
 
