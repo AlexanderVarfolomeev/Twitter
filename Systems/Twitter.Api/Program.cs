@@ -7,10 +7,7 @@ using Twitter.Settings.Source;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
-builder.Host.UseSerilog((host, cfg) =>
-{
-    cfg.ReadFrom.Configuration(host.Configuration);
-});
+builder.AddTwitterSerilog();
 
 services.AddTwitterCors();
 
@@ -29,6 +26,8 @@ services.AddControllers();
 services.AddTwitterSwagger();
 
 var app = builder.Build();
+
+app.UseTwitterSerilog();
 
 app.UseTwitterCors();
 
