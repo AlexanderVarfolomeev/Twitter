@@ -50,7 +50,4 @@ public class TwitterUser : IdentityUser<Guid>, IBaseEntity
         Id = Guid.NewGuid();
         CreationTime = ModificationTime = DateTime.UtcNow;
     }
-
-    // Поля email, phoneNumber, id, passwordHash, userName (ник) определены в IdentityUser
-    // TODO добавить аватар 
 }

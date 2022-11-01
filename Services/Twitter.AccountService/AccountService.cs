@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shared.Exceptions;
 using Twitter.AccountService.Models;
 using Twitter.Entities.Users;
 using Twitter.Repository;
@@ -46,8 +48,7 @@ public class AccountService : IAccountService
     public async Task<TwitterAccountModel> RegisterAccount(TwitterAccountModelRequest requestModel)
     {
         var user = await _userManager.FindByEmailAsync(requestModel.Email);
-        if (user != null)
-            throw new Exception(); //TODO сделать ошибку 
+        ProcessException.ThrowIf(() => user is not null, "User with this email already exists!");
 
         user = _mapper.Map<TwitterUser>(requestModel);
         user.PhoneNumberConfirmed = false;
@@ -58,12 +59,8 @@ public class AccountService : IAccountService
         
         
         var result = await _userManager.CreateAsync(user, requestModel.Password);
-        if (result.Succeeded)
-        {
-        }
-
+        ProcessException.ThrowIf(() => !result.Succeeded, "Error while create user!");
         return _mapper.Map<TwitterAccountModel>(user);
-
     }
 
     public Task<TwitterAccountModel> UpdateAccount(Guid id, TwitterAccountModelRequest requestModel)

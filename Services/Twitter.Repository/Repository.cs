@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Shared.Exceptions;
 using Twitter.Context.Context;
 using Twitter.Entities.Base;
 
@@ -27,7 +28,9 @@ public class Repository<T> : IRepository<T> where T : class, IBaseEntity
 
     public T GetById(Guid id)
     {
-        return context.Set<T>().FirstOrDefault(x => x.Id == id) ?? throw new NullReferenceException(); //TODO обработать
+        var model = context.Set<T>().Find(id); 
+        ProcessException.ThrowIf(() => model is null, "The entity with this Id was not found at database.");
+        return model;
     }
 
     public T Save(T obj)
@@ -53,8 +56,7 @@ public class Repository<T> : IRepository<T> where T : class, IBaseEntity
         }
         catch (Exception e)
         {
-            //TODO logger
-            throw e;
+            throw new ProcessException("Error while saving entity", e);
         }
     }
 
