@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Twitter.Api.Configuration.ApplicationExtensions;
+namespace Twitter.Api.Configuration.ServicesExtensions;
 
 public static class VersioningConfiguration
 {

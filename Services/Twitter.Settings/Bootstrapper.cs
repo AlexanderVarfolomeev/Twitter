@@ -11,6 +11,8 @@ public static class Bootstrapper
     {
         services.AddSingleton<ISettingSource, SettingSource>();
         services.AddSingleton<IDbSettings, DbSettings>();
+        services.AddSingleton<IDuendeSettings, DuendeSettings>();
+        services.AddSingleton<ITwitterApiSettings, TwitterApiSettings>();
         return services;
     }
 }

@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿namespace Twitter.AccountService.Models;
 
-namespace Twitter.Entities.Auth;
-
-public class TwitterUser : IdentityUser<Guid>
+public class TwitterAccountModel
 {
     public string Name { get; set; } = String.Empty;
     public string Surname { get; set; } = String.Empty;
@@ -11,7 +9,9 @@ public class TwitterUser : IdentityUser<Guid>
     public string PageDescription { get; set; } = String.Empty;
     public bool IsBanned { get; set; } = false;
     
+    public string UserName { get; set; } = String.Empty;
+    public string Email { get; set; } = String.Empty;
+    public string PhoneNumber { get; set; } = String.Empty;
     
-    // Поля email, phoneNumber, id, passwordHash, userName (ник) определены в IdentityUser
-    // TODO добавить аватар 
+    public string Password { get; set; } = String.Empty;
 }

@@ -3,7 +3,7 @@ using Twitter.Context.Context;
 
 namespace Twitter.Context.Factories;
 
-public class DbContextOptionsFactories
+public  class DbContextOptionsFactories
 {
     public static DbContextOptions<MainDbContext> Create(string connectionString)
     {

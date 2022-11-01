@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Twitter.Context.Context;
-using Twitter.Entities.Auth;
+using Twitter.Entities.Users;
 
 namespace Twitter.Api.Configuration.ServicesExtensions;
 
@@ -12,24 +12,30 @@ public static partial class AuthConfiguration
     {
         services.AddIdentity<TwitterUser, TwitterRole>(options =>
             {
-                options.Password.RequiredLength = 0;
+                //TODO исправить требования
+                options.Password.RequiredLength = 0; 
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
+               // options.User.RequireUniqueEmail
             })
             .AddEntityFrameworkStores<MainDbContext>()
-            //.AddUserManager<UserManager<TwitterUser>>()
-            //.AddSignInManager<SignInManager<TwitterRole>>()
+            .AddUserManager<UserManager<TwitterUser>>()
+            .AddSignInManager<SignInManager<TwitterUser>>()
+            .AddRoleManager<RoleManager<TwitterRole>>()
+            .AddRoles<TwitterRole>()
             .AddDefaultTokenProviders();
-        //TODO добавление entity и тд
+     
+        
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
             options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 
-        }).AddJwtBearer(IdentityServerAuthenticationDefaults.AuthenticationScheme, options =>
+        })
+            .AddJwtBearer(IdentityServerAuthenticationDefaults.AuthenticationScheme, options =>
         {
             options.RequireHttpsMetadata = false;
             options.Authority = "https://localhost:5001"; //TODO settings

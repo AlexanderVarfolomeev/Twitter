@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Text.Json;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
@@ -34,7 +33,7 @@ public static class DuendeConfig
             ClientId = "frontend",
             ClientSecrets = {new Secret("secret".Sha256())},
             AllowAccessTokensViaBrowser =true,
-            AllowedGrantTypes = GrantTypes.Code,
+            AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
             
             AllowOfflineAccess = true,
             AccessTokenType = AccessTokenType.Jwt,
@@ -52,8 +51,8 @@ public static class DuendeConfig
     {
         new TestUser()
         {
-            Username = "Alise",
-            Password = "Alice",
+            Username = "alice",
+            Password = "alice",
             SubjectId = "1",
             Claims =  {
                 new Claim(JwtClaimTypes.Name, "Alice Smith"),
