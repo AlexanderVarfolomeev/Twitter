@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Twitter.AccountService;
 using Twitter.AccountService.Models;
@@ -20,6 +21,7 @@ public class TwitterAccountController : ControllerBase
         _accountService = accountService;
     }
     
+    [Authorize]
     [HttpGet("")]
     public async Task<IEnumerable<TwitterAccountResponse>> GetAccounts()
     {
@@ -27,6 +29,7 @@ public class TwitterAccountController : ControllerBase
         return (await _accountService.GetAccounts()).Select(x => _mapper.Map<TwitterAccountResponse>(x));
     }
     
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<TwitterAccountResponse> GetAccountById([FromRoute] Guid id)
     {
@@ -40,6 +43,7 @@ public class TwitterAccountController : ControllerBase
         return _mapper.Map<TwitterAccountResponse>(await _accountService.RegisterAccount(model));
     }
     
+    [Authorize]
     [HttpDelete("{id}")]
     public Task DeleteAccount([FromRoute] Guid id)
     {
@@ -47,7 +51,8 @@ public class TwitterAccountController : ControllerBase
         return Task.CompletedTask;
     }
     
-    [HttpPatch("{id}")]
+    [Authorize]
+    [HttpPut("{id}")]
     public async Task<TwitterAccountResponse> UpdateFile([FromRoute] Guid id, [FromBody] TwitterAccountRequest account)
     {
         var model = _mapper.Map<TwitterAccountModelRequest>(account);

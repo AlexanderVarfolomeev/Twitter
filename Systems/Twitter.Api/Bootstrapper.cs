@@ -3,6 +3,7 @@ using Twitter.FileService;
 using Twitter.Repository;
 using Twitter.RoleService;
 using Twitter.Settings;
+using Twitter.TweetsService;
 
 namespace Twitter.Api;
 
@@ -15,7 +16,7 @@ public static class Bootstrapper
         services.AddFileService();
         services.AddRoleService();
         services.AddAccountService();
-
+        services.AddTweetsService();
         return services;
     }
 }

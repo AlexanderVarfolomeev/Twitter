@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Twitter.Api.Controllers.TwitterFilesController.Models;
 using Twitter.FileService;
 using Twitter.FileService.Models;
 
 namespace Twitter.Api.Controllers.TwitterFilesController;
-//var userId = _accessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
+[Authorize]
 public class TwitterFilesController : ControllerBase
 {
     private readonly IFileService _fileService;
@@ -47,7 +48,7 @@ public class TwitterFilesController : ControllerBase
         return Task.CompletedTask;
     }
 
-    [HttpPatch("{id}")]
+    [HttpPut("{id}")]
     public async Task<TwitterFileResponse> UpdateFile([FromRoute] Guid id, [FromBody] TwitterFileRequest file)
     {
         var model = _mapper.Map<TwitterFileModelRequest>(file);

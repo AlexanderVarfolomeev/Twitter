@@ -19,7 +19,7 @@ services.AddEndpointsApiExplorer();
 
 services.AddTwitterVersions();
 
-services.AddHttpContextAccessor();
+services.AddHttpContextAccessor();  
 
 services.AddTwitterAuth();
 

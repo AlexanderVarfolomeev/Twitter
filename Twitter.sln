@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.FileService", "Serv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.RoleService", "Services\Twitter.RoleService\Twitter.RoleService.csproj", "{057429D2-848C-4B8D-BB1A-8BBB5CB14461}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.TweetsService", "Services\Twitter.TweetsService\Twitter.TweetsService.csproj", "{14FB8704-2C0C-4F0D-8879-68939CEAE28A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,7 @@ Global
 		{D740B140-DA89-4241-AD29-DEEB12CCB5E1} = {2526713C-3B45-4E70-AF08-188375350FC3}
 		{1172859D-C611-4058-8930-2E48663BBF41} = {2526713C-3B45-4E70-AF08-188375350FC3}
 		{057429D2-848C-4B8D-BB1A-8BBB5CB14461} = {2526713C-3B45-4E70-AF08-188375350FC3}
+		{14FB8704-2C0C-4F0D-8879-68939CEAE28A} = {2526713C-3B45-4E70-AF08-188375350FC3}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BEEE65D7-A4EE-472E-9F44-FDEB2CC4A527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -93,5 +96,9 @@ Global
 		{057429D2-848C-4B8D-BB1A-8BBB5CB14461}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{057429D2-848C-4B8D-BB1A-8BBB5CB14461}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{057429D2-848C-4B8D-BB1A-8BBB5CB14461}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14FB8704-2C0C-4F0D-8879-68939CEAE28A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14FB8704-2C0C-4F0D-8879-68939CEAE28A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14FB8704-2C0C-4F0D-8879-68939CEAE28A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14FB8704-2C0C-4F0D-8879-68939CEAE28A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

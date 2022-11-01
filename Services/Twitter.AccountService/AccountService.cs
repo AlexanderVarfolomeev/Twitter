@@ -59,7 +59,7 @@ public class AccountService : IAccountService
         
         
         var result = await _userManager.CreateAsync(user, requestModel.Password);
-        ProcessException.ThrowIf(() => !result.Succeeded, "Error while create user!");
+        ProcessException.ThrowIf(() => !result.Succeeded, result.ToString());
         return _mapper.Map<TwitterAccountModel>(user);
     }
 
