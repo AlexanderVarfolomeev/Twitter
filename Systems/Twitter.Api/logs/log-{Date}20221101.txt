@@ -1,0 +1,68 @@
+[11:11:47:333 DBG ()] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[11:11:47:437 DBG ()] Hosting starting
+[11:11:47:489 INF ()] User profile is available. Using 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[11:11:47:501 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-548b9a28-01c5-49e0-9727-79a67e7fb6c7.xml'.
+[11:11:47:536 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-85fd3714-f1a1-4109-8a1d-9c1348b71088.xml'.
+[11:11:47:553 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-919cd95c-a471-4887-b1f5-ece1484bf2fd.xml'.
+[11:11:47:568 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-a8765750-b548-4a34-b32e-480264d09c54.xml'.
+[11:11:47:593 DBG ()] Found key {548b9a28-01c5-49e0-9727-79a67e7fb6c7}.
+[11:11:47:601 DBG ()] Found key {85fd3714-f1a1-4109-8a1d-9c1348b71088}.
+[11:11:47:602 DBG ()] Found key {919cd95c-a471-4887-b1f5-ece1484bf2fd}.
+[11:11:47:603 DBG ()] Found key {a8765750-b548-4a34-b32e-480264d09c54}.
+[11:11:47:613 DBG ()] Considering key {919cd95c-a471-4887-b1f5-ece1484bf2fd} with expiration date 2022-12-22 18:30:23Z as default key.
+[11:11:47:616 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[11:11:47:620 DBG ()] Decrypting secret element using Windows DPAPI.
+[11:11:47:625 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[11:11:47:630 DBG ()] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+[11:11:47:634 DBG ()] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+[11:11:47:641 DBG ()] Using key {919cd95c-a471-4887-b1f5-ece1484bf2fd} as the default key.
+[11:11:47:642 DBG ()] Key ring with default key {919cd95c-a471-4887-b1f5-ece1484bf2fd} was loaded during application startup.
+[11:11:47:794 DBG ()] Using development certificate: CN=localhost (Thumbprint: 167B92C7D14757143A54F3F21F80C296445B0D22)
+[11:11:47:843 DBG ()] Loaded hosting startup assembly Twitter.Api
+[11:11:47:844 DBG ()] Hosting started
+[11:11:47:908 DBG ()] Connection id "0HMLRS2SHPDEK" received FIN.
+[11:11:47:919 DBG ()] Connection id "0HMLRS2SHPDEK" accepted.
+[11:11:47:921 DBG ()] Connection id "0HMLRS2SHPDEK" started.
+[11:11:47:943 DBG ()] Failed to authenticate HTTPS connection.
+System.IO.IOException:  Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveBlobAsync[TIOAdapter](TIOAdapter adapter)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](TIOAdapter adapter, Boolean receiveFirst, Byte[] reAuthenticationData, Boolean isApm)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+[11:11:47:975 DBG ()] Connection id "0HMLRS2SHPDEK" stopped.
+[11:11:47:980 DBG ()] Connection id "0HMLRS2SHPDEK" sending FIN because: "The Socket transport's send loop completed gracefully."
+[11:11:48:290 DBG ()] Connection id "0HMLRS2SHPDEL" accepted.
+[11:11:48:313 DBG ()] Connection id "0HMLRS2SHPDEL" started.
+[11:11:48:398 DBG ()] Connection 0HMLRS2SHPDEL established using the following protocol: "Tls12"
+[11:11:48:465 INF (ff67d901-3a1e-45b0-b36e-8935c2ecaaea)] Request starting HTTP/2 GET https://localhost:5000/swagger/index.html - -
+[11:11:48:468 DBG (ff67d901-3a1e-45b0-b36e-8935c2ecaaea)] Wildcard detected, all requests with hosts will be allowed.
+[11:11:48:505 DBG (ff67d901-3a1e-45b0-b36e-8935c2ecaaea)] No candidates found for the request path '/swagger/index.html'
+[11:11:48:507 DBG (ff67d901-3a1e-45b0-b36e-8935c2ecaaea)] Request did not match any endpoints
+[11:11:49:265 DBG (ff67d901-3a1e-45b0-b36e-8935c2ecaaea)] AuthenticationScheme: Bearer was not authenticated.
+[11:11:49:533 INF (ff67d901-3a1e-45b0-b36e-8935c2ecaaea)] Request finished HTTP/2 GET https://localhost:5000/swagger/index.html - - - 200 - text/html;charset=utf-8 1072.3517ms
+[11:11:49:805 INF (872c03e3-1e36-4e07-9a02-4baf7a7f7fdb)] Request starting HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - -
+[11:11:49:807 DBG (872c03e3-1e36-4e07-9a02-4baf7a7f7fdb)] No candidates found for the request path '/swagger/v1/swagger.json'
+[11:11:49:808 DBG (872c03e3-1e36-4e07-9a02-4baf7a7f7fdb)] Request did not match any endpoints
+[11:11:49:975 INF (872c03e3-1e36-4e07-9a02-4baf7a7f7fdb)] Request finished HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 170.4098ms
+[11:11:55:448 INF (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Request starting HTTP/2 GET https://localhost:5000/api/v1/Home - -
+[11:11:55:455 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] 1 candidate(s) found for the request path '/api/v1/Home'
+[11:11:55:461 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Endpoint 'Twitter.Api.Controllers.HomeController.GetFiles (Twitter.Api)' with route pattern 'api/v{version:apiVersion}/Home' is valid for the request path '/api/v1/Home'
+[11:11:55:470 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Request matched endpoint 'Twitter.Api.Controllers.HomeController.GetFiles (Twitter.Api)'
+[11:11:55:477 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Static files was skipped as the request already matched an endpoint.
+[11:11:55:479 INF (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Executing endpoint 'Twitter.Api.Controllers.HomeController.GetFiles (Twitter.Api)'
+[11:11:55:504 INF (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Route matched with {action = "GetFiles", controller = "Home"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[Twitter.FileService.Models.TwitterFileModel]] GetFiles() on controller Twitter.Api.Controllers.HomeController (Twitter.Api).
+[11:11:55:508 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Execution plan of authorization filters (in the following order): ["None"]
+[11:11:55:510 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Execution plan of resource filters (in the following order): ["None"]
+[11:11:55:511 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:11:55:515 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Execution plan of exception filters (in the following order): ["None"]
+[11:11:55:517 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:11:55:520 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Executing controller factory for controller Twitter.Api.Controllers.HomeController (Twitter.Api)
+[11:11:55:999 DBG (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Executed controller factory for controller Twitter.Api.Controllers.HomeController (Twitter.Api)
+[11:11:59:346 INF (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Executed action Twitter.Api.Controllers.HomeController.GetFiles (Twitter.Api) in 3817.827ms
+[11:11:59:349 INF (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Executed endpoint 'Twitter.Api.Controllers.HomeController.GetFiles (Twitter.Api)'
+[11:11:59:367 INF (ea77b42b-839b-482d-b690-9ca001bbb5d0)] Request finished HTTP/2 GET https://localhost:5000/api/v1/Home - - - 200 - application/json;+charset=utf-8 3918.6195ms
+[11:12:20:524 DBG ()] Connection id "0HMLRS2SHPDEL" received FIN.
+[11:12:20:537 DBG ()] Connection id "0HMLRS2SHPDEL" is closed. The last processed stream ID was 5.
+[11:12:20:537 DBG ()] Connection id "0HMLRS2SHPDEL" sending FIN because: "The client closed the connection."
+[11:12:20:546 DBG ()] Connection id "0HMLRS2SHPDEL" stopped.
+[11:12:21:228 DBG ()] Hosting stopping
+[11:12:21:241 DBG ()] Hosting stopped

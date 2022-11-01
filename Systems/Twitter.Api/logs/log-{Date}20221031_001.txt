@@ -1,0 +1,180 @@
+[17:44:32:048 INF (62150ba0-c0e4-44dd-820a-76c5872b7c93)] HTTP GET /swagger responded 301 in 398.0044 ms
+[17:44:32:092 DBG (f8156f33-ffe8-499e-8a9d-db6bfcc93c36)] AuthenticationScheme: Bearer was not authenticated.
+[17:44:32:175 INF (f8156f33-ffe8-499e-8a9d-db6bfcc93c36)] HTTP GET /swagger/index.html responded 200 in 83.9015 ms
+[17:44:32:249 DBG (773d3521-ddab-443a-8489-8c6ec7d64055)] AuthenticationScheme: Bearer was not authenticated.
+[17:44:32:251 DBG (241b7185-8d55-45cf-95e9-f1ebb0c29be9)] AuthenticationScheme: Bearer was not authenticated.
+[17:44:32:263 DBG (c8e47282-740f-4755-a5fe-cd2e7b88b306)] AuthenticationScheme: Bearer was not authenticated.
+[17:44:32:283 INF (c8e47282-740f-4755-a5fe-cd2e7b88b306)] HTTP GET /swagger/swagger-ui.css responded 200 in 19.8486 ms
+[17:44:32:346 INF (773d3521-ddab-443a-8489-8c6ec7d64055)] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 98.7134 ms
+[17:44:32:361 INF (241b7185-8d55-45cf-95e9-f1ebb0c29be9)] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 110.9729 ms
+[17:44:32:619 DBG (9509f85d-b074-45ea-902d-36fc16c69621)] AuthenticationScheme: Bearer was not authenticated.
+[17:44:32:702 DBG (4bc659ec-174e-4a84-b586-08068964e477)] AuthenticationScheme: Bearer was not authenticated.
+[17:44:32:711 INF (4bc659ec-174e-4a84-b586-08068964e477)] HTTP GET /swagger/favicon-32x32.png responded 200 in 9.4904 ms
+[17:44:32:806 INF (9509f85d-b074-45ea-902d-36fc16c69621)] HTTP GET /swagger/v1/swagger.json responded 200 in 187.2891 ms
+[17:44:35:823 DBG (4c93a0f4-ea1a-4595-b51e-beaa70bf40a4)] AuthenticationScheme: Bearer was not authenticated.
+[17:44:36:227 DBG (4c93a0f4-ea1a-4595-b51e-beaa70bf40a4)] An 'IServiceProvider' was created for internal use by Entity Framework.
+[17:44:36:361 ERR (4c93a0f4-ea1a-4595-b51e-beaa70bf40a4)] HTTP GET / responded 500 in 537.6682 ms
+System.InvalidOperationException: Unable to resolve service for type 'Microsoft.EntityFrameworkCore.IDbContextFactory`1[Twitter.Context.Context.MainDbContext]' while attempting to activate 'Twitter.Repository.Repository`1[Twitter.Entities.Base.TwitterFile]'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateOpenGeneric(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, Int32 slot, Boolean throwOnConstraintViolation)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateOpenGeneric(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(Type serviceType)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method10(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass7_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[17:44:41:487 DBG (61e2c274-e4cd-4aa5-aa00-f3d216a327bb)] AuthenticationScheme: Bearer was not authenticated.
+[17:44:41:531 ERR (61e2c274-e4cd-4aa5-aa00-f3d216a327bb)] HTTP GET / responded 500 in 44.2431 ms
+System.InvalidOperationException: Unable to resolve service for type 'Microsoft.EntityFrameworkCore.IDbContextFactory`1[Twitter.Context.Context.MainDbContext]' while attempting to activate 'Twitter.Repository.Repository`1[Twitter.Entities.Base.TwitterFile]'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateOpenGeneric(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, Int32 slot, Boolean throwOnConstraintViolation)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateOpenGeneric(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(Type serviceType)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method10(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass7_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[17:50:40:092 DBG ()] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[17:50:40:161 DBG ()] Hosting starting
+[17:50:40:180 INF ()] User profile is available. Using 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[17:50:40:186 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-548b9a28-01c5-49e0-9727-79a67e7fb6c7.xml'.
+[17:50:40:192 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-85fd3714-f1a1-4109-8a1d-9c1348b71088.xml'.
+[17:50:40:193 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-919cd95c-a471-4887-b1f5-ece1484bf2fd.xml'.
+[17:50:40:195 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-a8765750-b548-4a34-b32e-480264d09c54.xml'.
+[17:50:40:202 DBG ()] Found key {548b9a28-01c5-49e0-9727-79a67e7fb6c7}.
+[17:50:40:207 DBG ()] Found key {85fd3714-f1a1-4109-8a1d-9c1348b71088}.
+[17:50:40:209 DBG ()] Found key {919cd95c-a471-4887-b1f5-ece1484bf2fd}.
+[17:50:40:210 DBG ()] Found key {a8765750-b548-4a34-b32e-480264d09c54}.
+[17:50:40:220 DBG ()] Considering key {919cd95c-a471-4887-b1f5-ece1484bf2fd} with expiration date 2022-12-22 18:30:23Z as default key.
+[17:50:40:223 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[17:50:40:230 DBG ()] Decrypting secret element using Windows DPAPI.
+[17:50:40:233 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[17:50:40:242 DBG ()] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+[17:50:40:246 DBG ()] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+[17:50:40:253 DBG ()] Using key {919cd95c-a471-4887-b1f5-ece1484bf2fd} as the default key.
+[17:50:40:255 DBG ()] Key ring with default key {919cd95c-a471-4887-b1f5-ece1484bf2fd} was loaded during application startup.
+[17:50:40:378 DBG ()] Using development certificate: CN=localhost (Thumbprint: 167B92C7D14757143A54F3F21F80C296445B0D22)
+[17:50:40:435 DBG ()] Loaded hosting startup assembly Twitter.Api
+[17:50:40:436 DBG ()] Hosting started
+[17:50:40:589 DBG ()] Connection id "0HMLR9T3R0FK5" received FIN.
+[17:50:40:604 DBG ()] Connection id "0HMLR9T3R0FK5" accepted.
+[17:50:40:607 DBG ()] Connection id "0HMLR9T3R0FK5" started.
+[17:50:40:638 DBG ()] Failed to authenticate HTTPS connection.
+System.IO.IOException:  Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveBlobAsync[TIOAdapter](TIOAdapter adapter)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](TIOAdapter adapter, Boolean receiveFirst, Byte[] reAuthenticationData, Boolean isApm)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+[17:50:40:731 DBG ()] Connection id "0HMLR9T3R0FK5" stopped.
+[17:50:40:755 DBG ()] Connection id "0HMLR9T3R0FK5" sending FIN because: "The Socket transport's send loop completed gracefully."
+[17:50:40:769 DBG ()] Connection id "0HMLR9T3R0FK6" accepted.
+[17:50:40:772 DBG ()] Connection id "0HMLR9T3R0FK6" started.
+[17:50:40:862 DBG ()] Connection 0HMLR9T3R0FK6 established using the following protocol: "Tls12"
+[17:50:40:928 INF (03719d05-9375-4ae6-8816-b75882bcb2ef)] Request starting HTTP/2 GET https://localhost:5000/swagger/index.html - -
+[17:50:40:932 DBG (03719d05-9375-4ae6-8816-b75882bcb2ef)] Wildcard detected, all requests with hosts will be allowed.
+[17:50:40:966 DBG (03719d05-9375-4ae6-8816-b75882bcb2ef)] No candidates found for the request path '/swagger/index.html'
+[17:50:40:969 DBG (03719d05-9375-4ae6-8816-b75882bcb2ef)] Request did not match any endpoints
+[17:50:41:021 DBG (03719d05-9375-4ae6-8816-b75882bcb2ef)] AuthenticationScheme: Bearer was not authenticated.
+[17:50:41:235 INF (03719d05-9375-4ae6-8816-b75882bcb2ef)] Request finished HTTP/2 GET https://localhost:5000/swagger/index.html - - - 200 - text/html;charset=utf-8 311.3831ms
+[17:50:41:634 INF (d23f4c39-9c02-4bb1-b8d8-22c0a1cfe594)] Request starting HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - -
+[17:50:41:637 DBG (d23f4c39-9c02-4bb1-b8d8-22c0a1cfe594)] No candidates found for the request path '/swagger/v1/swagger.json'
+[17:50:41:639 DBG (d23f4c39-9c02-4bb1-b8d8-22c0a1cfe594)] Request did not match any endpoints
+[17:50:41:826 INF (d23f4c39-9c02-4bb1-b8d8-22c0a1cfe594)] Request finished HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 190.9473ms
+[17:50:45:117 INF (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Request starting HTTP/2 GET https://localhost:5000/ - -
+[17:50:45:126 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] 1 candidate(s) found for the request path '/'
+[17:50:45:133 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Endpoint 'Twitter.Api.Controllers.HomeController.Index (Twitter.Api)' with route pattern '' is valid for the request path '/'
+[17:50:45:153 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Request matched endpoint 'Twitter.Api.Controllers.HomeController.Index (Twitter.Api)'
+[17:50:45:164 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Static files was skipped as the request already matched an endpoint.
+[17:50:45:168 INF (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Executing endpoint 'Twitter.Api.Controllers.HomeController.Index (Twitter.Api)'
+[17:50:45:206 INF (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller Twitter.Api.Controllers.HomeController (Twitter.Api).
+[17:50:45:213 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Execution plan of authorization filters (in the following order): ["None"]
+[17:50:45:218 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Execution plan of resource filters (in the following order): ["None"]
+[17:50:45:222 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[17:50:45:228 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Execution plan of exception filters (in the following order): ["None"]
+[17:50:45:236 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[17:50:45:245 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Executing controller factory for controller Twitter.Api.Controllers.HomeController (Twitter.Api)
+[17:50:45:511 DBG (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Executed controller factory for controller Twitter.Api.Controllers.HomeController (Twitter.Api)
+[17:50:47:897 INF (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Executed action Twitter.Api.Controllers.HomeController.Index (Twitter.Api) in 2646.8297ms
+[17:50:47:900 INF (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Executed endpoint 'Twitter.Api.Controllers.HomeController.Index (Twitter.Api)'
+[17:50:47:930 ERR (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] An unhandled exception has occurred while executing the request.
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'MainDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.CheckDisposed()
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_Model()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Collections.Generic.IAsyncEnumerable<TEntity>.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at System.Text.Json.Serialization.Converters.IAsyncEnumerableOfTConverter`2.OnWriteResume(Utf8JsonWriter writer, TAsyncEnumerable value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IAsyncEnumerableOfTConverter`2.OnTryWrite(Utf8JsonWriter writer, TAsyncEnumerable value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCoreAsObject(Utf8JsonWriter writer, Object value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.JsonSerializer.WriteCore[TValue](JsonConverter jsonConverter, Utf8JsonWriter writer, TValue& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.JsonSerializer.WriteStreamAsync[TValue](Stream utf8Json, TValue value, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at System.Text.Json.JsonSerializer.WriteStreamAsync[TValue](Stream utf8Json, TValue value, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at System.Text.Json.JsonSerializer.WriteStreamAsync[TValue](Stream utf8Json, TValue value, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[17:50:47:955 INF (9c5ebec6-e4bc-423e-b905-689ca51d45a8)] Request finished HTTP/2 GET https://localhost:5000/ - - - 500 - text/plain;+charset=utf-8 2837.9354ms
+[17:52:46:174 DBG ()] Hosting stopping
+[17:52:46:183 DBG ()] Connection id "0HMLR9T3R0FK6" is closing.
+[17:52:46:184 DBG ()] Connection id "0HMLR9T3R0FK6" is closed. The last processed stream ID was 5.
+[17:52:46:186 DBG ()] Connection id "0HMLR9T3R0FK6" received FIN.
+[17:52:46:187 DBG ()] Connection id "0HMLR9T3R0FK6" sending FIN because: "The client closed the connection."
+[17:52:46:189 DBG ()] Connection id "0HMLR9T3R0FK6" stopped.
+[17:52:46:193 DBG ()] Hosting stopped

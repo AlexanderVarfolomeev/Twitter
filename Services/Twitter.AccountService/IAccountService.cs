@@ -4,9 +4,9 @@ namespace Twitter.AccountService;
 
 public interface IAccountService
 {
-    Task<TwitterAccountModel> GetAccount();
-    Task<TwitterAccountModel> GetAccounts();
-    Task<bool> RegisterAccount(TwitterAccountModel accountModel);
-    Task<bool> DeleteAccount();
-    Task<bool> UpdateAccount();
+    Task<IEnumerable<TwitterAccountModel>> GetAccounts();
+    Task<TwitterAccountModel> GetAccountById(Guid id);
+    Task DeleteAccount(Guid id);
+    Task<TwitterAccountModel> RegisterAccount(TwitterAccountModelRequest requestModel);
+    Task<TwitterAccountModel> UpdateAccount(Guid id, TwitterAccountModelRequest requestModel);
 }

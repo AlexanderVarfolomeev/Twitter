@@ -28,7 +28,7 @@ public class TwitterFilesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<TwitterFileResponse> GetFileById(Guid id)
+    public async Task<TwitterFileResponse> GetFileById([FromRoute] Guid id)
     {
         return _mapper.Map<TwitterFileResponse>(await _fileService.GetFileById(id));
     }
@@ -40,8 +40,8 @@ public class TwitterFilesController : ControllerBase
         return _mapper.Map<TwitterFileResponse>( await _fileService.AddFile(model));
     }
 
-    [HttpDelete("")]
-    public Task DeleteFile(Guid id)
+    [HttpDelete("{id}")]
+    public Task DeleteFile([FromRoute] Guid id)
     {
         _fileService.DeleteFile(id);
         return Task.CompletedTask;

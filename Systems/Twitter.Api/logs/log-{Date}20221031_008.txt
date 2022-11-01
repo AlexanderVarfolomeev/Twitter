@@ -1,0 +1,140 @@
+[18:40:15:401 INF (210540bb-bc74-4996-be74-07e7226f07c0)] HTTP GET /swagger/index.html responded 200 in 240.4702 ms
+[18:40:15:645 DBG (80e2bd1f-65b7-42f1-915f-fb148c3dfa79)] AuthenticationScheme: Bearer was not authenticated.
+[18:40:15:797 INF (80e2bd1f-65b7-42f1-915f-fb148c3dfa79)] HTTP GET /swagger/v1/swagger.json responded 200 in 152.3633 ms
+[18:40:32:933 DBG (08435637-66da-4563-ac35-60d64659ebbd)] AuthenticationScheme: Bearer was not authenticated.
+[18:40:33:145 DBG (08435637-66da-4563-ac35-60d64659ebbd)] An 'IServiceProvider' was created for internal use by Entity Framework.
+[18:40:33:446 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'Dialog' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'FirstUser', 'SecondUser'} that could be matched with the properties on the other entity type - {'DialogsUser1', 'DialogsUser2'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:503 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'Subscribe' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'Subscriber', 'User'} that could be matched with the properties on the other entity type - {'Subscribers', 'Subscribes'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:514 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:516 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'TwitterUser' to 'Subscribe' has been configured by convention because there are multiple properties on one entity type - {'Subscribers', 'Subscribes'} that could be matched with the properties on the other entity type - {'Subscriber', 'User'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:711 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'Subscribe' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'Subscriber', 'User'} that could be matched with the properties on the other entity type - {'Subscribers', 'Subscribes'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:715 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:718 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'TwitterUser' to 'Subscribe' has been configured by convention because there are multiple properties on one entity type - {'Subscribers', 'Subscribes'} that could be matched with the properties on the other entity type - {'Subscriber', 'User'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:721 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:730 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'Dialog' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'FirstUser', 'SecondUser'} that could be matched with the properties on the other entity type - {'DialogsUser1', 'DialogsUser2'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:733 DBG (08435637-66da-4563-ac35-60d64659ebbd)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[18:40:33:768 DBG (08435637-66da-4563-ac35-60d64659ebbd)] The index {'UserId'} was not created on entity type 'IdentityUserRole<Guid>' as the properties are already covered by the index {'UserId', 'RoleId'}.
+[18:40:33:770 DBG (08435637-66da-4563-ac35-60d64659ebbd)] The index {'UserId'} was not created on entity type 'IdentityUserToken<Guid>' as the properties are already covered by the index {'UserId', 'LoginProvider', 'Name'}.
+[18:40:34:056 INF (08435637-66da-4563-ac35-60d64659ebbd)] Entity Framework Core 6.0.1 initialized 'MainDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.1' with options: None
+[18:40:34:138 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[18:40:34:144 DBG (08435637-66da-4563-ac35-60d64659ebbd)] SaveChanges starting for 'MainDbContext'.
+[18:40:34:151 DBG (08435637-66da-4563-ac35-60d64659ebbd)] DetectChanges starting for 'MainDbContext'.
+[18:40:34:164 DBG (08435637-66da-4563-ac35-60d64659ebbd)] DetectChanges completed for 'MainDbContext'.
+[18:40:34:244 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[18:40:34:477 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[18:40:34:482 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Beginning transaction with isolation level 'Unspecified'.
+[18:40:34:493 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Began transaction with isolation level 'ReadCommitted'.
+[18:40:34:541 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Creating DbCommand for 'ExecuteReader'.
+[18:40:34:549 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Created DbCommand for 'ExecuteReader' (5ms).
+[18:40:34:574 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Executing DbCommand [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000), @p4='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [TwitterFiles] ([Id], [CreationTime], [ModificationTime], [Name], [Type])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+[18:40:34:621 INF (08435637-66da-4563-ac35-60d64659ebbd)] Executed DbCommand (51ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000), @p4='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [TwitterFiles] ([Id], [CreationTime], [ModificationTime], [Name], [Type])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+[18:40:34:631 DBG (08435637-66da-4563-ac35-60d64659ebbd)] A data reader was disposed.
+[18:40:34:638 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Committing transaction.
+[18:40:34:642 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Committed transaction.
+[18:40:34:646 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[18:40:34:655 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[18:40:34:659 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Disposing transaction.
+[18:40:34:668 DBG (08435637-66da-4563-ac35-60d64659ebbd)] An entity of type 'TwitterFile' tracked by 'MainDbContext' changed state from '"Added"' to '"Unchanged"'. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[18:40:34:673 DBG (08435637-66da-4563-ac35-60d64659ebbd)] SaveChanges completed for 'MainDbContext' with 1 entities written to the database.
+[18:40:34:710 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Compiling query expression: 
+'DbSet<TwitterFile>()'
+[18:40:34:856 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<TwitterFile>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.SelectExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: TwitterFile.Id (Guid) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: TwitterFile.CreationTime (DateTime) Required, 1], [Property: TwitterFile.ModificationTime (DateTime) Required, 2], [Property: TwitterFile.Name (string) Required, 3], [Property: TwitterFile.Type (string) Required, 4] }
+        SELECT t.Id, t.CreationTime, t.ModificationTime, t.Name, t.Type
+        FROM TwitterFiles AS t), 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, TwitterFile>, 
+    Twitter.Context.Context.MainDbContext, 
+    False, 
+    False, 
+    True
+)'
+[18:40:34:891 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Creating DbCommand for 'ExecuteReader'.
+[18:40:34:892 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Created DbCommand for 'ExecuteReader' (1ms).
+[18:40:34:897 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[18:40:34:901 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[18:40:34:903 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+[18:40:34:918 INF (08435637-66da-4563-ac35-60d64659ebbd)] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+[18:40:34:937 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[18:40:34:939 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[18:40:34:941 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[18:40:34:943 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[18:40:34:945 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[18:40:34:947 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[18:40:34:950 DBG (08435637-66da-4563-ac35-60d64659ebbd)] A data reader was disposed.
+[18:40:34:953 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[18:40:34:956 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[18:40:34:967 DBG (08435637-66da-4563-ac35-60d64659ebbd)] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[18:40:34:974 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Attempting to select an output formatter based on Accept header '["text/plain"]'.
+[18:40:34:976 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Could not find an output formatter based on content negotiation. Accepted types were (["text/plain"])
+[18:40:34:977 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[18:40:34:979 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Attempting to select the first formatter in the output formatters list which can write the result.
+[18:40:34:981 DBG (08435637-66da-4563-ac35-60d64659ebbd)] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+[18:40:34:982 INF (08435637-66da-4563-ac35-60d64659ebbd)] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Twitter.Entities.Base.TwitterFile, Twitter.Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[18:40:35:015 INF (08435637-66da-4563-ac35-60d64659ebbd)] HTTP GET / responded 200 in 2083.1307 ms
+[18:40:35:025 DBG (08435637-66da-4563-ac35-60d64659ebbd)] 'MainDbContext' disposed.
+[19:42:26:207 DBG ()] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[19:42:26:392 DBG ()] Hosting starting
+[19:42:26:424 INF ()] User profile is available. Using 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[19:42:26:434 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-548b9a28-01c5-49e0-9727-79a67e7fb6c7.xml'.
+[19:42:26:444 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-85fd3714-f1a1-4109-8a1d-9c1348b71088.xml'.
+[19:42:26:449 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-919cd95c-a471-4887-b1f5-ece1484bf2fd.xml'.
+[19:42:26:453 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-a8765750-b548-4a34-b32e-480264d09c54.xml'.
+[19:42:26:472 DBG ()] Found key {548b9a28-01c5-49e0-9727-79a67e7fb6c7}.
+[19:42:26:484 DBG ()] Found key {85fd3714-f1a1-4109-8a1d-9c1348b71088}.
+[19:42:26:486 DBG ()] Found key {919cd95c-a471-4887-b1f5-ece1484bf2fd}.
+[19:42:26:489 DBG ()] Found key {a8765750-b548-4a34-b32e-480264d09c54}.
+[19:42:26:513 DBG ()] Considering key {919cd95c-a471-4887-b1f5-ece1484bf2fd} with expiration date 2022-12-22 18:30:23Z as default key.
+[19:42:26:520 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[19:42:26:531 DBG ()] Decrypting secret element using Windows DPAPI.
+[19:42:26:534 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[19:42:26:546 DBG ()] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+[19:42:26:555 DBG ()] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+[19:42:26:571 DBG ()] Using key {919cd95c-a471-4887-b1f5-ece1484bf2fd} as the default key.
+[19:42:26:582 DBG ()] Key ring with default key {919cd95c-a471-4887-b1f5-ece1484bf2fd} was loaded during application startup.
+[19:42:26:775 DBG ()] Using development certificate: CN=localhost (Thumbprint: 167B92C7D14757143A54F3F21F80C296445B0D22)
+[19:42:26:837 DBG ()] Loaded hosting startup assembly Twitter.Api
+[19:42:26:845 DBG ()] Hosting started
+[19:42:27:197 DBG ()] Connection id "0HMLRBRII6VVS" received FIN.
+[19:42:27:212 DBG ()] Connection id "0HMLRBRII6VVS" accepted.
+[19:42:27:214 DBG ()] Connection id "0HMLRBRII6VVS" started.
+[19:42:27:244 DBG ()] Failed to authenticate HTTPS connection.
+System.IO.IOException:  Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveBlobAsync[TIOAdapter](TIOAdapter adapter)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](TIOAdapter adapter, Boolean receiveFirst, Byte[] reAuthenticationData, Boolean isApm)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+[19:42:27:286 DBG ()] Connection id "0HMLRBRII6VVS" stopped.
+[19:42:27:291 DBG ()] Connection id "0HMLRBRII6VVS" sending FIN because: "The Socket transport's send loop completed gracefully."
+[19:42:27:606 DBG ()] Connection id "0HMLRBRII6VVT" accepted.
+[19:42:27:608 DBG ()] Connection id "0HMLRBRII6VVT" started.
+[19:42:27:679 DBG ()] Connection 0HMLRBRII6VVT established using the following protocol: "Tls12"
+[19:42:27:747 INF (91679ac1-a901-4aab-883e-c48ac53f4619)] Request starting HTTP/2 GET https://localhost:5000/swagger/index.html - -
+[19:42:27:752 DBG (91679ac1-a901-4aab-883e-c48ac53f4619)] Wildcard detected, all requests with hosts will be allowed.
+[19:42:27:790 DBG (91679ac1-a901-4aab-883e-c48ac53f4619)] No candidates found for the request path '/swagger/index.html'
+[19:42:27:793 DBG (91679ac1-a901-4aab-883e-c48ac53f4619)] Request did not match any endpoints
+[19:42:27:838 DBG (91679ac1-a901-4aab-883e-c48ac53f4619)] AuthenticationScheme: Bearer was not authenticated.
+[19:42:28:018 INF (91679ac1-a901-4aab-883e-c48ac53f4619)] Request finished HTTP/2 GET https://localhost:5000/swagger/index.html - - - 200 - text/html;charset=utf-8 274.8990ms
+[19:42:28:228 INF (59295974-520f-4225-841a-d9564ed27aa1)] Request starting HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - -
+[19:42:28:230 DBG (59295974-520f-4225-841a-d9564ed27aa1)] No candidates found for the request path '/swagger/v1/swagger.json'
+[19:42:28:233 DBG (59295974-520f-4225-841a-d9564ed27aa1)] Request did not match any endpoints
+[19:42:28:446 INF (59295974-520f-4225-841a-d9564ed27aa1)] Request finished HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 217.3628ms
+[19:44:11:358 DBG ()] Hosting stopping
+[19:44:11:366 DBG ()] Connection id "0HMLRBRII6VVT" is closing.
+[19:44:11:373 DBG ()] Connection id "0HMLRBRII6VVT" is closed. The last processed stream ID was 3.
+[19:44:11:375 DBG ()] Connection id "0HMLRBRII6VVT" received FIN.
+[19:44:11:376 DBG ()] Connection id "0HMLRBRII6VVT" sending FIN because: "The client closed the connection."
+[19:44:11:385 DBG ()] Connection id "0HMLRBRII6VVT" stopped.
+[19:44:11:389 DBG ()] Hosting stopped

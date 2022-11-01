@@ -1,0 +1,387 @@
+[11:56:34:214 INF (99a26d7e-c0f0-468c-a848-4bbaacd279a5)] HTTP GET /swagger/index.html responded 200 in 269.2146 ms
+[11:56:34:413 DBG (cdb4d102-999c-4fab-950d-5cda86cf27a3)] AuthenticationScheme: Bearer was not authenticated.
+[11:56:34:638 INF (cdb4d102-999c-4fab-950d-5cda86cf27a3)] HTTP GET /swagger/v1/swagger.json responded 200 in 226.3243 ms
+[11:56:38:708 DBG (08484d49-3856-4c6c-91b1-182b52960546)] AuthenticationScheme: Bearer was not authenticated.
+[11:56:38:878 DBG (08484d49-3856-4c6c-91b1-182b52960546)] An 'IServiceProvider' was created for internal use by Entity Framework.
+[11:56:39:334 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'Dialog' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'FirstUser', 'SecondUser'} that could be matched with the properties on the other entity type - {'DialogsUser1', 'DialogsUser2'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:411 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'Subscribe' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'Subscriber', 'User'} that could be matched with the properties on the other entity type - {'Subscribers', 'Subscribes'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:421 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:425 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'TwitterUser' to 'Subscribe' has been configured by convention because there are multiple properties on one entity type - {'Subscribers', 'Subscribes'} that could be matched with the properties on the other entity type - {'Subscriber', 'User'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:665 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'Subscribe' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'Subscriber', 'User'} that could be matched with the properties on the other entity type - {'Subscribers', 'Subscribes'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:670 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:672 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'TwitterUser' to 'Subscribe' has been configured by convention because there are multiple properties on one entity type - {'Subscribers', 'Subscribes'} that could be matched with the properties on the other entity type - {'Subscriber', 'User'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:675 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:684 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'Dialog' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'FirstUser', 'SecondUser'} that could be matched with the properties on the other entity type - {'DialogsUser1', 'DialogsUser2'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:687 DBG (08484d49-3856-4c6c-91b1-182b52960546)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[11:56:39:725 DBG (08484d49-3856-4c6c-91b1-182b52960546)] The index {'UserId'} was not created on entity type 'IdentityUserRole<Guid>' as the properties are already covered by the index {'UserId', 'RoleId'}.
+[11:56:39:727 DBG (08484d49-3856-4c6c-91b1-182b52960546)] The index {'UserId'} was not created on entity type 'IdentityUserToken<Guid>' as the properties are already covered by the index {'UserId', 'LoginProvider', 'Name'}.
+[11:56:40:099 INF (08484d49-3856-4c6c-91b1-182b52960546)] Entity Framework Core 6.0.1 initialized 'MainDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.1' with options: None
+[11:56:40:155 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Compiling query expression: 
+'DbSet<TwitterFile>()'
+[11:56:40:328 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<TwitterFile>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.SelectExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: TwitterFile.Id (Guid) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: TwitterFile.CreationTime (DateTime) Required, 1], [Property: TwitterFile.ModificationTime (DateTime) Required, 2], [Property: TwitterFile.Name (string) Required, 3], [Property: TwitterFile.Type (string) Required, 4] }
+        SELECT t.Id, t.CreationTime, t.ModificationTime, t.Name, t.Type
+        FROM TwitterFiles AS t), 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, TwitterFile>, 
+    Twitter.Context.Context.MainDbContext, 
+    False, 
+    False, 
+    True
+)'
+[11:56:40:377 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Creating DbCommand for 'ExecuteReader'.
+[11:56:40:411 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Created DbCommand for 'ExecuteReader' (31ms).
+[11:56:40:419 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:56:40:646 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:56:40:658 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+[11:56:40:708 INF (08484d49-3856-4c6c-91b1-182b52960546)] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+[11:56:40:728 DBG (08484d49-3856-4c6c-91b1-182b52960546)] A data reader was disposed.
+[11:56:40:733 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:56:40:741 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:56:40:750 DBG (08484d49-3856-4c6c-91b1-182b52960546)] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[11:56:40:755 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Attempting to select an output formatter based on Accept header '["text/plain"]'.
+[11:56:40:757 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Could not find an output formatter based on content negotiation. Accepted types were (["text/plain"])
+[11:56:40:759 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[11:56:40:760 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Attempting to select the first formatter in the output formatters list which can write the result.
+[11:56:40:762 DBG (08484d49-3856-4c6c-91b1-182b52960546)] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+[11:56:40:764 INF (08484d49-3856-4c6c-91b1-182b52960546)] Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[Twitter.Entities.Base.TwitterFile, Twitter.Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileResponse, Twitter.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[11:56:40:787 INF (08484d49-3856-4c6c-91b1-182b52960546)] HTTP GET /api/v1/TwitterFiles responded 200 in 2081.6887 ms
+[11:56:40:793 DBG (08484d49-3856-4c6c-91b1-182b52960546)] 'MainDbContext' disposed.
+[11:56:56:240 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] AuthenticationScheme: Bearer was not authenticated.
+[11:56:56:295 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Attempting to bind parameter 'file' of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest' using the name '' in request data ...
+[11:56:56:298 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+[11:56:56:314 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Done attempting to bind parameter 'file' of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest'.
+[11:56:56:391 INF (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Entity Framework Core 6.0.1 initialized 'MainDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.1' with options: None
+[11:56:56:490 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[11:56:56:495 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] SaveChanges starting for 'MainDbContext'.
+[11:56:56:500 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] DetectChanges starting for 'MainDbContext'.
+[11:56:56:516 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] DetectChanges completed for 'MainDbContext'.
+[11:56:56:528 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:56:56:533 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:56:56:538 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Beginning transaction with isolation level 'Unspecified'.
+[11:56:56:550 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Began transaction with isolation level 'ReadCommitted'.
+[11:56:56:616 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Creating DbCommand for 'ExecuteReader'.
+[11:56:56:617 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Created DbCommand for 'ExecuteReader' (1ms).
+[11:56:56:632 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Executing DbCommand [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000), @p4='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [TwitterFiles] ([Id], [CreationTime], [ModificationTime], [Name], [Type])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+[11:56:56:667 INF (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Executed DbCommand (40ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000), @p4='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [TwitterFiles] ([Id], [CreationTime], [ModificationTime], [Name], [Type])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+[11:56:56:672 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] A data reader was disposed.
+[11:56:56:675 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Committing transaction.
+[11:56:56:681 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Committed transaction.
+[11:56:56:683 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:56:56:687 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:56:56:690 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Disposing transaction.
+[11:56:56:704 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] An entity of type 'TwitterFile' tracked by 'MainDbContext' changed state from '"Added"' to '"Unchanged"'. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[11:56:56:707 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] SaveChanges completed for 'MainDbContext' with 1 entities written to the database.
+[11:56:56:714 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[11:56:56:719 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Attempting to select an output formatter based on Accept header '["text/plain"]'.
+[11:56:56:720 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Could not find an output formatter based on content negotiation. Accepted types were (["text/plain"])
+[11:56:56:722 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[11:56:56:723 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Attempting to select the first formatter in the output formatters list which can write the result.
+[11:56:56:724 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+[11:56:56:725 INF (b9254a1f-4b5b-454d-a696-a8b0878cb813)] Executing ObjectResult, writing value of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileResponse'.
+[11:56:56:738 INF (b9254a1f-4b5b-454d-a696-a8b0878cb813)] HTTP POST /api/v1/TwitterFiles responded 200 in 502.6415 ms
+[11:56:56:740 DBG (b9254a1f-4b5b-454d-a696-a8b0878cb813)] 'MainDbContext' disposed.
+[11:57:12:956 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] AuthenticationScheme: Bearer was not authenticated.
+[11:57:12:990 INF (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Entity Framework Core 6.0.1 initialized 'MainDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.1' with options: None
+[11:57:12:993 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Creating DbCommand for 'ExecuteReader'.
+[11:57:12:995 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Created DbCommand for 'ExecuteReader' (1ms).
+[11:57:12:996 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:12:997 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:12:998 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+[11:57:13:002 INF (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+[11:57:13:018 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[11:57:13:022 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] A data reader was disposed.
+[11:57:13:024 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:13:025 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:13:026 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[11:57:13:029 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Attempting to select an output formatter based on Accept header '["text/plain"]'.
+[11:57:13:030 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Could not find an output formatter based on content negotiation. Accepted types were (["text/plain"])
+[11:57:13:032 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[11:57:13:033 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Attempting to select the first formatter in the output formatters list which can write the result.
+[11:57:13:035 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+[11:57:13:038 INF (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectListIterator`2[[Twitter.Entities.Base.TwitterFile, Twitter.Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileResponse, Twitter.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[11:57:13:043 INF (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] HTTP GET /api/v1/TwitterFiles responded 200 in 86.7883 ms
+[11:57:13:045 DBG (2839d6d5-4bf9-4fd6-ad0e-e6084a6ef5ff)] 'MainDbContext' disposed.
+[11:57:20:711 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] AuthenticationScheme: Bearer was not authenticated.
+[11:57:20:743 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Attempting to bind parameter 'id' of type 'System.Guid' using the name 'id' in request data ...
+[11:57:20:747 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Done attempting to bind parameter 'id' of type 'System.Guid'.
+[11:57:20:755 INF (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Entity Framework Core 6.0.1 initialized 'MainDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.1' with options: None
+[11:57:20:772 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Compiling query expression: 
+'DbSet<TwitterFile>()
+    .FirstOrDefault(x => x.Id == __id_0)'
+[11:57:20:843 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<TwitterFile>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.SelectExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: TwitterFile.Id (Guid) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: TwitterFile.CreationTime (DateTime) Required, 1], [Property: TwitterFile.ModificationTime (DateTime) Required, 2], [Property: TwitterFile.Name (string) Required, 3], [Property: TwitterFile.Type (string) Required, 4] }
+        SELECT TOP(1) t.Id, t.CreationTime, t.ModificationTime, t.Name, t.Type
+        FROM TwitterFiles AS t
+        WHERE t.Id == @__id_0), 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, TwitterFile>, 
+    Twitter.Context.Context.MainDbContext, 
+    False, 
+    False, 
+    True
+)
+    .SingleOrDefault()'
+[11:57:20:858 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Creating DbCommand for 'ExecuteReader'.
+[11:57:20:859 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Created DbCommand for 'ExecuteReader' (1ms).
+[11:57:20:860 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:20:861 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:20:862 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Executing DbCommand [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+WHERE [t].[Id] = @__id_0
+[11:57:20:866 INF (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Executed DbCommand (4ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+WHERE [t].[Id] = @__id_0
+[11:57:20:868 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[11:57:20:871 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] A data reader was disposed.
+[11:57:20:873 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:20:874 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:20:875 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[11:57:20:877 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Attempting to select an output formatter based on Accept header '["text/plain"]'.
+[11:57:20:879 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Could not find an output formatter based on content negotiation. Accepted types were (["text/plain"])
+[11:57:20:880 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[11:57:20:882 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Attempting to select the first formatter in the output formatters list which can write the result.
+[11:57:20:883 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+[11:57:20:884 INF (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] Executing ObjectResult, writing value of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileResponse'.
+[11:57:20:891 INF (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] HTTP GET /api/v1/TwitterFiles/5770cc2b-685b-4a52-ae51-fd0b2fffed36 responded 200 in 180.2930 ms
+[11:57:20:893 DBG (8db9e9a3-b25e-49d4-bb5a-2c0643cc46e4)] 'MainDbContext' disposed.
+[11:57:33:288 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] AuthenticationScheme: Bearer was not authenticated.
+[11:57:33:328 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Attempting to bind parameter 'id' of type 'System.Guid' using the name 'id' in request data ...
+[11:57:33:331 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Done attempting to bind parameter 'id' of type 'System.Guid'.
+[11:57:33:346 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Attempting to bind parameter 'file' of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest' using the name '' in request data ...
+[11:57:33:348 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+[11:57:33:358 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Done attempting to bind parameter 'file' of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest'.
+[11:57:33:370 INF (38d92e1f-e960-4f7e-abc4-941827069523)] Entity Framework Core 6.0.1 initialized 'MainDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.1' with options: None
+[11:57:33:377 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Creating DbCommand for 'ExecuteReader'.
+[11:57:33:378 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Created DbCommand for 'ExecuteReader' (1ms).
+[11:57:33:380 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:33:381 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:33:382 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Executing DbCommand [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+WHERE [t].[Id] = @__id_0
+[11:57:33:386 INF (38d92e1f-e960-4f7e-abc4-941827069523)] Executed DbCommand (4ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CreationTime], [t].[ModificationTime], [t].[Name], [t].[Type]
+FROM [TwitterFiles] AS [t]
+WHERE [t].[Id] = @__id_0
+[11:57:33:388 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[11:57:33:390 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] A data reader was disposed.
+[11:57:33:390 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:33:392 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:33:397 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] The unchanged property 'TwitterFile.ModificationTime' was detected as changed and will be marked as modified. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see property values.
+[11:57:33:400 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] An entity of type 'TwitterFile' tracked by 'MainDbContext' changed state from '"Unchanged"' to '"Modified"'. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[11:57:33:404 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] The unchanged property 'TwitterFile.Type' was detected as changed and will be marked as modified. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see property values.
+[11:57:33:407 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] SaveChanges starting for 'MainDbContext'.
+[11:57:33:409 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] DetectChanges starting for 'MainDbContext'.
+[11:57:33:411 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] DetectChanges completed for 'MainDbContext'.
+[11:57:33:412 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:33:413 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:33:415 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Beginning transaction with isolation level 'Unspecified'.
+[11:57:33:417 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Began transaction with isolation level 'ReadCommitted'.
+[11:57:33:423 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Creating DbCommand for 'ExecuteReader'.
+[11:57:33:424 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Created DbCommand for 'ExecuteReader' (1ms).
+[11:57:33:426 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Executing DbCommand [Parameters=[@p4='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [TwitterFiles] SET [CreationTime] = @p0, [ModificationTime] = @p1, [Name] = @p2, [Type] = @p3
+WHERE [Id] = @p4;
+SELECT @@ROWCOUNT;
+[11:57:33:431 INF (38d92e1f-e960-4f7e-abc4-941827069523)] Executed DbCommand (5ms) [Parameters=[@p4='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [TwitterFiles] SET [CreationTime] = @p0, [ModificationTime] = @p1, [Name] = @p2, [Type] = @p3
+WHERE [Id] = @p4;
+SELECT @@ROWCOUNT;
+[11:57:33:438 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] A data reader was disposed.
+[11:57:33:439 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Committing transaction.
+[11:57:33:441 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Committed transaction.
+[11:57:33:442 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:33:444 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[11:57:33:445 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] Disposing transaction.
+[11:57:33:446 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] An entity of type 'TwitterFile' tracked by 'MainDbContext' changed state from '"Modified"' to '"Unchanged"'. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[11:57:33:449 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] SaveChanges completed for 'MainDbContext' with 1 entities written to the database.
+[11:57:33:465 ERR (38d92e1f-e960-4f7e-abc4-941827069523)] HTTP PATCH /api/v1/TwitterFiles/5770cc2b-685b-4a52-ae51-fd0b2fffed36 responded 500 in 180.4971 ms
+AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Task`1 -> TwitterFileResponse
+System.Threading.Tasks.Task`1[[Twitter.FileService.Models.TwitterFileModel, Twitter.FileService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileResponse
+   at lambda_method137(Closure , Object , TwitterFileResponse , ResolutionContext )
+   at Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.UpdateFile(Guid id, TwitterFileRequest file) in D:\repos\Twitter\Systems\Twitter.Api\Controllers\TwitterFilesController\TwitterFilesController.cs:line 54
+   at lambda_method131(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[11:57:33:516 DBG (38d92e1f-e960-4f7e-abc4-941827069523)] 'MainDbContext' disposed.
+[11:58:03:585 DBG ()] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[11:58:03:690 DBG ()] Hosting starting
+[11:58:03:715 INF ()] User profile is available. Using 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[11:58:03:722 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-548b9a28-01c5-49e0-9727-79a67e7fb6c7.xml'.
+[11:58:03:729 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-85fd3714-f1a1-4109-8a1d-9c1348b71088.xml'.
+[11:58:03:731 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-919cd95c-a471-4887-b1f5-ece1484bf2fd.xml'.
+[11:58:03:733 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-a8765750-b548-4a34-b32e-480264d09c54.xml'.
+[11:58:03:743 DBG ()] Found key {548b9a28-01c5-49e0-9727-79a67e7fb6c7}.
+[11:58:03:748 DBG ()] Found key {85fd3714-f1a1-4109-8a1d-9c1348b71088}.
+[11:58:03:749 DBG ()] Found key {919cd95c-a471-4887-b1f5-ece1484bf2fd}.
+[11:58:03:750 DBG ()] Found key {a8765750-b548-4a34-b32e-480264d09c54}.
+[11:58:03:762 DBG ()] Considering key {919cd95c-a471-4887-b1f5-ece1484bf2fd} with expiration date 2022-12-22 18:30:23Z as default key.
+[11:58:03:765 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[11:58:03:772 DBG ()] Decrypting secret element using Windows DPAPI.
+[11:58:03:774 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[11:58:03:782 DBG ()] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+[11:58:03:786 DBG ()] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+[11:58:03:791 DBG ()] Using key {919cd95c-a471-4887-b1f5-ece1484bf2fd} as the default key.
+[11:58:03:793 DBG ()] Key ring with default key {919cd95c-a471-4887-b1f5-ece1484bf2fd} was loaded during application startup.
+[11:58:03:873 DBG ()] Using development certificate: CN=localhost (Thumbprint: 167B92C7D14757143A54F3F21F80C296445B0D22)
+[11:58:03:921 DBG ()] Loaded hosting startup assembly Twitter.Api
+[11:58:03:922 DBG ()] Hosting started
+[11:58:03:974 DBG ()] Connection id "0HMLRSSNSDIMU" received FIN.
+[11:58:03:986 DBG ()] Connection id "0HMLRSSNSDIMU" accepted.
+[11:58:03:988 DBG ()] Connection id "0HMLRSSNSDIMU" started.
+[11:58:04:010 DBG ()] Failed to authenticate HTTPS connection.
+System.IO.IOException:  Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveBlobAsync[TIOAdapter](TIOAdapter adapter)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](TIOAdapter adapter, Boolean receiveFirst, Byte[] reAuthenticationData, Boolean isApm)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+[11:58:04:054 DBG ()] Connection id "0HMLRSSNSDIMU" stopped.
+[11:58:04:060 DBG ()] Connection id "0HMLRSSNSDIMU" sending FIN because: "The Socket transport's send loop completed gracefully."
+[11:58:04:878 DBG ()] Connection id "0HMLRSSNSDIMV" accepted.
+[11:58:05:214 DBG ()] Connection id "0HMLRSSNSDIMV" started.
+[11:58:05:303 DBG ()] Connection 0HMLRSSNSDIMV established using the following protocol: "Tls12"
+[11:58:05:484 INF (0bb3140f-24a3-4d46-8b8b-518f053f9897)] Request starting HTTP/2 GET https://localhost:5000/swagger/index.html - -
+[11:58:05:489 DBG (0bb3140f-24a3-4d46-8b8b-518f053f9897)] Wildcard detected, all requests with hosts will be allowed.
+[11:58:05:533 DBG (0bb3140f-24a3-4d46-8b8b-518f053f9897)] No candidates found for the request path '/swagger/index.html'
+[11:58:05:535 DBG (0bb3140f-24a3-4d46-8b8b-518f053f9897)] Request did not match any endpoints
+[11:58:05:579 DBG (0bb3140f-24a3-4d46-8b8b-518f053f9897)] AuthenticationScheme: Bearer was not authenticated.
+[11:58:05:749 INF (0bb3140f-24a3-4d46-8b8b-518f053f9897)] Request finished HTTP/2 GET https://localhost:5000/swagger/index.html - - - 200 - text/html;charset=utf-8 270.4332ms
+[11:58:05:932 INF (3e58676a-0acb-45cb-88e5-c24d0d6d593b)] Request starting HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - -
+[11:58:05:937 DBG (3e58676a-0acb-45cb-88e5-c24d0d6d593b)] No candidates found for the request path '/swagger/v1/swagger.json'
+[11:58:05:939 DBG (3e58676a-0acb-45cb-88e5-c24d0d6d593b)] Request did not match any endpoints
+[11:58:06:180 INF (3e58676a-0acb-45cb-88e5-c24d0d6d593b)] Request finished HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 248.4948ms
+[11:58:09:251 INF (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Request starting HTTP/2 GET https://localhost:5000/api/v1/TwitterFiles - -
+[11:58:09:259 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] 1 candidate(s) found for the request path '/api/v1/TwitterFiles'
+[11:58:09:265 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api)' with route pattern 'api/v{version:apiVersion}/TwitterFiles' is valid for the request path '/api/v1/TwitterFiles'
+[11:58:09:273 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Request matched endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api)'
+[11:58:09:279 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Static files was skipped as the request already matched an endpoint.
+[11:58:09:281 INF (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Executing endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api)'
+[11:58:09:304 INF (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Route matched with {action = "GetFiles", controller = "TwitterFiles"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileResponse]] GetFiles() on controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api).
+[11:58:09:308 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Execution plan of authorization filters (in the following order): ["None"]
+[11:58:09:310 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Execution plan of resource filters (in the following order): ["None"]
+[11:58:09:311 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:58:09:314 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Execution plan of exception filters (in the following order): ["None"]
+[11:58:09:317 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:58:09:320 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Executing controller factory for controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api)
+[11:58:09:597 DBG (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Executed controller factory for controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api)
+[11:58:11:504 INF (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Executed action Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api) in 2178.0813ms
+[11:58:11:508 INF (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Executed endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api)'
+[11:58:11:523 INF (0a6bd521-51b6-4c8b-96fe-758e50d19779)] Request finished HTTP/2 GET https://localhost:5000/api/v1/TwitterFiles - - - 200 - application/json;+charset=utf-8 2271.8781ms
+[11:58:26:895 INF (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Request starting HTTP/2 PATCH https://localhost:5000/api/v1/TwitterFiles/5770cc2b-685b-4a52-ae51-fd0b2fffed36 application/json 43
+[11:58:26:897 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] 1 candidate(s) found for the request path '/api/v1/TwitterFiles/5770cc2b-685b-4a52-ae51-fd0b2fffed36'
+[11:58:26:899 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.UpdateFile (Twitter.Api)' with route pattern 'api/v{version:apiVersion}/TwitterFiles/{id}' is valid for the request path '/api/v1/TwitterFiles/5770cc2b-685b-4a52-ae51-fd0b2fffed36'
+[11:58:26:902 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Request matched endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.UpdateFile (Twitter.Api)'
+[11:58:26:904 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] The request has an origin header: 'https://localhost:5000'.
+[11:58:26:906 INF (269699b6-76e1-4b56-bdae-e8357d3d72f8)] CORS policy execution successful.
+[11:58:26:909 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Static files was skipped as the request already matched an endpoint.
+[11:58:26:910 INF (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Executing endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.UpdateFile (Twitter.Api)'
+[11:58:26:930 INF (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Route matched with {action = "UpdateFile", controller = "TwitterFiles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileResponse] UpdateFile(System.Guid, Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest) on controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api).
+[11:58:26:932 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Execution plan of authorization filters (in the following order): ["None"]
+[11:58:26:934 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Execution plan of resource filters (in the following order): ["None"]
+[11:58:26:935 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:58:26:937 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Execution plan of exception filters (in the following order): ["None"]
+[11:58:26:939 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:58:26:941 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Executing controller factory for controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api)
+[11:58:26:954 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Executed controller factory for controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api)
+[11:58:26:961 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Attempting to bind parameter 'id' of type 'System.Guid' ...
+[11:58:26:968 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Done attempting to bind parameter 'id' of type 'System.Guid'.
+[11:58:26:970 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Attempting to validate the bound parameter 'id' of type 'System.Guid' ...
+[11:58:26:972 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Done attempting to validate the bound parameter 'id' of type 'System.Guid'.
+[11:58:26:976 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Attempting to bind parameter 'file' of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest' ...
+[11:58:26:987 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Connection id "0HMLRSSNSDIMV", Request id "0HMLRSSNSDIMV:00000007": started reading request body.
+[11:58:26:989 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Connection id "0HMLRSSNSDIMV", Request id "0HMLRSSNSDIMV:00000007": done reading request body.
+[11:58:26:997 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] JSON input formatter succeeded, deserializing to type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest'
+[11:58:26:999 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Done attempting to bind parameter 'file' of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest'.
+[11:58:27:001 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Attempting to validate the bound parameter 'file' of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest' ...
+[11:58:27:012 DBG (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Done attempting to validate the bound parameter 'file' of type 'Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileRequest'.
+[11:58:27:482 INF (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Executed action Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.UpdateFile (Twitter.Api) in 541.1079ms
+[11:58:27:484 INF (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Executed endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.UpdateFile (Twitter.Api)'
+[11:58:27:489 INF (269699b6-76e1-4b56-bdae-e8357d3d72f8)] Request finished HTTP/2 PATCH https://localhost:5000/api/v1/TwitterFiles/5770cc2b-685b-4a52-ae51-fd0b2fffed36 application/json 43 - 200 - application/json;+charset=utf-8 593.8763ms
+[11:58:38:504 INF (1c166e93-2647-4e60-a62d-503638e351aa)] Request starting HTTP/2 DELETE https://localhost:5000/api/v1/TwitterFiles?id=5770cc2b-685b-4a52-ae51-fd0b2fffed36 - -
+[11:58:38:506 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] 1 candidate(s) found for the request path '/api/v1/TwitterFiles'
+[11:58:38:508 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.DeleteFile (Twitter.Api)' with route pattern 'api/v{version:apiVersion}/TwitterFiles' is valid for the request path '/api/v1/TwitterFiles'
+[11:58:38:510 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Request matched endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.DeleteFile (Twitter.Api)'
+[11:58:38:512 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] The request has an origin header: 'https://localhost:5000'.
+[11:58:38:513 INF (1c166e93-2647-4e60-a62d-503638e351aa)] CORS policy execution successful.
+[11:58:38:515 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Static files was skipped as the request already matched an endpoint.
+[11:58:38:516 INF (1c166e93-2647-4e60-a62d-503638e351aa)] Executing endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.DeleteFile (Twitter.Api)'
+[11:58:38:521 INF (1c166e93-2647-4e60-a62d-503638e351aa)] Route matched with {action = "DeleteFile", controller = "TwitterFiles"}. Executing controller action with signature System.Threading.Tasks.Task DeleteFile(System.Guid) on controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api).
+[11:58:38:525 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Execution plan of authorization filters (in the following order): ["None"]
+[11:58:38:526 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Execution plan of resource filters (in the following order): ["None"]
+[11:58:38:527 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:58:38:530 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Execution plan of exception filters (in the following order): ["None"]
+[11:58:38:532 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:58:38:533 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Executing controller factory for controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api)
+[11:58:38:538 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Executed controller factory for controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api)
+[11:58:38:547 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Attempting to bind parameter 'id' of type 'System.Guid' ...
+[11:58:38:554 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Done attempting to bind parameter 'id' of type 'System.Guid'.
+[11:58:38:556 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Attempting to validate the bound parameter 'id' of type 'System.Guid' ...
+[11:58:38:558 DBG (1c166e93-2647-4e60-a62d-503638e351aa)] Done attempting to validate the bound parameter 'id' of type 'System.Guid'.
+[11:58:38:660 INF (1c166e93-2647-4e60-a62d-503638e351aa)] Executed action Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.DeleteFile (Twitter.Api) in 126.7087ms
+[11:58:38:661 INF (1c166e93-2647-4e60-a62d-503638e351aa)] Executed endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.DeleteFile (Twitter.Api)'
+[11:58:38:670 INF (1c166e93-2647-4e60-a62d-503638e351aa)] Request finished HTTP/2 DELETE https://localhost:5000/api/v1/TwitterFiles?id=5770cc2b-685b-4a52-ae51-fd0b2fffed36 - - - 200 0 - 165.7963ms
+[11:58:44:598 INF (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Request starting HTTP/2 GET https://localhost:5000/api/v1/TwitterFiles - -
+[11:58:44:600 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] 1 candidate(s) found for the request path '/api/v1/TwitterFiles'
+[11:58:44:602 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api)' with route pattern 'api/v{version:apiVersion}/TwitterFiles' is valid for the request path '/api/v1/TwitterFiles'
+[11:58:44:604 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Request matched endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api)'
+[11:58:44:608 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Static files was skipped as the request already matched an endpoint.
+[11:58:44:609 INF (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Executing endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api)'
+[11:58:44:610 INF (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Route matched with {action = "GetFiles", controller = "TwitterFiles"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[Twitter.Api.Controllers.TwitterFilesController.Models.TwitterFileResponse]] GetFiles() on controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api).
+[11:58:44:612 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Execution plan of authorization filters (in the following order): ["None"]
+[11:58:44:613 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Execution plan of resource filters (in the following order): ["None"]
+[11:58:44:615 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:58:44:619 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Execution plan of exception filters (in the following order): ["None"]
+[11:58:44:620 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[11:58:44:622 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Executing controller factory for controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api)
+[11:58:44:624 DBG (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Executed controller factory for controller Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController (Twitter.Api)
+[11:58:44:655 INF (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Executed action Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api) in 33.0428ms
+[11:58:44:657 INF (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Executed endpoint 'Twitter.Api.Controllers.TwitterFilesController.TwitterFilesController.GetFiles (Twitter.Api)'
+[11:58:44:662 INF (8ef6722d-bc8c-4dc4-aa57-1149be9ddaa6)] Request finished HTTP/2 GET https://localhost:5000/api/v1/TwitterFiles - - - 200 - application/json;+charset=utf-8 63.2854ms
+[11:58:46:490 DBG ()] Connection id "0HMLRSSNSDIMV" received FIN.
+[11:58:46:492 DBG ()] Connection id "0HMLRSSNSDIMV" is closed. The last processed stream ID was 11.
+[11:58:46:497 DBG ()] Connection id "0HMLRSSNSDIMV" sending FIN because: "The client closed the connection."
+[11:58:46:506 DBG ()] Connection id "0HMLRSSNSDIMV" stopped.
+[11:58:47:456 DBG ()] Hosting stopping
+[11:58:47:467 DBG ()] Hosting stopped

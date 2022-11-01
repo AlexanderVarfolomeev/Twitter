@@ -1,0 +1,176 @@
+[17:58:20:936 INF (17e9c1f1-df0f-4eda-a3d1-5f1375dc9748)] HTTP GET /swagger/index.html responded 200 in 136.4768 ms
+[17:58:21:172 DBG (2a092f23-78b0-4c86-a791-e438afc76e8a)] AuthenticationScheme: Bearer was not authenticated.
+[17:58:21:327 INF (2a092f23-78b0-4c86-a791-e438afc76e8a)] HTTP GET /swagger/v1/swagger.json responded 200 in 155.6964 ms
+[17:58:25:587 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] AuthenticationScheme: Bearer was not authenticated.
+[17:58:25:824 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] An 'IServiceProvider' was created for internal use by Entity Framework.
+[17:58:26:255 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'Dialog' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'FirstUser', 'SecondUser'} that could be matched with the properties on the other entity type - {'DialogsUser1', 'DialogsUser2'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:347 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'Subscribe' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'Subscriber', 'User'} that could be matched with the properties on the other entity type - {'Subscribers', 'Subscribes'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:359 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:362 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'TwitterUser' to 'Subscribe' has been configured by convention because there are multiple properties on one entity type - {'Subscribers', 'Subscribes'} that could be matched with the properties on the other entity type - {'Subscriber', 'User'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:627 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'Subscribe' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'Subscriber', 'User'} that could be matched with the properties on the other entity type - {'Subscribers', 'Subscribes'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:632 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:634 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'TwitterUser' to 'Subscribe' has been configured by convention because there are multiple properties on one entity type - {'Subscribers', 'Subscribes'} that could be matched with the properties on the other entity type - {'Subscriber', 'User'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:637 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:647 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'Dialog' to 'TwitterUser' has been configured by convention because there are multiple properties on one entity type - {'FirstUser', 'SecondUser'} that could be matched with the properties on the other entity type - {'DialogsUser1', 'DialogsUser2'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:649 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] No relationship from 'TwitterUser' to 'Dialog' has been configured by convention because there are multiple properties on one entity type - {'DialogsUser1', 'DialogsUser2'} that could be matched with the properties on the other entity type - {'FirstUser', 'SecondUser'}. This message can be disregarded if explicit configuration has been specified in 'OnModelCreating'.
+[17:58:26:685 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] The index {'UserId'} was not created on entity type 'IdentityUserRole<Guid>' as the properties are already covered by the index {'UserId', 'RoleId'}.
+[17:58:26:687 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] The index {'UserId'} was not created on entity type 'IdentityUserToken<Guid>' as the properties are already covered by the index {'UserId', 'LoginProvider', 'Name'}.
+[17:58:27:128 INF (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Entity Framework Core 6.0.1 initialized 'MainDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.1' with options: None
+[17:58:27:240 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Context 'MainDbContext' started tracking 'TwitterFile' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[17:58:27:248 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] SaveChanges starting for 'MainDbContext'.
+[17:58:27:257 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] DetectChanges starting for 'MainDbContext'.
+[17:58:27:274 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] DetectChanges completed for 'MainDbContext'.
+[17:58:27:340 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Opening connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[17:58:27:598 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Opened connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[17:58:27:602 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Beginning transaction with isolation level 'Unspecified'.
+[17:58:27:618 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Began transaction with isolation level 'ReadCommitted'.
+[17:58:27:688 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Creating DbCommand for 'ExecuteReader'.
+[17:58:27:701 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Created DbCommand for 'ExecuteReader' (5ms).
+[17:58:27:725 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Executing DbCommand [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000), @p4='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [TwitterFiles] ([Id], [CreationTime], [ModificationTime], [Name], [Type])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+[17:58:27:794 INF (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Executed DbCommand (70ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000), @p4='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [TwitterFiles] ([Id], [CreationTime], [ModificationTime], [Name], [Type])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+[17:58:27:809 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] A data reader was disposed.
+[17:58:27:816 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Committing transaction.
+[17:58:27:822 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Committed transaction.
+[17:58:27:827 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Closing connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[17:58:27:835 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Closed connection to database 'Twitter' on server '(localdb)\MSSQLLocalDB'.
+[17:58:27:841 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Disposing transaction.
+[17:58:27:856 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] An entity of type 'TwitterFile' tracked by 'MainDbContext' changed state from '"Added"' to '"Unchanged"'. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[17:58:27:863 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] SaveChanges completed for 'MainDbContext' with 1 entities written to the database.
+[17:58:27:868 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] 'MainDbContext' disposed.
+[17:58:27:924 INF (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] Entity Framework Core 6.0.1 initialized 'MainDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.1' with options: None
+[17:58:27:926 DBG (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] 'MainDbContext' disposed.
+[17:58:27:950 ERR (ecec60ed-9924-4ffe-aaec-5943ec4bfba8)] HTTP GET / responded 500 in 2367.9403 ms
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'MainDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.CheckDisposed()
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_Model()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Collections.Generic.IEnumerable<TEntity>.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Twitter.Api.Controllers.HomeController.Index() in D:\repos\Twitter\Systems\Twitter.Api\Controllers\Home.cs:line 32
+   at lambda_method6(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[17:59:36:058 DBG ()] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[17:59:36:120 DBG ()] Hosting starting
+[17:59:36:137 INF ()] User profile is available. Using 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[17:59:36:143 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-548b9a28-01c5-49e0-9727-79a67e7fb6c7.xml'.
+[17:59:36:148 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-85fd3714-f1a1-4109-8a1d-9c1348b71088.xml'.
+[17:59:36:149 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-919cd95c-a471-4887-b1f5-ece1484bf2fd.xml'.
+[17:59:36:150 DBG ()] Reading data from file 'C:\Users\alexander\AppData\Local\ASP.NET\DataProtection-Keys\key-a8765750-b548-4a34-b32e-480264d09c54.xml'.
+[17:59:36:156 DBG ()] Found key {548b9a28-01c5-49e0-9727-79a67e7fb6c7}.
+[17:59:36:160 DBG ()] Found key {85fd3714-f1a1-4109-8a1d-9c1348b71088}.
+[17:59:36:161 DBG ()] Found key {919cd95c-a471-4887-b1f5-ece1484bf2fd}.
+[17:59:36:162 DBG ()] Found key {a8765750-b548-4a34-b32e-480264d09c54}.
+[17:59:36:172 DBG ()] Considering key {919cd95c-a471-4887-b1f5-ece1484bf2fd} with expiration date 2022-12-22 18:30:23Z as default key.
+[17:59:36:174 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[17:59:36:179 DBG ()] Decrypting secret element using Windows DPAPI.
+[17:59:36:181 DBG ()] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[17:59:36:186 DBG ()] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+[17:59:36:191 DBG ()] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+[17:59:36:195 DBG ()] Using key {919cd95c-a471-4887-b1f5-ece1484bf2fd} as the default key.
+[17:59:36:197 DBG ()] Key ring with default key {919cd95c-a471-4887-b1f5-ece1484bf2fd} was loaded during application startup.
+[17:59:36:278 DBG ()] Using development certificate: CN=localhost (Thumbprint: 167B92C7D14757143A54F3F21F80C296445B0D22)
+[17:59:36:336 DBG ()] Loaded hosting startup assembly Twitter.Api
+[17:59:36:337 DBG ()] Hosting started
+[17:59:36:355 DBG ()] Connection id "0HMLRA23GFF5P" received FIN.
+[17:59:36:366 DBG ()] Connection id "0HMLRA23GFF5P" accepted.
+[17:59:36:369 DBG ()] Connection id "0HMLRA23GFF5P" started.
+[17:59:36:388 DBG ()] Failed to authenticate HTTPS connection.
+System.IO.IOException:  Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveBlobAsync[TIOAdapter](TIOAdapter adapter)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](TIOAdapter adapter, Boolean receiveFirst, Byte[] reAuthenticationData, Boolean isApm)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+[17:59:36:427 DBG ()] Connection id "0HMLRA23GFF5P" stopped.
+[17:59:36:441 DBG ()] Connection id "0HMLRA23GFF5P" sending FIN because: "The Socket transport's send loop completed gracefully."
+[17:59:36:482 DBG ()] Connection id "0HMLRA23GFF5Q" accepted.
+[17:59:36:485 DBG ()] Connection id "0HMLRA23GFF5Q" started.
+[17:59:36:575 DBG ()] Connection 0HMLRA23GFF5Q established using the following protocol: "Tls12"
+[17:59:36:679 INF (9fc35c00-18f6-46d1-a81b-2a1c40466a10)] Request starting HTTP/2 GET https://localhost:5000/swagger/index.html - -
+[17:59:36:692 DBG (9fc35c00-18f6-46d1-a81b-2a1c40466a10)] Wildcard detected, all requests with hosts will be allowed.
+[17:59:36:732 DBG (9fc35c00-18f6-46d1-a81b-2a1c40466a10)] No candidates found for the request path '/swagger/index.html'
+[17:59:36:735 DBG (9fc35c00-18f6-46d1-a81b-2a1c40466a10)] Request did not match any endpoints
+[17:59:36:783 DBG (9fc35c00-18f6-46d1-a81b-2a1c40466a10)] AuthenticationScheme: Bearer was not authenticated.
+[17:59:36:969 INF (9fc35c00-18f6-46d1-a81b-2a1c40466a10)] Request finished HTTP/2 GET https://localhost:5000/swagger/index.html - - - 200 - text/html;charset=utf-8 301.2282ms
+[17:59:37:205 INF (d96614b5-e2a4-4e32-9500-f4130b496495)] Request starting HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - -
+[17:59:37:208 DBG (d96614b5-e2a4-4e32-9500-f4130b496495)] No candidates found for the request path '/swagger/v1/swagger.json'
+[17:59:37:210 DBG (d96614b5-e2a4-4e32-9500-f4130b496495)] Request did not match any endpoints
+[17:59:37:433 INF (d96614b5-e2a4-4e32-9500-f4130b496495)] Request finished HTTP/2 GET https://localhost:5000/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 228.4950ms
+[17:59:40:649 INF (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Request starting HTTP/2 GET https://localhost:5000/ - -
+[17:59:40:658 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] 1 candidate(s) found for the request path '/'
+[17:59:40:666 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Endpoint 'Twitter.Api.Controllers.HomeController.Index (Twitter.Api)' with route pattern '' is valid for the request path '/'
+[17:59:40:682 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Request matched endpoint 'Twitter.Api.Controllers.HomeController.Index (Twitter.Api)'
+[17:59:40:692 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Static files was skipped as the request already matched an endpoint.
+[17:59:40:699 INF (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Executing endpoint 'Twitter.Api.Controllers.HomeController.Index (Twitter.Api)'
+[17:59:40:738 INF (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[Twitter.Entities.Base.TwitterFile]] Index() on controller Twitter.Api.Controllers.HomeController (Twitter.Api).
+[17:59:40:743 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Execution plan of authorization filters (in the following order): ["None"]
+[17:59:40:745 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Execution plan of resource filters (in the following order): ["None"]
+[17:59:40:748 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[17:59:40:750 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Execution plan of exception filters (in the following order): ["None"]
+[17:59:40:753 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+[17:59:40:756 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Executing controller factory for controller Twitter.Api.Controllers.HomeController (Twitter.Api)
+[17:59:41:000 DBG (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Executed controller factory for controller Twitter.Api.Controllers.HomeController (Twitter.Api)
+[17:59:43:041 INF (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Executed action Twitter.Api.Controllers.HomeController.Index (Twitter.Api) in 2280.5345ms
+[17:59:43:043 INF (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Executed endpoint 'Twitter.Api.Controllers.HomeController.Index (Twitter.Api)'
+[17:59:43:069 ERR (19e6c230-ca98-4e7f-96ad-514edf8ad858)] An unhandled exception has occurred while executing the request.
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'MainDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.CheckDisposed()
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_Model()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Collections.Generic.IEnumerable<TEntity>.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Twitter.Api.Controllers.HomeController.Index() in D:\repos\Twitter\Systems\Twitter.Api\Controllers\Home.cs:line 32
+   at lambda_method6(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[17:59:43:090 INF (19e6c230-ca98-4e7f-96ad-514edf8ad858)] Request finished HTTP/2 GET https://localhost:5000/ - - - 500 - text/plain;+charset=utf-8 2441.0107ms
+[18:00:01:255 DBG ()] Connection id "0HMLRA23GFF5Q" received FIN.
+[18:00:01:257 DBG ()] Connection id "0HMLRA23GFF5Q" is closed. The last processed stream ID was 5.
+[18:00:01:260 DBG ()] Connection id "0HMLRA23GFF5Q" sending FIN because: "The client closed the connection."
+[18:00:01:267 DBG ()] Connection id "0HMLRA23GFF5Q" stopped.
+[18:01:26:697 DBG ()] Hosting stopping
+[18:01:26:708 DBG ()] Hosting stopped

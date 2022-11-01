@@ -16,9 +16,10 @@ public class TwitterUser : IdentityUser<Guid>, IBaseEntity
     public string PageDescription { get; set; } = String.Empty;
     public bool IsBanned { get; set; } = false;
     
-    public Guid AvatarId { get; set; }
-    public virtual TwitterFile Avatar { get; set; }
+    public Guid? AvatarId { get; set; }
+    public virtual TwitterFile? Avatar { get; set; }
     
+    public virtual ICollection<TwitterRole> Roles { get; set; }
     public virtual ICollection<Tweet> Tweets { get; set; }
     
     public virtual ICollection<Comment> Comments { get; set; }

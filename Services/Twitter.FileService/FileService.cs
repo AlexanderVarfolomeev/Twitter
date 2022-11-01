@@ -46,7 +46,6 @@ public class FileService : IFileService
     {
         var model = _repository.GetById(id);
         var file = _mapper.Map(requestModel, model);
-       // var file = _mapper.Map<TwitterFile>(requestModel);
         return Task.FromResult(_mapper.Map<TwitterFileModel>(_repository.Save(file)));
     }
 }

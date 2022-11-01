@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Twitter.Entities.Users;
+using Twitter.AccountService.Models;
 
-namespace Twitter.AccountService.Models;
+namespace Twitter.Api.Controllers.AccountController.Models;
 
-public class TwitterAccountModel
+public class TwitterAccountResponse
 {
     public Guid Id { get; set; }
     public DateTime CreationTime { get; set; }
@@ -25,10 +25,10 @@ public class TwitterAccountModel
     public Guid? AvatarId { get; set; }
 }
 
-public class TwitterAccountModelProfile : Profile
+public class TwitterAccountResponseProfile : Profile
 {
-    public TwitterAccountModelProfile()
+    public TwitterAccountResponseProfile()
     {
-        CreateMap<TwitterUser, TwitterAccountModel>();
+        CreateMap<TwitterAccountModel, TwitterAccountResponse>();
     }
 }

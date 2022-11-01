@@ -12,7 +12,7 @@ using Twitter.Context.Context;
 namespace Twitter.Context.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20221031143627_Initial")]
+    [Migration("20221101105207_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -553,7 +553,7 @@ namespace Twitter.Context.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("AvatarId")
+                    b.Property<Guid?>("AvatarId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Birthday")
@@ -640,6 +640,21 @@ namespace Twitter.Context.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("TwitterRoleTwitterUser", b =>
+                {
+                    b.Property<Guid>("RolesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("TwitterRoleTwitterUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -915,10 +930,24 @@ namespace Twitter.Context.Migrations
                     b.HasOne("Twitter.Entities.Base.TwitterFile", "Avatar")
                         .WithMany("Users")
                         .HasForeignKey("AvatarId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Avatar");
+                });
+
+            modelBuilder.Entity("TwitterRoleTwitterUser", b =>
+                {
+                    b.HasOne("Twitter.Entities.Users.TwitterRole", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Twitter.Entities.Users.TwitterUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Twitter.Entities.Base.ReasonReport", b =>
