@@ -15,7 +15,8 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
     public DbSet<TwitterUser> Users { get; set; }
     public DbSet<TwitterRole> Roles { get; set; }
     public DbSet<Subscribe> Subscribes { get; set; }
-    
+    public DbSet<TwitterRoleTwitterUser> TwitterRolesTwitterUsers { get; set; }
+
     public DbSet<Tweet> Tweets { get; set; }
     public DbSet<UserLikeTweet> LikeTweets { get; set; }
     public DbSet<ReportToTweet> ReportsToTweets { get; set; }
@@ -154,8 +155,6 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        //UserRole создастся автоматически 
-
         builder.Entity<Dialog>().HasOne(x => x.FirstUser)
             .WithMany(x => x.DialogsUser2)
             .OnDelete(DeleteBehavior.Restrict)
@@ -184,6 +183,17 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
             .WithMany(x => x.Files)
             .HasForeignKey(x => x.MessageId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<TwitterRoleTwitterUser>().HasOne(x => x.User)
+            .WithMany(x => x.TwitterRoles)
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.Entity<TwitterRoleTwitterUser>().HasOne(x => x.Role)
+            .WithMany(x => x.TwitterUsers)
+            .HasForeignKey(x => x.RoleId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
 
     }
 }

@@ -54,6 +54,9 @@ public class AccountService : IAccountService
         user.EmailConfirmed = false;
         
         user.Init();
+        
+        
+        
         var result = await _userManager.CreateAsync(user, requestModel.Password);
         if (result.Succeeded)
         {

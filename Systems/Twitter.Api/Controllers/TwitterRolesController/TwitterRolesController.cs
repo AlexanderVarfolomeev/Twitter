@@ -40,6 +40,13 @@ public class TwitterRolesController : ControllerBase
         var model = _mapper.Map<TwitterRoleModelRequest>(role);
         return _mapper.Map<TwitterRoleResponse>( await _roleService.AddRole(model));
     }
+    
+    [HttpPost("{roleId}:{userId}")]
+    public async Task<IActionResult> GiveRole([FromRoute] Guid roleId, [FromRoute] Guid userId)
+    {
+        _roleService.GiveRole(roleId, userId);
+        return Ok();
+    }
 
     [HttpDelete("{id}")]
     public Task DeleteRole([FromRoute] Guid id)

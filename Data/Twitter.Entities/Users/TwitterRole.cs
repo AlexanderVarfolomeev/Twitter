@@ -12,7 +12,7 @@ public class TwitterRole : IdentityRole<Guid>, IBaseEntity
     public DateTime CreationTime { get; set; }
     public DateTime ModificationTime { get; set; }
 
-    public virtual ICollection<TwitterUser> Users { get; set; }
+    public virtual ICollection<TwitterRoleTwitterUser> TwitterUsers { get; set; }
 
     public bool IsNew
     {

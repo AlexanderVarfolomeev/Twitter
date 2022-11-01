@@ -10,11 +10,13 @@ public class RoleService : IRoleService
 {
     private readonly IRepository<TwitterRole> _repository;
     private readonly IMapper _mapper;
+    private readonly IRepository<TwitterRoleTwitterUser> _rolesUserRepository;
 
-    public RoleService(IRepository<TwitterRole> repository, IMapper mapper)
+    public RoleService(IRepository<TwitterRole> repository, IMapper mapper, IRepository<TwitterRoleTwitterUser> rolesUserRepository)
     {
         _repository = repository;
         _mapper = mapper;
+        _rolesUserRepository = rolesUserRepository;
     }
 
 
@@ -48,5 +50,12 @@ public class RoleService : IRoleService
         var model = _repository.GetById(id);
         var file = _mapper.Map(requestModel, model);
         return Task.FromResult(_mapper.Map<TwitterRoleModel>(_repository.Save(file)));
+    }
+
+    //TODO смотреть кто вызывает метод (роли может выдавать только админ с высшимы правами)
+    public Task GiveRole(Guid roleId, Guid userId)
+    {
+        _rolesUserRepository.Save(new TwitterRoleTwitterUser() {RoleId = roleId, UserId = userId});    
+        return Task.CompletedTask;
     }
 }

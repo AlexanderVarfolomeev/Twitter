@@ -19,7 +19,7 @@ public class TwitterUser : IdentityUser<Guid>, IBaseEntity
     public Guid? AvatarId { get; set; }
     public virtual TwitterFile? Avatar { get; set; }
     
-    public virtual ICollection<TwitterRole> Roles { get; set; }
+    public virtual ICollection<TwitterRoleTwitterUser> TwitterRoles { get; set; }
     public virtual ICollection<Tweet> Tweets { get; set; }
     
     public virtual ICollection<Comment> Comments { get; set; }
