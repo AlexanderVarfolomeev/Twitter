@@ -23,6 +23,7 @@ public class TwitterAccountController : ControllerBase
     [HttpGet("")]
     public async Task<IEnumerable<TwitterAccountResponse>> GetAccounts()
     {
+        throw new IOException();
         return (await _accountService.GetAccounts()).Select(x => _mapper.Map<TwitterAccountResponse>(x));
     }
     

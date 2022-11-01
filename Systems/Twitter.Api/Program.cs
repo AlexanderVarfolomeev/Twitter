@@ -31,6 +31,8 @@ services.AddTwitterAutomapper();
 
 var app = builder.Build();
 
+app.UseTwitterMiddlewares();
+
 app.UseTwitterSerilog();
 
 app.UseTwitterCors();
