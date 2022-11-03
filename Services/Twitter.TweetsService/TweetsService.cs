@@ -17,14 +17,16 @@ public class TweetsService : ITweetsService
     private readonly IRepository<Tweet> _repository;
     private readonly IMapper _mapper;
     private readonly UserManager<TwitterUser> _userManager;
-    
+    private readonly IRepository<UserLikeTweet> _userLikeTweets;
+
     private readonly Guid _userId;
     
-    public TweetsService(IHttpContextAccessor accessor, IRepository<Tweet> repository, IMapper mapper, UserManager<TwitterUser> userManager)
+    public TweetsService(IHttpContextAccessor accessor, IRepository<Tweet> repository, IMapper mapper, UserManager<TwitterUser> userManager, IRepository<UserLikeTweet> userLikeTweets)
     {
         _repository = repository;
         _mapper = mapper;
         _userManager = userManager;
+        _userLikeTweets = userLikeTweets;
 
         _userId = Guid.Parse(accessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
     }
@@ -74,5 +76,21 @@ public class TweetsService : ITweetsService
         ProcessException.ThrowIf(() => tweet.CreatorId != _userId, "Only the person who created it can change a tweet!");
         
         return Task.FromResult(_mapper.Map<TweetModel>(_repository.Save(tweet)));
+    }
+
+    public Task LikeTweet(Guid idTweet)
+    {
+        var tweets = _userLikeTweets.GetAll(x => x.TweetId == idTweet && x.UserId == _userId);
+        
+        // Если юзер уже лайкал твит, то убираем лайк
+        if (tweets.Any())
+        {
+            _userLikeTweets.Delete(tweets.First());
+        }
+        else
+        {
+            _userLikeTweets.Save(new UserLikeTweet() {TweetId = idTweet, UserId = _userId});
+        }
+        return Task.CompletedTask;
     }
 }

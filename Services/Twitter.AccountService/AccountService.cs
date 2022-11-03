@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared.Exceptions;
@@ -13,15 +15,24 @@ public class AccountService : IAccountService
 {
     private readonly SignInManager<TwitterUser> _signInManager;
     private readonly UserManager<TwitterUser> _userManager;
+    private readonly IRepository<Subscribe> _subscribesRepository;
     private readonly IRepository<TwitterUser> _repository;
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _accessor;
+    
+    private readonly Guid _userId;
 
-    public AccountService(SignInManager<TwitterUser> signInManager, UserManager<TwitterUser> userManager, IRepository<TwitterUser> repository, IMapper mapper)
+    public AccountService(SignInManager<TwitterUser> signInManager, UserManager<TwitterUser> userManager, IRepository<Subscribe> subscribesRepository,
+        IRepository<TwitterUser> repository, IMapper mapper, IHttpContextAccessor accessor)
     {
         _signInManager = signInManager;
         _userManager = userManager;
+        _subscribesRepository = subscribesRepository;
         _repository = repository;
         _mapper = mapper;
+        _accessor = accessor;
+        
+        _userId = Guid.Parse(accessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
     }
 
 
@@ -68,6 +79,29 @@ public class AccountService : IAccountService
         var model = _repository.GetById(id);
         var file = _mapper.Map(requestModel, model);
         return Task.FromResult(_mapper.Map<TwitterAccountModel>(_repository.Save(file)));
+    }
+
+    public Task Subscribe(Guid userId)
+    {
+        // Пользователь не может подписаться сам на себя
+        if (userId == _userId)
+        {
+            return Task.CompletedTask;
+        }
+        
+        var sub = _subscribesRepository.GetAll((x) => x.SubscriberId == _userId && x.UserId == userId);
+        
+        //Если пользователь уже подписан на данный аккаунт, то отписываемся
+        if (sub.Any())
+        {
+            _subscribesRepository.Delete(sub.First());
+        }
+        else
+        {
+            _subscribesRepository.Save(new Subscribe() {SubscriberId = _userId, UserId = userId});
+        }
+        
+        return Task.CompletedTask;
     }
 }
 

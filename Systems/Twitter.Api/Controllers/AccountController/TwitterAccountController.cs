@@ -25,7 +25,6 @@ public class TwitterAccountController : ControllerBase
     [HttpGet("")]
     public async Task<IEnumerable<TwitterAccountResponse>> GetAccounts()
     {
-        throw new IOException();
         return (await _accountService.GetAccounts()).Select(x => _mapper.Map<TwitterAccountResponse>(x));
     }
     
@@ -53,9 +52,18 @@ public class TwitterAccountController : ControllerBase
     
     [Authorize]
     [HttpPut("{id}")]
-    public async Task<TwitterAccountResponse> UpdateFile([FromRoute] Guid id, [FromBody] TwitterAccountRequest account)
+    public async Task<TwitterAccountResponse> UpdateAccount([FromRoute] Guid id, [FromBody] TwitterAccountRequest account)
     {
         var model = _mapper.Map<TwitterAccountModelRequest>(account);
         return _mapper.Map<TwitterAccountResponse>(await _accountService.UpdateAccount(id, model));
     }
+
+    [Authorize]
+    [HttpPost("Suubscribe-{id}")]
+    public Task<IActionResult> SubscribeTo([FromRoute] Guid id)
+    {
+        _accountService.Subscribe(id);
+        return Task.FromResult<IActionResult>(Ok());
+    }
+
 }

@@ -58,9 +58,16 @@ public class TweetsController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    public Task DeleteTweet([FromRoute] Guid id)
+    public async Task<IActionResult> DeleteTweet([FromRoute] Guid id)
     {
         _tweetsService.DeleteTweet(id);
-        return Task.CompletedTask;
+        return Ok();
+    }
+
+    [HttpPost("Like-{id}")]
+    public Task<IActionResult> LikeTweet([FromRoute] Guid id)
+    {
+        _tweetsService.LikeTweet(id);
+        return Task.FromResult<IActionResult>(Ok());
     }
 }

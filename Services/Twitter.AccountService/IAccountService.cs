@@ -9,4 +9,5 @@ public interface IAccountService
     Task DeleteAccount(Guid id);
     Task<TwitterAccountModel> RegisterAccount(TwitterAccountModelRequest requestModel);
     Task<TwitterAccountModel> UpdateAccount(Guid id, TwitterAccountModelRequest requestModel);
+    Task Subscribe(Guid userId);
 }

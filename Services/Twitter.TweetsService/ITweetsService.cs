@@ -11,6 +11,7 @@ public interface ITweetsService
     Task DeleteTweet(Guid id);
     Task<TweetModel> AddTweet(TweetModelRequest requestModel);
     Task<TweetModel> UpdateTweet(Guid id, TweetModelRequest requestModel);
-    
-    
+
+    Task LikeTweet(Guid tweetId);
+
 }
