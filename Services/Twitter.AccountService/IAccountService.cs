@@ -10,4 +10,5 @@ public interface IAccountService
     Task<TwitterAccountModel> RegisterAccount(TwitterAccountModelRequest requestModel);
     Task<TwitterAccountModel> UpdateAccount(Guid id, TwitterAccountModelRequest requestModel);
     Task Subscribe(Guid userId);
+    Task BanUser(Guid userId);
 }

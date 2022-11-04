@@ -30,6 +30,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.RoleService", "Serv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.TweetsService", "Services\Twitter.TweetsService\Twitter.TweetsService.csproj", "{14FB8704-2C0C-4F0D-8879-68939CEAE28A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.CommentsService", "Services\Twitter.CommentsService\Twitter.CommentsService.csproj", "{8E0312AB-7791-4DA3-8C5B-0DE6A9E7A2A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.ReportServices", "Services\Twitter.ReportServices\Twitter.ReportServices.csproj", "{007614C8-ADC9-4FA9-B6CB-D7C871D5B0E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,8 @@ Global
 		{1172859D-C611-4058-8930-2E48663BBF41} = {2526713C-3B45-4E70-AF08-188375350FC3}
 		{057429D2-848C-4B8D-BB1A-8BBB5CB14461} = {2526713C-3B45-4E70-AF08-188375350FC3}
 		{14FB8704-2C0C-4F0D-8879-68939CEAE28A} = {2526713C-3B45-4E70-AF08-188375350FC3}
+		{8E0312AB-7791-4DA3-8C5B-0DE6A9E7A2A9} = {2526713C-3B45-4E70-AF08-188375350FC3}
+		{007614C8-ADC9-4FA9-B6CB-D7C871D5B0E7} = {2526713C-3B45-4E70-AF08-188375350FC3}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BEEE65D7-A4EE-472E-9F44-FDEB2CC4A527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -93,5 +99,13 @@ Global
 		{14FB8704-2C0C-4F0D-8879-68939CEAE28A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14FB8704-2C0C-4F0D-8879-68939CEAE28A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14FB8704-2C0C-4F0D-8879-68939CEAE28A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E0312AB-7791-4DA3-8C5B-0DE6A9E7A2A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E0312AB-7791-4DA3-8C5B-0DE6A9E7A2A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E0312AB-7791-4DA3-8C5B-0DE6A9E7A2A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E0312AB-7791-4DA3-8C5B-0DE6A9E7A2A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007614C8-ADC9-4FA9-B6CB-D7C871D5B0E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007614C8-ADC9-4FA9-B6CB-D7C871D5B0E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007614C8-ADC9-4FA9-B6CB-D7C871D5B0E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007614C8-ADC9-4FA9-B6CB-D7C871D5B0E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

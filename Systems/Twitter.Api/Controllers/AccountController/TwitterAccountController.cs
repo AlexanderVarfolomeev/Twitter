@@ -66,4 +66,13 @@ public class TwitterAccountController : ControllerBase
         _accountService.Subscribe(id);
         return Task.FromResult<IActionResult>(Ok());
     }
+
+    [Authorize]
+    [HttpPut("ban-user-{id}")]
+    public Task<IActionResult> BanUser([FromRoute] Guid id)
+    {
+        _accountService.BanUser(id);
+        return Task.FromResult<IActionResult>(Ok());
+    }
+    
 }

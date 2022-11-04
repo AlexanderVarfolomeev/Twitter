@@ -1,5 +1,7 @@
 ﻿using Twitter.AccountService;
+using Twitter.CommentsService;
 using Twitter.FileService;
+using Twitter.ReportServices;
 using Twitter.Repository;
 using Twitter.RoleService;
 using Twitter.Settings;
@@ -17,6 +19,8 @@ public static class Bootstrapper
         services.AddRoleService();
         services.AddAccountService();
         services.AddTweetsService();
+        services.AddCommentsService();
+        services.AddReportService();
         return services;
     }
 }

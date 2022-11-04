@@ -1,8 +1,8 @@
-﻿using Twitter.TweetsService.Models;
+﻿using System.Linq.Expressions;
+using Twitter.TweetsService.Models;
 
 namespace Twitter.TweetsService;
 
-//TODO Узнать про файлы, как они передаются, где хранятся
 public interface ITweetsService
 {
     Task<IEnumerable<TweetModel>> GetTweets(int limit = 100);
@@ -11,6 +11,5 @@ public interface ITweetsService
     Task DeleteTweet(Guid id);
     Task<TweetModel> AddTweet(TweetModelRequest requestModel);
     Task<TweetModel> UpdateTweet(Guid id, TweetModelRequest requestModel);
-
     Task LikeTweet(Guid tweetId);
 }

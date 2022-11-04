@@ -14,7 +14,7 @@ namespace Twitter.AccountService;
 public class AccountService : IAccountService
 {
     private readonly IMapper _mapper;
-    private readonly IRepository<TwitterUser> _repository;
+    private readonly IRepository<TwitterUser> _accountsRepository;
     private readonly SignInManager<TwitterUser> _signInManager;
     private readonly IRepository<Subscribe> _subscribesRepository;
     private readonly IRepository<TwitterRoleTwitterUser> _rolesUserRepository;
@@ -25,14 +25,14 @@ public class AccountService : IAccountService
 
     public AccountService(SignInManager<TwitterUser> signInManager, UserManager<TwitterUser> userManager,
         IRepository<Subscribe> subscribesRepository,  IRepository<TwitterRoleTwitterUser> rolesUserRepository, IRepository<TwitterRole> rolesRepository,
-        IRepository<TwitterUser> repository, IMapper mapper, IHttpContextAccessor accessor)
+        IRepository<TwitterUser> accountsRepository, IMapper mapper, IHttpContextAccessor accessor)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _subscribesRepository = subscribesRepository;
         _rolesUserRepository = rolesUserRepository;
         _rolesRepository = rolesRepository;
-        _repository = repository;
+        _accountsRepository = accountsRepository;
         _mapper = mapper;
             
         //когда подключаемся с clientCredentials, ставим GUID empty
@@ -45,21 +45,32 @@ public class AccountService : IAccountService
 
     public async Task<IEnumerable<TwitterAccountModel>> GetAccounts()
     {
-        var accounts = _repository.GetAll();
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        
+        var accounts = _accountsRepository.GetAll();
         var result = (await accounts.ToListAsync()).Select(x => _mapper.Map<TwitterAccountModel>(x));
         return result;
     }
 
     public Task<TwitterAccountModel> GetAccountById(Guid id)
     {
-        var account = _repository.GetById(id);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        
+        var account = _accountsRepository.GetById(id);
         return Task.FromResult(_mapper.Map<TwitterAccountModel>(account));
     }
 
     public Task DeleteAccount(Guid id)
     {
-        var account = _repository.GetById(id);
-        _repository.Delete(account);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        
+        if (id != _currentUserId)
+        {
+            ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "Only the admin or the account owner can delete the account");
+        }
+        
+        var account = _accountsRepository.GetById(id);
+        _accountsRepository.Delete(account);
         return Task.CompletedTask;
     }
 
@@ -82,13 +93,18 @@ public class AccountService : IAccountService
 
     public Task<TwitterAccountModel> UpdateAccount(Guid id, TwitterAccountModelRequest requestModel)
     {
-        var model = _repository.GetById(id);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => id != _currentUserId, "Only the account owner can change the account information.");
+        
+        var model = _accountsRepository.GetById(id);
         var file = _mapper.Map(requestModel, model);
-        return Task.FromResult(_mapper.Map<TwitterAccountModel>(_repository.Save(file)));
+        return Task.FromResult(_mapper.Map<TwitterAccountModel>(_accountsRepository.Save(file)));
     }
 
     public Task Subscribe(Guid userId)
     {
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        
         // Пользователь не может подписаться сам на себя
         if (userId == _currentUserId) return Task.CompletedTask;
 
@@ -103,9 +119,31 @@ public class AccountService : IAccountService
         return Task.CompletedTask;
     }
 
-    private async Task GiveUserRole(TwitterUser user)
+    public Task BanUser(Guid userId)
+    {
+        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "Only the admin can ban.");
+        ProcessException.ThrowIf(() => IsAdmin(userId), "You can't ban the admin.");
+        
+        var model = _accountsRepository.GetById(userId);
+        model.IsBanned = !model.IsBanned;
+        _accountsRepository.Save(model);
+        return Task.CompletedTask;
+    }
+
+    private void GiveUserRole(TwitterUser user)
     {
         var userRoleId = _rolesRepository.GetAll(x => x.Permissions == TwitterPermissions.User).First().Id;
         _rolesUserRepository.Save(new TwitterRoleTwitterUser {RoleId = userRoleId, UserId = user.Id});
+    }
+
+    private bool IsAdmin(Guid userId)
+    {
+        return _rolesUserRepository.GetAll(x => x.UserId == userId)
+            .Any(x => x.Role.Permissions  == TwitterPermissions.Admin || x.Role.Permissions == TwitterPermissions.FullAccessAdmin);
+    }
+
+    private bool IsBanned(Guid userId)
+    {
+        return _accountsRepository.GetById(userId).IsBanned;
     }
 }

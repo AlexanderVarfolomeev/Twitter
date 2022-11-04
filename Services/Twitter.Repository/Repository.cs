@@ -6,51 +6,64 @@ using Twitter.Entities.Base;
 
 namespace Twitter.Repository;
 
-public class Repository<T> : IRepository<T> where T : class, IBaseEntity 
+public class Repository<T> : IRepository<T> where T : class, IBaseEntity
 {
-    private readonly MainDbContext context;
+    private readonly MainDbContext _context;
 
     public Repository(MainDbContext context)
     {
-        this.context = context;
+        _context = context;
     }
 
 
     public IQueryable<T> GetAll()
     {
-        return context.Set<T>().AsQueryable();
+        try
+        {
+            return _context.Set<T>().AsQueryable();
+        }
+        catch (Exception ex)
+        {
+            throw new ProcessException("Error while get data from database.", ex);
+        }
     }
 
     public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate)
     {
-        return context.Set<T>().Where(predicate).AsQueryable();
+        try
+        {
+            return _context.Set<T>().Where(predicate).AsQueryable();
+        }
+        catch (Exception ex)
+        {
+            throw new ProcessException("Error while get data from database.", ex);
+        }
     }
 
     public T GetById(Guid id)
     {
-        var model = context.Set<T>().Find(id); 
+        var model = _context.Set<T>().Find(id);
         ProcessException.ThrowIf(() => model is null, "The entity with this Id was not found at database.");
         return model;
     }
 
     public T Save(T obj)
     {
-
         try
         {
             if (obj.IsNew)
             {
                 obj.Init();
-                var result = context.Set<T>().Add(obj);
-                context.SaveChanges();
+                var result = _context.Set<T>().Add(obj);
+                _context.SaveChanges();
                 return result.Entity;
             }
             else
             {
                 obj.ModificationTime = DateTime.UtcNow;
-                var result = context.Set<T>().Attach(obj);
-                context.Entry(obj).State = EntityState.Modified;
-                context.SaveChanges();
+                var result = _context.Set<T>().Attach(obj);
+                _context.Entry(obj).State = EntityState.Modified;
+                _context.SaveChanges();
                 return result.Entity;
             }
         }
@@ -62,7 +75,15 @@ public class Repository<T> : IRepository<T> where T : class, IBaseEntity
 
     public void Delete(T obj)
     {
-        context.Remove(obj);
-        context.SaveChanges();
+        try
+        {
+            _context.Set<T>().Attach(obj);
+            _context.Entry(obj).State = EntityState.Deleted;
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            throw new ProcessException("Error while delete entity.", ex);
+        }
     }
 }
