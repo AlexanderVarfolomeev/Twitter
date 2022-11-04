@@ -13,5 +13,4 @@ public interface ITweetsService
     Task<TweetModel> UpdateTweet(Guid id, TweetModelRequest requestModel);
 
     Task LikeTweet(Guid tweetId);
-
 }

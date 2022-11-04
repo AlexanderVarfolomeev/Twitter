@@ -2,7 +2,7 @@
 
 namespace Twitter.Api.Configuration.ApplicationExtensions;
 
-public static partial class SerilogConfiguration
+public static class SerilogConfiguration
 {
     public static IApplicationBuilder UseTwitterSerilog(this IApplicationBuilder app)
     {

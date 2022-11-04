@@ -10,4 +10,5 @@ public interface IRoleService
     Task<TwitterRoleModel> AddRole(TwitterRoleModelRequest requestModel);
     Task<TwitterRoleModel> UpdateRole(Guid id, TwitterRoleModelRequest requestModel);
     Task GiveRole(Guid roleId, Guid userId);
+    Task RevokeRole(Guid roleId, Guid userId);
 }

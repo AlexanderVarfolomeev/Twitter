@@ -2,9 +2,8 @@
 
 namespace Twitter.Api.Configuration.ServicesExtensions;
 
-public static partial class SerilogConfiguration
+public static class SerilogConfiguration
 {
-
     public static void AddTwitterSerilog(this WebApplicationBuilder app)
     {
         app.Host.UseSerilog((context, loggerConfiguration) =>
@@ -15,7 +14,5 @@ public static partial class SerilogConfiguration
         });
 
         app.Services.AddHttpContextAccessor();
-
     }
-    
 }

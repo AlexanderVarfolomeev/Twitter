@@ -22,16 +22,13 @@ public static class DuendeConfiguration
             .AddDefaultTokenProviders();
 
 
-        services.AddIdentityServer(options =>
-            {
-                options.EmitStaticAudienceClaim = true;
-            })
+        services.AddIdentityServer(options => { options.EmitStaticAudienceClaim = true; })
             .AddAspNetIdentity<TwitterUser>()
             .AddInMemoryApiScopes(DuendeConfig.Scopes)
             .AddInMemoryIdentityResources(DuendeConfig.Resources)
             .AddInMemoryClients(DuendeConfig.Clients)
             .AddDeveloperSigningCredential();
-            //.AddTestUsers(DuendeConfig.Users);
+        //.AddTestUsers(DuendeConfig.Users);
 
         return services;
     }

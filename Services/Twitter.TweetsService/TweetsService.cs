@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,14 +13,15 @@ namespace Twitter.TweetsService;
 
 public class TweetsService : ITweetsService
 {
-    private readonly IRepository<Tweet> _repository;
     private readonly IMapper _mapper;
-    private readonly UserManager<TwitterUser> _userManager;
-    private readonly IRepository<UserLikeTweet> _userLikeTweets;
+    private readonly IRepository<Tweet> _repository;
 
     private readonly Guid _userId;
-    
-    public TweetsService(IHttpContextAccessor accessor, IRepository<Tweet> repository, IMapper mapper, UserManager<TwitterUser> userManager, IRepository<UserLikeTweet> userLikeTweets)
+    private readonly IRepository<UserLikeTweet> _userLikeTweets;
+    private readonly UserManager<TwitterUser> _userManager;
+
+    public TweetsService(IHttpContextAccessor accessor, IRepository<Tweet> repository, IMapper mapper,
+        UserManager<TwitterUser> userManager, IRepository<UserLikeTweet> userLikeTweets)
     {
         _repository = repository;
         _mapper = mapper;
@@ -30,7 +30,7 @@ public class TweetsService : ITweetsService
 
         _userId = Guid.Parse(accessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
     }
-    
+
     public async Task<IEnumerable<TweetModel>> GetTweets(int limit = 100)
     {
         var tweets = _repository.GetAll().Take(limit);
@@ -42,7 +42,7 @@ public class TweetsService : ITweetsService
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
         ProcessException.ThrowIf(() => user is null, "The user with this id, doesn't exists.");
-        return _repository.GetAll((x) => x.CreatorId == userId).Select(x => _mapper.Map<TweetModel>(x));
+        return _repository.GetAll(x => x.CreatorId == userId).Select(x => _mapper.Map<TweetModel>(x));
     }
 
     public Task<TweetModel> GetTweetById(Guid id)
@@ -72,25 +72,22 @@ public class TweetsService : ITweetsService
     {
         var model = _repository.GetById(id);
         var tweet = _mapper.Map(requestModel, model);
-        
-        ProcessException.ThrowIf(() => tweet.CreatorId != _userId, "Only the person who created it can change a tweet!");
-        
+
+        ProcessException.ThrowIf(() => tweet.CreatorId != _userId,
+            "Only the person who created it can change a tweet!");
+
         return Task.FromResult(_mapper.Map<TweetModel>(_repository.Save(tweet)));
     }
 
     public Task LikeTweet(Guid idTweet)
     {
         var tweets = _userLikeTweets.GetAll(x => x.TweetId == idTweet && x.UserId == _userId);
-        
+
         // Если юзер уже лайкал твит, то убираем лайк
         if (tweets.Any())
-        {
             _userLikeTweets.Delete(tweets.First());
-        }
         else
-        {
-            _userLikeTweets.Save(new UserLikeTweet() {TweetId = idTweet, UserId = _userId});
-        }
+            _userLikeTweets.Save(new UserLikeTweet {TweetId = idTweet, UserId = _userId});
         return Task.CompletedTask;
     }
 }

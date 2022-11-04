@@ -5,7 +5,7 @@ namespace Twitter.TweetsService.Models;
 
 public class TweetModelRequest
 {
-    public string Text { get; set; } = String.Empty;
+    public string Text { get; set; } = string.Empty;
 }
 
 public class TweetModelRequestProfile : Profile

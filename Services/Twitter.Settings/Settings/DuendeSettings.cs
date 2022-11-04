@@ -11,7 +11,7 @@ public class DuendeSettings : IDuendeSettings
     {
         _source = source;
     }
-    
+
     public string Url => _source.GetAsString("IdentityServer:Url");
     public string ClientId => _source.GetAsString("IdentityServer:ClientId");
     public string ClientSecret => _source.GetAsString("IdentityServer:ClientSecret");

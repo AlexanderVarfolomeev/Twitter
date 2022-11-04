@@ -6,8 +6,8 @@ namespace Twitter.TweetsService.Models;
 public class TweetModel
 {
     public Guid Id { get; set; }
-    public string Text { get; set; } = String.Empty;
-    
+    public string Text { get; set; } = string.Empty;
+
     public Guid CreatorId { get; set; }
     public DateTime CreationTime { get; set; }
     public DateTime ModificationTime { get; set; }

@@ -18,7 +18,7 @@ public class TwitterFilesController : ControllerBase
 
     public TwitterFilesController(IFileService fileService, IMapper mapper)
     {
-        this._fileService = fileService;
+        _fileService = fileService;
         _mapper = mapper;
     }
 
@@ -38,7 +38,7 @@ public class TwitterFilesController : ControllerBase
     public async Task<TwitterFileResponse> AddFile([FromBody] TwitterFileRequest file)
     {
         var model = _mapper.Map<TwitterFileModelRequest>(file);
-        return _mapper.Map<TwitterFileResponse>( await _fileService.AddFile(model));
+        return _mapper.Map<TwitterFileResponse>(await _fileService.AddFile(model));
     }
 
     [HttpDelete("{id}")]
@@ -54,5 +54,4 @@ public class TwitterFilesController : ControllerBase
         var model = _mapper.Map<TwitterFileModelRequest>(file);
         return _mapper.Map<TwitterFileResponse>(await _fileService.UpdateFile(id, model));
     }
-    
 }

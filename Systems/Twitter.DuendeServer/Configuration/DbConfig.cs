@@ -10,7 +10,7 @@ public static class DbConfig
     {
         var dbOptionsDelegate = DbContextOptionsFactories.Configure(settings.GetConnectionString);
 
-        services.AddDbContextFactory<MainDbContext>(dbOptionsDelegate, ServiceLifetime.Singleton);
+        services.AddDbContextFactory<MainDbContext>(dbOptionsDelegate);
 
         return services;
     }

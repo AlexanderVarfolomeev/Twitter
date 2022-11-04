@@ -5,8 +5,8 @@ namespace Twitter.FileService.Models;
 
 public class TwitterFileModel : BaseEntity
 {
-    public string Name { get; set; } = String.Empty;
-    public string Type { get; set; } = String.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
 }
 
 public class TwitterFileModelProfile : Profile

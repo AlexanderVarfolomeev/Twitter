@@ -5,8 +5,8 @@ namespace Twitter.Api.Controllers.TwitterFilesController.Models;
 
 public class TwitterFileRequest
 {
-    public string Name { get; set; } = String.Empty;
-    public string Type { get; set; } = String.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
 }
 
 public class TwitterFileRequestProfile : Profile

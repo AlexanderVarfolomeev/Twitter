@@ -6,11 +6,11 @@ namespace Twitter.Api.Controllers.TweetsController.Models;
 public class TweetResponse
 {
     public Guid Id { get; set; }
-    public string Text { get; set; } = String.Empty;
-    
+    public string Text { get; set; } = string.Empty;
+
     public Guid CreatorId { get; set; }
     public DateTime CreationTime { get; set; }
-    public DateTime ModificationTime { get; set; }   
+    public DateTime ModificationTime { get; set; }
 }
 
 public class TweetResponseProfile : Profile
@@ -20,4 +20,3 @@ public class TweetResponseProfile : Profile
         CreateMap<TweetModel, TweetResponse>();
     }
 }
-

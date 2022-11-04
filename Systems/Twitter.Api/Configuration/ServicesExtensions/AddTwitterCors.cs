@@ -1,6 +1,6 @@
 ﻿namespace Twitter.Api.Configuration.ServicesExtensions;
 
-public static partial class CorsConfiguration
+public static class CorsConfiguration
 {
     public static IServiceCollection AddTwitterCors(this IServiceCollection services)
     {

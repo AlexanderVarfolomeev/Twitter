@@ -3,14 +3,20 @@
 public class ProcessException : Exception
 {
     /// <summary>
-    ///Error code
+    ///     Error code
     /// </summary>
     public string Code { get; }
 
     /// <summary>
-    /// Error name
+    ///     Error name
     /// </summary>
     public string Name { get; }
+
+    public static void ThrowIf(Func<bool> predicate, string message)
+    {
+        if (predicate.Invoke())
+            throw new ProcessException(message);
+    }
 
     #region Constructors
 
@@ -41,10 +47,4 @@ public class ProcessException : Exception
     }
 
     #endregion
-
-    public static void ThrowIf(Func<bool> predicate, string message)
-    {
-        if (predicate.Invoke())
-            throw new ProcessException(message);
-    }
 }

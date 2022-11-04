@@ -5,10 +5,10 @@ using Shared.Responses;
 namespace Shared.Extensions;
 
 public static class ExceptionsException
-{ 
+{
     public static ErrorResponse ToErrorResponse(this ValidationResult data)
     {
-        var res = new ErrorResponse()
+        var res = new ErrorResponse
         {
             Message = "",
             FieldErrors = data.Errors.Select(x =>
@@ -16,10 +16,10 @@ public static class ExceptionsException
                 var elems = x.ErrorMessage.Split('&');
                 var errorName = elems[0];
                 var errorMessage = elems.Length > 0 ? elems[1] : errorName;
-                return new ErrorResponseFieldInfo()
+                return new ErrorResponseFieldInfo
                 {
                     FieldName = x.PropertyName,
-                    Message = errorMessage,
+                    Message = errorMessage
                 };
             })
         };
@@ -29,7 +29,7 @@ public static class ExceptionsException
 
     public static ErrorResponse ToErrorResponse(this ProcessException data)
     {
-        var res = new ErrorResponse()
+        var res = new ErrorResponse
         {
             Message = data.Message
         };
@@ -39,7 +39,7 @@ public static class ExceptionsException
 
     public static ErrorResponse ToErrorResponse(this Exception data)
     {
-        var res = new ErrorResponse()
+        var res = new ErrorResponse
         {
             Message = data.Message
         };

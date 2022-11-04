@@ -1,8 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Twitter.Entities.Base;
-using Twitter.Settings.Interfaces;
-using Twitter.Settings.Settings;
-using Twitter.Settings.Source;
 
 namespace Twitter.Repository;
 

@@ -6,9 +6,9 @@ namespace Twitter.Settings.Source;
 public class SettingSource : ISettingSource
 {
     private readonly IConfiguration? _configuration;
-    
+
     /// <summary>
-    /// Конструктор либо присваивает переданнную конфигурацию, либо считывает из файла.
+    ///     Конструктор либо присваивает переданнную конфигурацию, либо считывает из файла.
     /// </summary>
     /// <param name="configuration"></param>
     public SettingSource(IConfiguration? configuration = null)
@@ -18,25 +18,21 @@ public class SettingSource : ISettingSource
             _configuration = configuration;
             return;
         }
-        
-        
+
+
         var builder = new ConfigurationBuilder()
             .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
-            .AddJsonFile("appsettings.json", optional: false);
-        
-        bool isDevelopment = (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "")
+            .AddJsonFile("appsettings.json", false);
+
+        var isDevelopment = (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "")
             .ToLower().Equals("development");
 
-        if (isDevelopment)
-        {
-            builder.AddJsonFile("appsettings.development.json", optional: true);
-        }
+        if (isDevelopment) builder.AddJsonFile("appsettings.development.json", true);
 
         _configuration = builder.AddEnvironmentVariables()
             .Build();
-
     }
-    
+
     public string GetConnectionString(string? source = null)
     {
         return ApplyEnvironmentVariable(_configuration.GetConnectionString(source ?? "ConnectionString"));
@@ -58,7 +54,7 @@ public class SettingSource : ISettingSource
         var val = ApplyEnvironmentVariable(_configuration[source]);
         return int.TryParse(val, out var result) ? result : defaultValue;
     }
-    
+
     private string ApplyEnvironmentVariable(string value)
     {
         value ??= "";

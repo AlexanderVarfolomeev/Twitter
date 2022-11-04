@@ -8,15 +8,15 @@ namespace Twitter.FileService;
 
 public class FileService : IFileService
 {
-    private readonly IRepository<TwitterFile> _repository;
     private readonly IMapper _mapper;
+    private readonly IRepository<TwitterFile> _repository;
 
     public FileService(IRepository<TwitterFile> repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
     }
-    
+
     public async Task<IEnumerable<TwitterFileModel>> GetFiles()
     {
         var files = _repository.GetAll();

@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Twitter.Api.Configuration.ServicesExtensions;
 
-public static partial class SwaggerConfiguration
+public static class SwaggerConfiguration
 {
     public static IServiceCollection AddTwitterSwagger(this IServiceCollection services)
     {
@@ -14,30 +14,28 @@ public static partial class SwaggerConfiguration
             var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
 
             foreach (var description in provider.ApiVersionDescriptions)
-            {
-                opts.SwaggerDoc(description.GroupName, new OpenApiInfo()
+                opts.SwaggerDoc(description.GroupName, new OpenApiInfo
                 {
                     Version = description.GroupName,
-                    Title = $"Twitter api"
+                    Title = "Twitter api"
                 });
-            }
 
             opts.ResolveConflictingActions(apiDesc => apiDesc.First());
 
-            var xmlFile = $"api.xml";
+            var xmlFile = "api.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             opts.IncludeXmlComments(xmlPath);
 
-            opts.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
+            opts.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
                 Name = IdentityServerAuthenticationDefaults.AuthenticationScheme,
                 Type = SecuritySchemeType.OAuth2,
                 Scheme = "oauth2",
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
-                Flows = new OpenApiOAuthFlows()
+                Flows = new OpenApiOAuthFlows
                 {
-                    Password = new OpenApiOAuthFlow()
+                    Password = new OpenApiOAuthFlow
                     {
                         TokenUrl = new Uri("https://localhost:5001/connect/token"), //TODO заменить на настройки
                         Scopes = new Dictionary<string, string>
@@ -45,7 +43,7 @@ public static partial class SwaggerConfiguration
                             {"twitter_api", "TwitterScope"}
                         }
                     },
-                    ClientCredentials = new OpenApiOAuthFlow()
+                    ClientCredentials = new OpenApiOAuthFlow
                     {
                         TokenUrl = new Uri("https://localhost:5001/connect/token"),
                         Scopes = new Dictionary<string, string>
@@ -56,7 +54,7 @@ public static partial class SwaggerConfiguration
                 }
             });
 
-            opts.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            opts.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme

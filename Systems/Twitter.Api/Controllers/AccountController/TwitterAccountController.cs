@@ -12,36 +12,36 @@ namespace Twitter.Api.Controllers.AccountController;
 [ApiController]
 public class TwitterAccountController : ControllerBase
 {
-    private readonly IMapper _mapper;
     private readonly IAccountService _accountService;
+    private readonly IMapper _mapper;
 
     public TwitterAccountController(IMapper mapper, IAccountService accountService)
     {
         _mapper = mapper;
         _accountService = accountService;
     }
-    
+
     [Authorize]
     [HttpGet("")]
     public async Task<IEnumerable<TwitterAccountResponse>> GetAccounts()
     {
         return (await _accountService.GetAccounts()).Select(x => _mapper.Map<TwitterAccountResponse>(x));
     }
-    
+
     [Authorize]
     [HttpGet("{id}")]
     public async Task<TwitterAccountResponse> GetAccountById([FromRoute] Guid id)
     {
         return _mapper.Map<TwitterAccountResponse>(await _accountService.GetAccountById(id));
     }
-    
+
     [HttpPost("")]
     public async Task<TwitterAccountResponse> RegisterAccount([FromBody] TwitterAccountRequest account)
     {
         var model = _mapper.Map<TwitterAccountModelRequest>(account);
         return _mapper.Map<TwitterAccountResponse>(await _accountService.RegisterAccount(model));
     }
-    
+
     [Authorize]
     [HttpDelete("{id}")]
     public Task DeleteAccount([FromRoute] Guid id)
@@ -49,21 +49,21 @@ public class TwitterAccountController : ControllerBase
         _accountService.DeleteAccount(id);
         return Task.CompletedTask;
     }
-    
+
     [Authorize]
     [HttpPut("{id}")]
-    public async Task<TwitterAccountResponse> UpdateAccount([FromRoute] Guid id, [FromBody] TwitterAccountRequest account)
+    public async Task<TwitterAccountResponse> UpdateAccount([FromRoute] Guid id,
+        [FromBody] TwitterAccountRequest account)
     {
         var model = _mapper.Map<TwitterAccountModelRequest>(account);
         return _mapper.Map<TwitterAccountResponse>(await _accountService.UpdateAccount(id, model));
     }
 
     [Authorize]
-    [HttpPost("Suubscribe-{id}")]
+    [HttpPost("Subscribe-{id}")]
     public Task<IActionResult> SubscribeTo([FromRoute] Guid id)
     {
         _accountService.Subscribe(id);
         return Task.FromResult<IActionResult>(Ok());
     }
-
 }

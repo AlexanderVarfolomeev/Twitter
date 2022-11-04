@@ -6,10 +6,7 @@ public abstract class BaseEntity : IBaseEntity
     public DateTime CreationTime { get; set; }
     public DateTime ModificationTime { get; set; }
 
-    public bool IsNew
-    {
-        get => Id == Guid.Empty;
-    }
+    public bool IsNew => Id == Guid.Empty;
 
     public void Init()
     {

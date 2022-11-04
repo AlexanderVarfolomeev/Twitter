@@ -10,8 +10,10 @@ namespace Twitter.Context.Context;
 
 public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
 {
-    public MainDbContext(DbContextOptions<MainDbContext> opts) : base(opts) { }
-    
+    public MainDbContext(DbContextOptions<MainDbContext> opts) : base(opts)
+    {
+    }
+
     public DbSet<TwitterUser> Users { get; set; }
     public DbSet<TwitterRole> Roles { get; set; }
     public DbSet<Subscribe> Subscribes { get; set; }
@@ -29,10 +31,12 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
     public DbSet<Comment> Comments { get; set; }
     public DbSet<FileComment> FileComments { get; set; }
     public DbSet<ReportToComment> ReportsToComments { get; set; }
-    
-    public DbSet<ReasonReport>  ReasonReports { get; set; }
+
+    public DbSet<ReasonReport> ReasonReports { get; set; }
+
     public DbSet<TwitterFile> TwitterFiles { get; set; }
-//TODO настроить
+
+    //TODO исправить delete behavior (ошибки при удалении юзера, связаны с ролями и подписками, при удалении твита с лайками)
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -192,8 +196,5 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
             .WithMany(x => x.TwitterUsers)
             .HasForeignKey(x => x.RoleId)
             .OnDelete(DeleteBehavior.Restrict);
-
-
-
     }
 }

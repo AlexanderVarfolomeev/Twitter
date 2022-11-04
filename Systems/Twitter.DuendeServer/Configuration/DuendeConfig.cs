@@ -16,29 +16,29 @@ public static class DuendeConfig
     public static IEnumerable<IdentityResource> Resources = new IdentityResource[]
     {
         new IdentityResources.OpenId(),
-        new IdentityResources.Profile(),
+        new IdentityResources.Profile()
     };
 
     public static IEnumerable<Client> Clients = new[]
     {
-        new Client()
+        new Client
         {
             ClientId = "swagger",
             ClientSecrets = {new Secret("secret".Sha256())},
             AllowedGrantTypes = GrantTypes.ClientCredentials,
             AllowedScopes = {"twitter_api"}
         },
-        new Client()
+        new Client
         {
             ClientId = "frontend",
             ClientSecrets = {new Secret("secret".Sha256())},
-            AllowAccessTokensViaBrowser =true,
+            AllowAccessTokensViaBrowser = true,
             AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-            
+
             AllowOfflineAccess = true,
             AccessTokenType = AccessTokenType.Jwt,
-            
-            AllowedScopes = new List<string>()
+
+            AllowedScopes = new List<string>
             {
                 IdentityServerConstants.StandardScopes.OpenId,
                 IdentityServerConstants.StandardScopes.Profile,
@@ -47,22 +47,21 @@ public static class DuendeConfig
         }
     };
 
-    public static List<TestUser> Users = new List<TestUser>()
+    public static List<TestUser> Users = new()
     {
-        new TestUser()
+        new()
         {
             Username = "alice",
             Password = "alice",
             SubjectId = "1",
-            Claims =  {
+            Claims =
+            {
                 new Claim(JwtClaimTypes.Name, "Alice Smith"),
                 new Claim(JwtClaimTypes.GivenName, "Alice"),
                 new Claim(JwtClaimTypes.FamilyName, "Smith"),
                 new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
-                new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+                new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean)
             }
         }
     };
-
-
 }

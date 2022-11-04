@@ -8,16 +8,13 @@ public class TwitterRole : IdentityRole<Guid>, IBaseEntity
 {
     public TwitterPermissions Permissions { get; set; }
 
+    public virtual ICollection<TwitterRoleTwitterUser> TwitterUsers { get; set; }
+
     //Name, Id - Определены в identityRole
     public DateTime CreationTime { get; set; }
     public DateTime ModificationTime { get; set; }
 
-    public virtual ICollection<TwitterRoleTwitterUser> TwitterUsers { get; set; }
-
-    public bool IsNew
-    {
-        get => Id == Guid.Empty;
-    }
+    public bool IsNew => Id == Guid.Empty;
 
     public void Init()
     {

@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shared.Enum;
 using Shared.Exceptions;
 using Twitter.AccountService.Models;
 using Twitter.Entities.Users;
@@ -13,26 +13,33 @@ namespace Twitter.AccountService;
 
 public class AccountService : IAccountService
 {
-    private readonly SignInManager<TwitterUser> _signInManager;
-    private readonly UserManager<TwitterUser> _userManager;
-    private readonly IRepository<Subscribe> _subscribesRepository;
-    private readonly IRepository<TwitterUser> _repository;
     private readonly IMapper _mapper;
-    private readonly IHttpContextAccessor _accessor;
-    
-    private readonly Guid _userId;
+    private readonly IRepository<TwitterUser> _repository;
+    private readonly SignInManager<TwitterUser> _signInManager;
+    private readonly IRepository<Subscribe> _subscribesRepository;
+    private readonly IRepository<TwitterRoleTwitterUser> _rolesUserRepository;
+    private readonly IRepository<TwitterRole> _rolesRepository;
 
-    public AccountService(SignInManager<TwitterUser> signInManager, UserManager<TwitterUser> userManager, IRepository<Subscribe> subscribesRepository,
+    private readonly Guid _currentUserId;
+    private readonly UserManager<TwitterUser> _userManager;
+
+    public AccountService(SignInManager<TwitterUser> signInManager, UserManager<TwitterUser> userManager,
+        IRepository<Subscribe> subscribesRepository,  IRepository<TwitterRoleTwitterUser> rolesUserRepository, IRepository<TwitterRole> rolesRepository,
         IRepository<TwitterUser> repository, IMapper mapper, IHttpContextAccessor accessor)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _subscribesRepository = subscribesRepository;
+        _rolesUserRepository = rolesUserRepository;
+        _rolesRepository = rolesRepository;
         _repository = repository;
         _mapper = mapper;
-        _accessor = accessor;
+            
+        //когда подключаемся с clientCredentials, ставим GUID empty
+        var value = accessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         
-        _userId = Guid.Parse(accessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
+        
     }
 
 
@@ -64,11 +71,10 @@ public class AccountService : IAccountService
         user = _mapper.Map<TwitterUser>(requestModel);
         user.PhoneNumberConfirmed = false;
         user.EmailConfirmed = false;
-        
+
         user.Init();
-        
-        
-        
+        GiveUserRole(user);
+
         var result = await _userManager.CreateAsync(user, requestModel.Password);
         ProcessException.ThrowIf(() => !result.Succeeded, result.ToString());
         return _mapper.Map<TwitterAccountModel>(user);
@@ -84,24 +90,22 @@ public class AccountService : IAccountService
     public Task Subscribe(Guid userId)
     {
         // Пользователь не может подписаться сам на себя
-        if (userId == _userId)
-        {
-            return Task.CompletedTask;
-        }
-        
-        var sub = _subscribesRepository.GetAll((x) => x.SubscriberId == _userId && x.UserId == userId);
-        
+        if (userId == _currentUserId) return Task.CompletedTask;
+
+        var sub = _subscribesRepository.GetAll(x => x.SubscriberId == _currentUserId && x.UserId == userId);
+
         //Если пользователь уже подписан на данный аккаунт, то отписываемся
         if (sub.Any())
-        {
             _subscribesRepository.Delete(sub.First());
-        }
         else
-        {
-            _subscribesRepository.Save(new Subscribe() {SubscriberId = _userId, UserId = userId});
-        }
-        
+            _subscribesRepository.Save(new Subscribe {SubscriberId = _currentUserId, UserId = userId});
+
         return Task.CompletedTask;
     }
-}
 
+    private async Task GiveUserRole(TwitterUser user)
+    {
+        var userRoleId = _rolesRepository.GetAll(x => x.Permissions == TwitterPermissions.User).First().Id;
+        _rolesUserRepository.Save(new TwitterRoleTwitterUser {RoleId = userRoleId, UserId = user.Id});
+    }
+}

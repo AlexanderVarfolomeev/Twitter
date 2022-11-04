@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Shared.Enum;
-using Twitter.Api.Controllers.TwitterFilesController.Models;
 using Twitter.RoleService.Models;
 
 namespace Twitter.Api.Controllers.TwitterRolesController.Models;

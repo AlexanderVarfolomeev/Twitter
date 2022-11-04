@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Twitter.Api.Controllers.TwitterRolesController.Models;
-using Twitter.Api.Controllers.TwitterRolesController.Models;
-using Twitter.RoleService.Models;
 using Twitter.RoleService;
 using Twitter.RoleService.Models;
 
@@ -15,15 +13,15 @@ namespace Twitter.Api.Controllers.TwitterRolesController;
 [Authorize]
 public class TwitterRolesController : ControllerBase
 {
-    private readonly IRoleService _roleService;
     private readonly IMapper _mapper;
+    private readonly IRoleService _roleService;
 
     public TwitterRolesController(IRoleService _roleService, IMapper mapper)
     {
         this._roleService = _roleService;
         _mapper = mapper;
     }
-    
+
     [HttpGet("")]
     public async Task<IEnumerable<TwitterRoleResponse>> GetRoles()
     {
@@ -40,13 +38,20 @@ public class TwitterRolesController : ControllerBase
     public async Task<TwitterRoleResponse> AddRole([FromBody] TwitterRoleRequest role)
     {
         var model = _mapper.Map<TwitterRoleModelRequest>(role);
-        return _mapper.Map<TwitterRoleResponse>( await _roleService.AddRole(model));
+        return _mapper.Map<TwitterRoleResponse>(await _roleService.AddRole(model));
     }
-    
-    [HttpPost("{roleId}:{userId}")]
+
+    [HttpPost("give-role-{roleId}:{userId}")]
     public async Task<IActionResult> GiveRole([FromRoute] Guid roleId, [FromRoute] Guid userId)
     {
         _roleService.GiveRole(roleId, userId);
+        return Ok();
+    }
+    
+    [HttpPost("revoke-role-{roleId}:{userId}")]
+    public async Task<IActionResult> RevokeRole([FromRoute] Guid roleId, [FromRoute] Guid userId)
+    {
+        _roleService.RevokeRole(roleId, userId);
         return Ok();
     }
 

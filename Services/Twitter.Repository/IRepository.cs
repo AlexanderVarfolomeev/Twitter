@@ -3,7 +3,7 @@ using Twitter.Entities.Base;
 
 namespace Twitter.Repository;
 
-public interface IRepository <T> where T : IBaseEntity
+public interface IRepository<T> where T : IBaseEntity
 {
     IQueryable<T> GetAll();
     IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);

@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="Microsoft.Extensions.Identity.Stores">
-        <HintPath>C:\Users\alexander\.nuget\packages\microsoft.extensions.identity.stores\6.0.9\lib\net6.0\Microsoft.Extensions.Identity.Stores.dll</HintPath>
-      </Reference>
+        <Reference Include="Microsoft.Extensions.Identity.Stores">
+            <HintPath>C:\Users\alexander\.nuget\packages\microsoft.extensions.identity.stores\6.0.9\lib\net6.0\Microsoft.Extensions.Identity.Stores.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Shared\Shared.csproj" />
+        <ProjectReference Include="..\..\Common\Shared\Shared.csproj"/>
     </ItemGroup>
 
 </Project>

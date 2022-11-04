@@ -11,8 +11,8 @@ public static class VersioningConfiguration
             options.GroupNameFormat = "'v'VVV";
             options.SubstituteApiVersionInUrl = true;
         });
-        
-        services.AddApiVersioning(setupAction: options =>
+
+        services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
@@ -20,7 +20,6 @@ public static class VersioningConfiguration
             }
         );
 
-        
 
         return services;
     }
