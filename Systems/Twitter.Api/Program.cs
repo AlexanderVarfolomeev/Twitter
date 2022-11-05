@@ -6,7 +6,6 @@ using Twitter.Settings.Source;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-
 builder.AddTwitterSerilog();
 
 services.AddTwitterCors();

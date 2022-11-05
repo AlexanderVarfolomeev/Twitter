@@ -17,7 +17,6 @@ public class RoleService : IRoleService
     private readonly IRepository<TwitterRoleTwitterUser> _rolesUserRepository;
     
     private readonly Guid _currentUserId;
-    private readonly bool _isCurrentUserFullAdmin;
     public RoleService(IRepository<TwitterRole> rolesRepository, IMapper mapper,
         IRepository<TwitterRoleTwitterUser> rolesUserRepository, IHttpContextAccessor accessor)
     {
@@ -31,13 +30,12 @@ public class RoleService : IRoleService
         
         _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
         
-        _isCurrentUserFullAdmin = _rolesUserRepository.GetAll(x => x.UserId == _currentUserId).Any(x => x.Role.Permissions == TwitterPermissions.FullAccessAdmin);
     }
 
 
     public async Task<IEnumerable<TwitterRoleModel>> GetRoles()
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights.");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty &&  !IsAdmin(_currentUserId), "No access rights.");
         
         var roles = _rolesRepository.GetAll();
         var result = (await roles.ToListAsync()).Select(x => _mapper.Map<TwitterRoleModel>(x));
@@ -46,7 +44,7 @@ public class RoleService : IRoleService
 
     public Task<TwitterRoleModel> GetRoleById(Guid id)
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights.");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights.");
         
         var role = _rolesRepository.GetById(id);
         return Task.FromResult(_mapper.Map<TwitterRoleModel>(role));
@@ -54,7 +52,7 @@ public class RoleService : IRoleService
 
     public Task DeleteRole(Guid id)
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights.");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights.");
         
         _rolesRepository.Delete(_rolesRepository.GetById(id));
         return Task.CompletedTask;
@@ -62,7 +60,7 @@ public class RoleService : IRoleService
 
     public Task<TwitterRoleModel> AddRole(TwitterRoleModelRequest requestModel)
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights.");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights.");
         
         var model = _mapper.Map<TwitterRole>(requestModel);
         return Task.FromResult(_mapper.Map<TwitterRoleModel>(_rolesRepository.Save(model)));
@@ -70,7 +68,7 @@ public class RoleService : IRoleService
 
     public Task<TwitterRoleModel> UpdateRole(Guid id, TwitterRoleModelRequest requestModel)
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights.");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights.");
         
         var model = _rolesRepository.GetById(id);
         var file = _mapper.Map(requestModel, model);
@@ -79,7 +77,7 @@ public class RoleService : IRoleService
 
     public Task GiveRole(Guid roleId, Guid userId)
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights.");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights.");
         
         // Выдавать роли, может только админ с высшими правами
         ThrowIfNotFullAdmin();
@@ -90,7 +88,7 @@ public class RoleService : IRoleService
     
     public Task RevokeRole(Guid roleId, Guid userId)
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights.");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights.");
         
         // Нельзя отозвать роль юзера
         var revokeRole = _rolesRepository.GetById(roleId);

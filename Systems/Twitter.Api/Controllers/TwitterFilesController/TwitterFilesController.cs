@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Twitter.Api.Controllers.TwitterFilesController.Models;
+using Twitter.Entities.Tweets;
 using Twitter.FileService;
 using Twitter.FileService.Models;
+
 
 namespace Twitter.Api.Controllers.TwitterFilesController;
 
@@ -15,11 +17,12 @@ public class TwitterFilesController : ControllerBase
 {
     private readonly IFileService _fileService;
     private readonly IMapper _mapper;
-
+ 
     public TwitterFilesController(IFileService fileService, IMapper mapper)
     {
         _fileService = fileService;
         _mapper = mapper;
+        
     }
 
     [HttpGet("")]
@@ -34,11 +37,16 @@ public class TwitterFilesController : ControllerBase
         return _mapper.Map<TwitterFileResponse>(await _fileService.GetFileById(id));
     }
 
-    [HttpPost("")]
-    public async Task<TwitterFileResponse> AddFile([FromBody] TwitterFileRequest file)
+    [HttpPost("add-files-to-tweet-{tweetId}")]
+    public async Task<IEnumerable<TwitterFileModel>> AddFilesToTweet(IEnumerable<IFormFile> files, [FromRoute] Guid tweetId)
     {
-        var model = _mapper.Map<TwitterFileModelRequest>(file);
-        return _mapper.Map<TwitterFileResponse>(await _fileService.AddFile(model));
+        return (await _fileService.AddFileToTweet(files, tweetId)).Select(x => _mapper.Map<TwitterFileModel>(x));
+    }
+    
+    [HttpPost("add-files-to-comment-{commentId}")]
+    public async Task<IEnumerable<TwitterFileModel>> AddFilesToComment(IEnumerable<IFormFile> files, [FromRoute] Guid commentId)
+    {
+        return (await _fileService.AddFileToComment(files, commentId)).Select(x => _mapper.Map<TwitterFileModel>(x));
     }
 
     [HttpDelete("{id}")]
@@ -48,6 +56,15 @@ public class TwitterFilesController : ControllerBase
         return Task.CompletedTask;
     }
 
+    [HttpGet("file")]
+    public FileResult GetStream()
+    {
+        FileStream fs = new FileStream("asd", FileMode.Open);
+        string file_type = "application/pdf";
+        string file_name = "PDFIcon.pdf";
+        return File(fs, file_type, file_name);
+    }
+    
     [HttpPut("{id}")]
     public async Task<TwitterFileResponse> UpdateFile([FromRoute] Guid id, [FromBody] TwitterFileRequest file)
     {

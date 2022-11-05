@@ -16,7 +16,7 @@ namespace Twitter.TweetsService;
 public class TweetsService : ITweetsService
 {
     private readonly IMapper _mapper;
-    private readonly Repository<TwitterUser> _usersRepository;
+    private readonly IRepository<TwitterUser> _usersRepository;
     private readonly IRepository<Tweet> _tweetRepository;
 
     private readonly Guid _currentUserId;
@@ -24,7 +24,7 @@ public class TweetsService : ITweetsService
     private readonly IRepository<TwitterRoleTwitterUser> _rolesUserRepository;
 
     public TweetsService(IHttpContextAccessor accessor, IRepository<Tweet> tweetRepository, IMapper mapper,
-        Repository<TwitterUser> usersRepository, IRepository<UserLikeTweet> userLikeTweetsRepository,IRepository<TwitterRoleTwitterUser> rolesUserRepository)
+        IRepository<TwitterUser> usersRepository, IRepository<UserLikeTweet> userLikeTweetsRepository,IRepository<TwitterRoleTwitterUser> rolesUserRepository)
     {
         _tweetRepository = tweetRepository;
         _mapper = mapper;
@@ -38,7 +38,7 @@ public class TweetsService : ITweetsService
 
     public async Task<IEnumerable<TweetModel>> GetTweets(int limit = 100)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty &&  IsBanned(_currentUserId), "You are banned!");
         
         var tweets = _tweetRepository.GetAll().Take(limit);
         var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x));
@@ -47,14 +47,14 @@ public class TweetsService : ITweetsService
 
     public Task<IEnumerable<TweetModel>> GetTweetsByUserId(Guid userId)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() =>_currentUserId != Guid.Empty &&  IsBanned(_currentUserId), "You are banned!");
         
         return Task.FromResult<IEnumerable<TweetModel>>(_tweetRepository.GetAll(x => x.CreatorId == userId).Select(x => _mapper.Map<TweetModel>(x)));
     }
 
     public Task<TweetModel> GetTweetById(Guid id)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() =>_currentUserId != Guid.Empty &&  IsBanned(_currentUserId), "You are banned!");
         
         var tweet = _tweetRepository.GetById(id);
         return Task.FromResult(_mapper.Map<TweetModel>(tweet));
@@ -62,6 +62,7 @@ public class TweetsService : ITweetsService
 
     public Task DeleteTweet(Guid id)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var model = _tweetRepository.GetById(id);
@@ -74,6 +75,7 @@ public class TweetsService : ITweetsService
 
     public Task<TweetModel> AddTweet(TweetModelRequest requestModel)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var tweet = _mapper.Map<Tweet>(requestModel);
@@ -83,6 +85,7 @@ public class TweetsService : ITweetsService
 
     public Task<TweetModel> UpdateTweet(Guid id, TweetModelRequest requestModel)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var model = _tweetRepository.GetById(id);
@@ -96,6 +99,7 @@ public class TweetsService : ITweetsService
 
     public Task LikeTweet(Guid idTweet)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var tweets = _userLikeTweetsRepository.GetAll(x => x.TweetId == idTweet && x.UserId == _currentUserId);

@@ -94,6 +94,7 @@ public class ReportService : IReportService
 
     public Task<ReportModel> AddTweetReport(ReportModelRequest modelRequest, Guid tweetId)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned.");
         
         var model = _mapper.Map<ReportToTweet>(modelRequest);
@@ -105,6 +106,7 @@ public class ReportService : IReportService
 
     public Task<ReportModel> AddCommentReport(ReportModelRequest modelRequest, Guid commentId)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned.");
         
         var model = _mapper.Map<ReportToComment>(modelRequest);

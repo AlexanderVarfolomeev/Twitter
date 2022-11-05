@@ -45,7 +45,7 @@ public class AccountService : IAccountService
 
     public async Task<IEnumerable<TwitterAccountModel>> GetAccounts()
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty &&  IsBanned(_currentUserId), "You are banned!");
         
         var accounts = _accountsRepository.GetAll();
         var result = (await accounts.ToListAsync()).Select(x => _mapper.Map<TwitterAccountModel>(x));
@@ -54,7 +54,7 @@ public class AccountService : IAccountService
 
     public Task<TwitterAccountModel> GetAccountById(Guid id)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
         
         var account = _accountsRepository.GetById(id);
         return Task.FromResult(_mapper.Map<TwitterAccountModel>(account));
@@ -62,7 +62,9 @@ public class AccountService : IAccountService
 
     public Task DeleteAccount(Guid id)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        
         
         if (id != _currentUserId)
         {
@@ -76,6 +78,8 @@ public class AccountService : IAccountService
 
     public async Task<TwitterAccountModel> RegisterAccount(TwitterAccountModelRequest requestModel)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
+        
         var user = await _userManager.FindByEmailAsync(requestModel.Email);
         ProcessException.ThrowIf(() => user is not null, "User with this email already exists!");
 
@@ -93,6 +97,7 @@ public class AccountService : IAccountService
 
     public Task<TwitterAccountModel> UpdateAccount(Guid id, TwitterAccountModelRequest requestModel)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         ProcessException.ThrowIf(() => id != _currentUserId, "Only the account owner can change the account information.");
         
@@ -103,6 +108,7 @@ public class AccountService : IAccountService
 
     public Task Subscribe(Guid userId)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         // Пользователь не может подписаться сам на себя
@@ -121,6 +127,7 @@ public class AccountService : IAccountService
 
     public Task BanUser(Guid userId)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "Only the admin can ban.");
         ProcessException.ThrowIf(() => IsAdmin(userId), "You can't ban the admin.");
         

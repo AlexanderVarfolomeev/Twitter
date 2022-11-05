@@ -34,6 +34,7 @@ public class CommentService : ICommentsService
     
     public Task<CommentModel> AddComment(CommentModelRequest modelRequest, Guid tweetId)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var model = _mapper.Map<Comment>(modelRequest);
@@ -45,7 +46,7 @@ public class CommentService : ICommentsService
 
     public Task<IEnumerable<CommentModel>> GetCommentsByTweet(Guid tweetId)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() =>_currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
         
         var comments = _tweetRepository.GetById(tweetId).Comments.Select(x => _mapper.Map<CommentModel>(x));
         return Task.FromResult(comments);
@@ -53,6 +54,7 @@ public class CommentService : ICommentsService
 
     public Task DeleteComment(Guid id)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var comment = _commentsRepository.GetById(id);
@@ -70,6 +72,7 @@ public class CommentService : ICommentsService
 
     public Task<CommentModel> UpdateComment(Guid id, CommentModelRequest modelRequest)
     {
+        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var model = _commentsRepository.GetById(id);
@@ -83,7 +86,7 @@ public class CommentService : ICommentsService
 
     public async Task<IEnumerable<CommentModel>> GetCommentsByUser(Guid userId)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() =>_currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
         
         _accountsRepository.GetById(userId);
         var list = (await _commentsRepository.GetAll(x => x.Creator.Id == userId).ToListAsync())

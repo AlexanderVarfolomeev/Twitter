@@ -38,6 +38,11 @@ public class SettingSource : ISettingSource
         return ApplyEnvironmentVariable(_configuration.GetConnectionString(source ?? "ConnectionString"));
     }
 
+    public string GetWebRootPath()
+    {
+        return @"D:\repos\Twitter\Systems\Twitter.Api\wwwroot";
+    }
+
     public string GetAsString(string source, string? defaultValue = null)
     {
         return ApplyEnvironmentVariable(_configuration[source]) ?? defaultValue;
