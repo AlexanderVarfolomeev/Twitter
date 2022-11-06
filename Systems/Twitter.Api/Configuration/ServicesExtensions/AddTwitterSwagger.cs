@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
+using Shared.Security;
 
 namespace Twitter.Api.Configuration.ServicesExtensions;
 
@@ -40,7 +41,8 @@ public static class SwaggerConfiguration
                         TokenUrl = new Uri("https://localhost:5001/connect/token"), //TODO заменить на настройки
                         Scopes = new Dictionary<string, string>
                         {
-                            {"twitter_api", "TwitterScope"}
+                            {AppScopes.TwitterRead, "Twitter API read data."},
+                            {AppScopes.TwitterWrite, "Twitter API write data."}
                         }
                     },
                     ClientCredentials = new OpenApiOAuthFlow
@@ -48,7 +50,7 @@ public static class SwaggerConfiguration
                         TokenUrl = new Uri("https://localhost:5001/connect/token"),
                         Scopes = new Dictionary<string, string>
                         {
-                            {"twitter_api", "TwitterScope"}
+                            {AppScopes.TwitterRead, "Twitter API read data."}
                         }
                     }
                 }

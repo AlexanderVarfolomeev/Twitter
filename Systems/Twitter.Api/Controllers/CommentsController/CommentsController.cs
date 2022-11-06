@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Security;
 using Twitter.Api.Controllers.CommentsController.Models;
 using Twitter.CommentsService;
 using Twitter.CommentsService.Models;
@@ -10,7 +11,6 @@ namespace Twitter.Api.Controllers.CommentsController;
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-[Authorize]
 public class CommentsController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -22,6 +22,7 @@ public class CommentsController : ControllerBase
         _commentsService = commentsService;
     }
 
+    [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-comment-by-tweet-{tweetId}")]
     public async Task<IEnumerable<CommentResponse>> GetCommentsByTweet([FromRoute] Guid tweetId)
     {
@@ -29,6 +30,7 @@ public class CommentsController : ControllerBase
         return comments.Select(x => _mapper.Map<CommentResponse>(x));
     }
     
+    [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-comment-by-user-{userId}")]
     public async Task<IEnumerable<CommentResponse>> GetCommentsByUser([FromRoute] Guid userId)
     {
@@ -36,6 +38,7 @@ public class CommentsController : ControllerBase
         return comments.Select(x => _mapper.Map<CommentResponse>(x));
     }
 
+    [Authorize(AppScopes.TwitterWrite)]
     [HttpPost("{tweetId}")]
     public async Task<CommentResponse> AddComment([FromRoute] Guid tweetId, [FromBody] CommentRequest comment)
     {
@@ -43,6 +46,7 @@ public class CommentsController : ControllerBase
         return _mapper.Map<CommentResponse>(commentModelResponse);
     }
 
+    [Authorize(AppScopes.TwitterWrite)]
     [HttpPut("{commentId}")]
     public async Task<CommentResponse> UpdateComment([FromRoute] Guid commentId, [FromBody] CommentRequest comment)
     {
@@ -50,6 +54,7 @@ public class CommentsController : ControllerBase
         return _mapper.Map<CommentResponse>(commentModelResponse); 
     }
 
+    [Authorize(AppScopes.TwitterWrite)]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteComment([FromRoute] Guid id)
     {

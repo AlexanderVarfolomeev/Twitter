@@ -3,6 +3,7 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using IdentityModel;
+using Shared.Security;
 
 namespace Twitter.DuendeServer.Configuration;
 
@@ -10,7 +11,8 @@ public static class DuendeConfig
 {
     public static IEnumerable<ApiScope> Scopes = new[]
     {
-        new ApiScope("twitter_api", "twitter api")
+        new ApiScope(AppScopes.TwitterRead, "Access to TwitterApi - read data."),
+        new ApiScope(AppScopes.TwitterWrite,"Access to TwitterApi - write data.")
     };
 
     public static IEnumerable<IdentityResource> Resources = new IdentityResource[]
@@ -26,23 +28,34 @@ public static class DuendeConfig
             ClientId = "swagger",
             ClientSecrets = {new Secret("secret".Sha256())},
             AllowedGrantTypes = GrantTypes.ClientCredentials,
-            AllowedScopes = {"twitter_api"}
+            AllowedScopes =
+            {
+                AppScopes.TwitterRead
+            }
         },
         new Client
         {
-            ClientId = "frontend",
+            ClientId = "wpf",
             ClientSecrets = {new Secret("secret".Sha256())},
             AllowAccessTokensViaBrowser = true,
             AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
             AllowOfflineAccess = true,
             AccessTokenType = AccessTokenType.Jwt,
+            
+            AccessTokenLifetime = 3600 * 12, // 12 hours
+            
+            RefreshTokenUsage = TokenUsage.OneTimeOnly,
+            RefreshTokenExpiration = TokenExpiration.Sliding,
+            AbsoluteRefreshTokenLifetime = 2592000, // 30 days
+            SlidingRefreshTokenLifetime = 1296000, // 15 days
 
             AllowedScopes = new List<string>
             {
                 IdentityServerConstants.StandardScopes.OpenId,
                 IdentityServerConstants.StandardScopes.Profile,
-                "twitter_api"
+                AppScopes.TwitterRead,
+                AppScopes.TwitterWrite
             }
         }
     };

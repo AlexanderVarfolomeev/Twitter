@@ -28,13 +28,11 @@ public class CommentService : ICommentsService
         _tweetRepository = tweetRepository;
         _mapper = mapper;
         
-        var value = accessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
+        _currentUserId =  Guid.Parse(accessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
     }
     
     public Task<CommentModel> AddComment(CommentModelRequest modelRequest, Guid tweetId)
     {
-        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var model = _mapper.Map<Comment>(modelRequest);
@@ -46,7 +44,7 @@ public class CommentService : ICommentsService
 
     public Task<IEnumerable<CommentModel>> GetCommentsByTweet(Guid tweetId)
     {
-        ProcessException.ThrowIf(() =>_currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() =>  IsBanned(_currentUserId), "You are banned!");
         
         var comments = _tweetRepository.GetById(tweetId).Comments.Select(x => _mapper.Map<CommentModel>(x));
         return Task.FromResult(comments);
@@ -54,7 +52,6 @@ public class CommentService : ICommentsService
 
     public Task DeleteComment(Guid id)
     {
-        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var comment = _commentsRepository.GetById(id);
@@ -72,7 +69,6 @@ public class CommentService : ICommentsService
 
     public Task<CommentModel> UpdateComment(Guid id, CommentModelRequest modelRequest)
     {
-        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         
         var model = _commentsRepository.GetById(id);

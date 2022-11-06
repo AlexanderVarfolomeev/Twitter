@@ -39,8 +39,7 @@ public class FileService : IFileService
         _fileCommentRepository = fileCommentRepository;
         _userRepository = userRepository;
 
-        var value = accessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
+        _currentUserId =  Guid.Parse(accessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
     }
 
     public async Task<IEnumerable<TwitterFileModel>> GetFiles()
@@ -64,8 +63,6 @@ public class FileService : IFileService
 
     public async Task<IEnumerable<TwitterFileModel>> AddFileToTweet(IEnumerable<IFormFile> files, Guid tweetId)
     {
-        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
-        
         List<TwitterFile> createdFiles = new List<TwitterFile>();
         
         ProcessException.ThrowIf(() => _currentUserId != _tweetsRepository.GetById(tweetId).CreatorId, "Only the creator can change a tweet.");
@@ -96,8 +93,6 @@ public class FileService : IFileService
 
     public async Task<IEnumerable<TwitterFileModel>> AddFileToComment(IEnumerable<IFormFile> files, Guid commentId)
     {
-        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
-        
         List<TwitterFile> createdFiles = new List<TwitterFile>();
         
         ProcessException.ThrowIf(() => _currentUserId != _commentsRepository.GetById(commentId).CreatorId, "Only the creator can change a comment.");

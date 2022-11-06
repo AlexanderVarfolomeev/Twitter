@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Security;
 using Twitter.Context.Context;
 using Twitter.Entities.Users;
 
@@ -52,7 +53,8 @@ public static class AuthConfiguration
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("twitter_api", policy => policy.RequireClaim("scope", "twitter_api"));
+            options.AddPolicy(AppScopes.TwitterRead, policy => policy.RequireClaim("scope", AppScopes.TwitterRead));
+            options.AddPolicy(AppScopes.TwitterWrite, policy => policy.RequireClaim("scope", AppScopes.TwitterWrite));
         });
 
         return services;

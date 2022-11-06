@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Security;
 using Twitter.AccountService;
 using Twitter.AccountService.Models;
 using Twitter.Api.Controllers.AccountController.Models;
@@ -21,14 +22,14 @@ public class TwitterAccountController : ControllerBase
         _accountService = accountService;
     }
 
-    [Authorize]
+    [Authorize(AppScopes.TwitterRead)]
     [HttpGet("")]
     public async Task<IEnumerable<TwitterAccountResponse>> GetAccounts()
     {
         return (await _accountService.GetAccounts()).Select(x => _mapper.Map<TwitterAccountResponse>(x));
     }
 
-    [Authorize]
+    [Authorize(AppScopes.TwitterRead)]
     [HttpGet("{id}")]
     public async Task<TwitterAccountResponse> GetAccountById([FromRoute] Guid id)
     {
@@ -42,7 +43,7 @@ public class TwitterAccountController : ControllerBase
         return _mapper.Map<TwitterAccountResponse>(await _accountService.RegisterAccount(model));
     }
 
-    [Authorize]
+    [Authorize(AppScopes.TwitterWrite)]
     [HttpDelete("{id}")]
     public Task DeleteAccount([FromRoute] Guid id)
     {
@@ -50,7 +51,7 @@ public class TwitterAccountController : ControllerBase
         return Task.CompletedTask;
     }
 
-    [Authorize]
+    [Authorize(AppScopes.TwitterWrite)]
     [HttpPut("{id}")]
     public async Task<TwitterAccountResponse> UpdateAccount([FromRoute] Guid id,
         [FromBody] TwitterAccountRequest account)
@@ -59,7 +60,7 @@ public class TwitterAccountController : ControllerBase
         return _mapper.Map<TwitterAccountResponse>(await _accountService.UpdateAccount(id, model));
     }
 
-    [Authorize]
+    [Authorize(AppScopes.TwitterWrite)]
     [HttpPost("Subscribe-{id}")]
     public Task<IActionResult> SubscribeTo([FromRoute] Guid id)
     {
@@ -67,7 +68,7 @@ public class TwitterAccountController : ControllerBase
         return Task.FromResult<IActionResult>(Ok());
     }
 
-    [Authorize]
+    [Authorize(AppScopes.TwitterWrite)]
     [HttpPut("ban-user-{id}")]
     public Task<IActionResult> BanUser([FromRoute] Guid id)
     {
