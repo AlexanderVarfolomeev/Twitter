@@ -1,8 +1,6 @@
-﻿using System.Linq.Expressions;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared.Enum;
 using Shared.Exceptions;
@@ -42,6 +40,17 @@ public class TweetsService : ITweetsService
         
         var tweets = _tweetRepository.GetAll().Take(limit);
         var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x));
+        return result;
+    }
+
+    public async Task<IEnumerable<TweetModel>> GetTweetsBySubscribes(int limit = 100)
+    {
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty &&  IsBanned(_currentUserId), "You are banned!");
+        var subscribes = _usersRepository.GetById(_currentUserId).Subscribes.Select(x => x.UserId);
+
+        var tweets = _tweetRepository.GetAll(x => subscribes.Contains(x.CreatorId));
+        var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x)).OrderByDescending(x => x.CreationTime);
+        
         return result;
     }
 

@@ -29,6 +29,13 @@ public class TweetsController : ControllerBase
         return tweets.Select(x => _mapper.Map<TweetResponse>(x));
     }
 
+    [HttpGet("get-first-{limit}-tweets-subscription")]
+    public async Task<IEnumerable<TweetResponse>> GetTweetsBySubscription([FromRoute] int limit = 100)
+    {
+        var tweets = await _tweetsService.GetTweetsBySubscribes(limit);
+        return tweets.Select(x => _mapper.Map<TweetResponse>(x));
+    }
+    
     [HttpGet("get-tweets-by-userId:{userId}")]
     public async Task<IEnumerable<TweetResponse>> GetTweetsByUserId([FromRoute] Guid userId)
     {

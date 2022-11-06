@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Twitter.ReportServices.Models;
 
 namespace Twitter.ReportServices;
 

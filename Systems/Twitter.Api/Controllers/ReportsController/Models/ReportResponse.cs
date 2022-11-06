@@ -5,9 +5,8 @@ namespace Twitter.Api.Controllers.ReportsController.Models;
 
 public class ReportResponse
 {
+    public Guid Id { get; set; }
     public string Text { get; set; } 
-
-    public DateTime CloseDate { get; set; }
 
     public Guid ReasonId { get; set; }
     

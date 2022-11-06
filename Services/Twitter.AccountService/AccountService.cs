@@ -78,8 +78,6 @@ public class AccountService : IAccountService
 
     public async Task<TwitterAccountModel> RegisterAccount(TwitterAccountModelRequest requestModel)
     {
-        ProcessException.ThrowIf(() => _currentUserId == Guid.Empty, "You can't do this with client credentials flow.");
-        
         var user = await _userManager.FindByEmailAsync(requestModel.Email);
         ProcessException.ThrowIf(() => user is not null, "User with this email already exists!");
 

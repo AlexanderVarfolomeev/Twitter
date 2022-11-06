@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Shared.Enum;
 using Shared.Exceptions;
 using Twitter.Entities.Base;
@@ -40,15 +38,20 @@ public class ReportService : IReportService
     public Task<IEnumerable<ReportModel>> GetReportsToTweets()
     {
         ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights!");
-        var reportsToTweets =  _reportToTweetRepository.GetAll().Select(x => _mapper.Map<ReportModel>(x));
+        
+        // Если жалоба была закрыта, то админу не нужно ее больше рассматривать
+        var reportsToTweets =  _reportToTweetRepository.GetAll(x => x.CloseDate == DateTime.MinValue)
+            .Select(x => _mapper.Map<ReportModel>(x)).AsEnumerable();
 
-        return Task.FromResult<IEnumerable<ReportModel>>(reportsToTweets);
+        return Task.FromResult(reportsToTweets);
     }
     
     public Task<IEnumerable<ReportModel>> GetReportsToComments()
     {
         ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights!");
-        var reportsToComments =  _reportToCommentRepository.GetAll().Select(x => _mapper.Map<ReportModel>(x));
+        
+        var reportsToComments =  _reportToCommentRepository.GetAll(x => x.CloseDate == DateTime.MinValue)
+            .Select(x => _mapper.Map<ReportModel>(x));
 
         return Task.FromResult<IEnumerable<ReportModel>>(reportsToComments);
     }
@@ -56,6 +59,7 @@ public class ReportService : IReportService
     public Task<IEnumerable<ReportModel>> GetReportsByTweet(Guid tweetId)
     {
         ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights!");
+        
         var reportsToTweets =  _reportToTweetRepository.GetAll(x => x.TweetId == tweetId).Select(x => _mapper.Map<ReportModel>(x));
 
         return Task.FromResult<IEnumerable<ReportModel>>(reportsToTweets);
@@ -64,6 +68,7 @@ public class ReportService : IReportService
     public Task<IEnumerable<ReportModel>> GetReportsByComment(Guid commentId)
     {
         ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights!");
+        
         var reportsToComments =  _reportToCommentRepository.GetAll(x => x.CommentId == commentId).Select(x => _mapper.Map<ReportModel>(x));
 
         return Task.FromResult<IEnumerable<ReportModel>>(reportsToComments);

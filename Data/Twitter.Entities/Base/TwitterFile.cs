@@ -1,4 +1,5 @@
-﻿using Twitter.Entities.Comments;
+﻿using Shared;
+using Twitter.Entities.Comments;
 using Twitter.Entities.Messenger;
 using Twitter.Entities.Tweets;
 using Twitter.Entities.Users;
@@ -8,7 +9,7 @@ namespace Twitter.Entities.Base;
 public class TwitterFile : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty;
+    public TypeOfFile TypeOfFile { get; set; }
 
     public virtual ICollection<FileTweet> Tweets { get; set; }
 
