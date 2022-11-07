@@ -16,10 +16,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Common\Shared\Shared.csproj"/>
-        <ProjectReference Include="..\..\Data\Twitter.Context\Twitter.Context.csproj"/>
-        <ProjectReference Include="..\..\Data\Twitter.Entities\Twitter.Entities.csproj"/>
-        <ProjectReference Include="..\Twitter.Repository\Twitter.Repository.csproj"/>
+        <ProjectReference Include="..\..\Common\Shared\Shared.csproj" />
+        <ProjectReference Include="..\..\Data\Twitter.Context\Twitter.Context.csproj" />
+        <ProjectReference Include="..\..\Data\Twitter.Entities\Twitter.Entities.csproj" />
+        <ProjectReference Include="..\Twitter.Repository\Twitter.Repository.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ public static class DuendeConfig
     public static IEnumerable<ApiScope> Scopes = new[]
     {
         new ApiScope(AppScopes.TwitterRead, "Access to TwitterApi - read data."),
-        new ApiScope(AppScopes.TwitterWrite,"Access to TwitterApi - write data.")
+        new ApiScope(AppScopes.TwitterWrite, "Access to TwitterApi - write data.")
     };
 
     public static IEnumerable<IdentityResource> Resources = new IdentityResource[]
@@ -42,9 +42,9 @@ public static class DuendeConfig
 
             AllowOfflineAccess = true,
             AccessTokenType = AccessTokenType.Jwt,
-            
+
             AccessTokenLifetime = 3600 * 12, // 12 hours
-            
+
             RefreshTokenUsage = TokenUsage.OneTimeOnly,
             RefreshTokenExpiration = TokenExpiration.Sliding,
             AbsoluteRefreshTokenLifetime = 2592000, // 30 days
@@ -62,7 +62,7 @@ public static class DuendeConfig
 
     public static List<TestUser> Users = new()
     {
-        new()
+        new TestUser
         {
             Username = "alice",
             Password = "alice",

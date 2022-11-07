@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <Reference Include="Microsoft.AspNetCore.Http.Features">
-          <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.8\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+            <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.8\Microsoft.AspNetCore.Http.Features.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Identity.Stores">
             <HintPath>C:\Users\alexander\.nuget\packages\microsoft.extensions.identity.stores\6.0.9\lib\net6.0\Microsoft.Extensions.Identity.Stores.dll</HintPath>

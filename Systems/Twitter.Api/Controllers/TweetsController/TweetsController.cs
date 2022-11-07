@@ -38,7 +38,7 @@ public class TweetsController : ControllerBase
         var tweets = await _tweetsService.GetTweetsBySubscribes(limit);
         return tweets.Select(x => _mapper.Map<TweetResponse>(x));
     }
-    
+
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-tweets-by-userId:{userId}")]
     public async Task<IEnumerable<TweetResponse>> GetTweetsByUserId([FromRoute] Guid userId)

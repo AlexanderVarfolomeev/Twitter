@@ -7,7 +7,7 @@ namespace Twitter.Api.Controllers.TwitterFilesController.Models;
 public class TwitterFileResponse
 {
     public string Name { get; set; } = string.Empty;
-    public TypeOfFile Type { get; set; }
+    public TypeOfFile TypeOfFile { get; set; }
     public Guid Id { get; set; }
     public DateTime CreationTime { get; set; }
     public DateTime ModificationTime { get; set; }

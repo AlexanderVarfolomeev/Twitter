@@ -8,7 +8,7 @@ namespace Twitter.FileService.Models;
 public class TwitterFileModelRequest
 {
     public string Name { get; set; } = string.Empty;
-    public TypeOfFile Type { get; set; }
+    public TypeOfFile TypeOfFile { get; set; }
     public IFormFile File { get; set; }
 }
 

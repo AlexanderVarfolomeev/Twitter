@@ -6,7 +6,7 @@ public interface ITweetsService
 {
     Task<IEnumerable<TweetModel>> GetTweets(int limit = 100);
     Task<IEnumerable<TweetModel>> GetTweetsBySubscribes(int limit = 100);
-    
+
     Task<IEnumerable<TweetModel>> GetTweetsByUserId(Guid userId);
     Task<TweetModel> GetTweetById(Guid id);
     Task DeleteTweet(Guid id);

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Shared.Enum;
 using Twitter.RoleService.Models;
 

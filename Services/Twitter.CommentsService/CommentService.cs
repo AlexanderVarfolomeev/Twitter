@@ -18,8 +18,9 @@ public class CommentService : ICommentsService
     private readonly IRepository<TwitterUser> _accountsRepository;
     private readonly IRepository<Tweet> _tweetRepository;
     private readonly IMapper _mapper;
-    
+
     private readonly Guid _currentUserId;
+
     public CommentService(IHttpContextAccessor accessor, IRepository<Comment> commentsRepository,
         IRepository<TwitterUser> accountsRepository, IRepository<Tweet> tweetRepository, IMapper mapper)
     {
@@ -27,14 +28,15 @@ public class CommentService : ICommentsService
         _accountsRepository = accountsRepository;
         _tweetRepository = tweetRepository;
         _mapper = mapper;
-        
-        _currentUserId =  Guid.Parse(accessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var value = accessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
     }
-    
+
     public Task<CommentModel> AddComment(CommentModelRequest modelRequest, Guid tweetId)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
-        
+
         var model = _mapper.Map<Comment>(modelRequest);
         model.CreatorId = _currentUserId;
         model.TweetId = tweetId;
@@ -44,8 +46,8 @@ public class CommentService : ICommentsService
 
     public Task<IEnumerable<CommentModel>> GetCommentsByTweet(Guid tweetId)
     {
-        ProcessException.ThrowIf(() =>  IsBanned(_currentUserId), "You are banned!");
-        
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
+
         var comments = _tweetRepository.GetById(tweetId).Comments.Select(x => _mapper.Map<CommentModel>(x));
         return Task.FromResult(comments);
     }
@@ -53,14 +55,15 @@ public class CommentService : ICommentsService
     public Task DeleteComment(Guid id)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
-        
+
         var comment = _commentsRepository.GetById(id);
         if (comment.Creator.Id != _currentUserId)
         {
             var isAdmin = _accountsRepository.GetById(_currentUserId).TwitterRoles
                 .Any(x => x.Role.Permissions is TwitterPermissions.Admin or TwitterPermissions.FullAccessAdmin);
-            
-            ProcessException.ThrowIf(() => !isAdmin, "Either the user who created it or the admin can delete the comment");
+
+            ProcessException.ThrowIf(() => !isAdmin,
+                "Either the user who created it or the admin can delete the comment");
         }
 
         _commentsRepository.Delete(_commentsRepository.GetById(id));
@@ -70,7 +73,7 @@ public class CommentService : ICommentsService
     public Task<CommentModel> UpdateComment(Guid id, CommentModelRequest modelRequest)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
-        
+
         var model = _commentsRepository.GetById(id);
         var comment = _mapper.Map(modelRequest, model);
 
@@ -82,14 +85,14 @@ public class CommentService : ICommentsService
 
     public async Task<IEnumerable<CommentModel>> GetCommentsByUser(Guid userId)
     {
-        ProcessException.ThrowIf(() =>_currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
-        
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
+
         _accountsRepository.GetById(userId);
         var list = (await _commentsRepository.GetAll(x => x.Creator.Id == userId).ToListAsync())
             .Select(x => _mapper.Map<CommentModel>(x));
         return list;
     }
-    
+
 
     private bool IsBanned(Guid userId)
     {

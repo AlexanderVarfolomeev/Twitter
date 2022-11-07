@@ -9,5 +9,4 @@ public interface ICommentsService
     Task DeleteComment(Guid id);
     Task<CommentModel> UpdateComment(Guid id, CommentModelRequest modelRequest);
     Task<IEnumerable<CommentModel>> GetCommentsByUser(Guid userId);
-
 }

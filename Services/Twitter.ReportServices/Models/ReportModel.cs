@@ -7,10 +7,10 @@ namespace Twitter.ReportServices.Models;
 public class ReportModel
 {
     public Guid Id { get; set; }
-    public string Text { get; set; } 
+    public string Text { get; set; }
 
     public Guid ReasonId { get; set; }
-    
+
     public Guid TweetOrCommentId { get; set; }
 
     public Guid CreatorId { get; set; }

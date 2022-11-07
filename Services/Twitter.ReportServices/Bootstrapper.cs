@@ -9,5 +9,4 @@ public static class Bootstrapper
         services.AddScoped<IReportService, ReportService>();
         return services;
     }
-    
 }

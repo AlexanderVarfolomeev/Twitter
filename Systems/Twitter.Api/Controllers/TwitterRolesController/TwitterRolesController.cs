@@ -47,7 +47,7 @@ public class TwitterRolesController : ControllerBase
         _roleService.GiveRole(roleId, userId);
         return Ok();
     }
-    
+
     [HttpPost("revoke-role-{roleId}:{userId}")]
     public async Task<IActionResult> RevokeRole([FromRoute] Guid roleId, [FromRoute] Guid userId)
     {

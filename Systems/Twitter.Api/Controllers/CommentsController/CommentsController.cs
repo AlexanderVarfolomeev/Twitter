@@ -29,7 +29,7 @@ public class CommentsController : ControllerBase
         var comments = await _commentsService.GetCommentsByTweet(tweetId);
         return comments.Select(x => _mapper.Map<CommentResponse>(x));
     }
-    
+
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-comment-by-user-{userId}")]
     public async Task<IEnumerable<CommentResponse>> GetCommentsByUser([FromRoute] Guid userId)
@@ -42,7 +42,8 @@ public class CommentsController : ControllerBase
     [HttpPost("{tweetId}")]
     public async Task<CommentResponse> AddComment([FromRoute] Guid tweetId, [FromBody] CommentRequest comment)
     {
-        var commentModelResponse = await _commentsService.AddComment(_mapper.Map<CommentModelRequest>(comment), tweetId);
+        var commentModelResponse =
+            await _commentsService.AddComment(_mapper.Map<CommentModelRequest>(comment), tweetId);
         return _mapper.Map<CommentResponse>(commentModelResponse);
     }
 
@@ -50,8 +51,9 @@ public class CommentsController : ControllerBase
     [HttpPut("{commentId}")]
     public async Task<CommentResponse> UpdateComment([FromRoute] Guid commentId, [FromBody] CommentRequest comment)
     {
-        var commentModelResponse = await _commentsService.UpdateComment( commentId, _mapper.Map<CommentModelRequest>(comment));
-        return _mapper.Map<CommentResponse>(commentModelResponse); 
+        var commentModelResponse =
+            await _commentsService.UpdateComment(commentId, _mapper.Map<CommentModelRequest>(comment));
+        return _mapper.Map<CommentResponse>(commentModelResponse);
     }
 
     [Authorize(AppScopes.TwitterWrite)]
@@ -61,5 +63,4 @@ public class CommentsController : ControllerBase
         await _commentsService.DeleteComment(id);
         return Ok();
     }
-    
 }

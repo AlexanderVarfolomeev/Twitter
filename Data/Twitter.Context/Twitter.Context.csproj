@@ -8,19 +8,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Services\Twitter.Settings\Twitter.Settings.csproj" />
-        <ProjectReference Include="..\Twitter.Entities\Twitter.Entities.csproj" />
+        <ProjectReference Include="..\..\Services\Twitter.Settings\Twitter.Settings.csproj"/>
+        <ProjectReference Include="..\Twitter.Entities\Twitter.Entities.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Migrations" />
-        <Folder Include="Setup" />
+        <Folder Include="Migrations"/>
+        <Folder Include="Setup"/>
     </ItemGroup>
 
 </Project>

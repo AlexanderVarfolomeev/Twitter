@@ -23,7 +23,7 @@ services.AddHttpContextAccessor();
 
 services.AddTwitterAuth();
 
-services.AddControllers();
+services.AddControllers().AddTwitterValidator();
 
 services.AddTwitterSwagger();
 

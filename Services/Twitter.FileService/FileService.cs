@@ -11,7 +11,6 @@ using Twitter.Entities.Tweets;
 using Twitter.Entities.Users;
 using Twitter.FileService.Models;
 using Twitter.Repository;
-using Twitter.Settings.Source;
 
 namespace Twitter.FileService;
 
@@ -19,27 +18,28 @@ public class FileService : IFileService
 {
     private readonly IMapper _mapper;
     private readonly IRepository<Tweet> _tweetsRepository;
-    private readonly ISettingSource _settings;
     private readonly IRepository<FileTweet> _fileTweetRepository;
     private readonly IRepository<Comment> _commentsRepository;
     private readonly IRepository<FileComment> _fileCommentRepository;
     private readonly IRepository<TwitterUser> _userRepository;
     private readonly IRepository<TwitterFile> _filesRepository;
     private readonly Guid _currentUserId;
-    public FileService(IRepository<TwitterFile> filesRepository, IMapper mapper, IRepository<Tweet> tweetsRepository, 
-        ISettingSource settings, IRepository<FileTweet> fileTweetRepository, IHttpContextAccessor accessor,
-        IRepository<Comment> commentsRepository, IRepository<FileComment> fileCommentRepository, IRepository<TwitterUser> userRepository)
+
+    public FileService(IRepository<TwitterFile> filesRepository, IMapper mapper, IRepository<Tweet> tweetsRepository,
+        IRepository<FileTweet> fileTweetRepository, IHttpContextAccessor accessor,
+        IRepository<Comment> commentsRepository, IRepository<FileComment> fileCommentRepository,
+        IRepository<TwitterUser> userRepository)
     {
         _filesRepository = filesRepository;
         _mapper = mapper;
         _tweetsRepository = tweetsRepository;
-        _settings = settings;
         _fileTweetRepository = fileTweetRepository;
         _commentsRepository = commentsRepository;
         _fileCommentRepository = fileCommentRepository;
         _userRepository = userRepository;
 
-        _currentUserId =  Guid.Parse(accessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var value = accessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
     }
 
     public async Task<IEnumerable<TwitterFileModel>> GetFiles()
@@ -63,60 +63,62 @@ public class FileService : IFileService
 
     public async Task<IEnumerable<TwitterFileModel>> AddFileToTweet(IEnumerable<IFormFile> files, Guid tweetId)
     {
-        List<TwitterFile> createdFiles = new List<TwitterFile>();
-        
-        ProcessException.ThrowIf(() => _currentUserId != _tweetsRepository.GetById(tweetId).CreatorId, "Only the creator can change a tweet.");
+        ProcessException.ThrowIf(() => _currentUserId != _tweetsRepository.GetById(tweetId).CreatorId,
+            "Only the creator can change a tweet.");
         ProcessException.ThrowIf(() => files.Any(x => !x.IsImage()), "You can only attach pictures to a tweet!");
-        
+        ProcessException.ThrowIf(() => files.Count() > 10, "You can attach maximum 10 files!");
+
+        var createdFiles = new List<TwitterFile>();
+
         foreach (var file in files)
-        {
             if (file.Length > 0)
             {
-                TwitterFileModelRequest fileModelRequest = new TwitterFileModelRequest();
+                var fileModelRequest = new TwitterFileModelRequest();
                 var name = Path.GetRandomFileName();
-                
+
                 fileModelRequest.Name = name;
-                fileModelRequest.Type = TypeOfFile.Tweet;
-                
-                var createdFile = _filesRepository.Save(_mapper.Map<TwitterFile>(fileModelRequest));
+                fileModelRequest.TypeOfFile = TypeOfFile.Tweet;
+
+
+                var mapFile = _mapper.Map<TwitterFile>(fileModelRequest);
+                var createdFile = _filesRepository.Save(mapFile);
                 createdFiles.Add(createdFile);
                 _fileTweetRepository.Save(new FileTweet() {FileId = createdFile.Id, TweetId = tweetId});
-                
+
                 var filePath = Path.Combine(createdFile.TypeOfFile.GetPath() + '\\', name);
                 await using var stream = File.Create(filePath);
                 await file.CopyToAsync(stream);
             }
-        }
 
         return createdFiles.Select(x => _mapper.Map<TwitterFileModel>(x));
     }
 
     public async Task<IEnumerable<TwitterFileModel>> AddFileToComment(IEnumerable<IFormFile> files, Guid commentId)
     {
-        List<TwitterFile> createdFiles = new List<TwitterFile>();
-        
-        ProcessException.ThrowIf(() => _currentUserId != _commentsRepository.GetById(commentId).CreatorId, "Only the creator can change a comment.");
+        ProcessException.ThrowIf(() => _currentUserId != _commentsRepository.GetById(commentId).CreatorId,
+            "Only the creator can change a comment.");
         ProcessException.ThrowIf(() => files.Any(x => !x.IsImage()), "You can only attach pictures to a comment!");
-        
+        ProcessException.ThrowIf(() => files.Count() > 10, "You can attach maximum 10 files!");
+
+        var createdFiles = new List<TwitterFile>();
+
         foreach (var file in files)
-        {
             if (file.Length > 0)
             {
-                TwitterFileModelRequest fileModelRequest = new TwitterFileModelRequest();
+                var fileModelRequest = new TwitterFileModelRequest();
                 var name = Path.GetRandomFileName();
-                
+
                 fileModelRequest.Name = name;
-                fileModelRequest.Type = TypeOfFile.Comment;
-                
+                fileModelRequest.TypeOfFile = TypeOfFile.Comment;
+
                 var createdFile = _filesRepository.Save(_mapper.Map<TwitterFile>(fileModelRequest));
                 createdFiles.Add(createdFile);
                 _fileCommentRepository.Save(new FileComment() {FileId = createdFile.Id, CommentId = commentId});
-                
+
                 var filePath = Path.Combine(createdFile.TypeOfFile.GetPath() + '\\', name);
                 await using var stream = File.Create(filePath);
                 await file.CopyToAsync(stream);
             }
-        }
 
         return createdFiles.Select(x => _mapper.Map<TwitterFileModel>(x));
     }
@@ -125,7 +127,7 @@ public class FileService : IFileService
     {
         var files = _fileTweetRepository.GetAll(x => x.TweetId == tweetId);
 
-        List<string> result = new List<string>();
+        var result = new List<string>();
         foreach (var file in files)
         {
             var path = TypeOfFile.Tweet.GetPath() + '\\' + file.File.Name;
@@ -140,7 +142,7 @@ public class FileService : IFileService
     {
         var files = _fileCommentRepository.GetAll(x => x.CommentId == commentId);
 
-        List<string> result = new List<string>();
+        var result = new List<string>();
         foreach (var file in files)
         {
             var path = TypeOfFile.Comment + '\\' + file.File.Name;
@@ -167,5 +169,4 @@ public class FileService : IFileService
         var file = _mapper.Map(requestModel, model);
         return Task.FromResult(_mapper.Map<TwitterFileModel>(_filesRepository.Save(file)));
     }
-
 }

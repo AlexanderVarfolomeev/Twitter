@@ -75,5 +75,4 @@ public class TwitterAccountController : ControllerBase
         _accountService.BanUser(id);
         return Task.FromResult<IActionResult>(Ok());
     }
-    
 }

@@ -10,7 +10,7 @@ public interface IReportService
     Task<IEnumerable<ReportModel>> GetReportsByComment(Guid commentId);
     Task CloseReportToComment(Guid reportId);
     Task CloseReportToTweet(Guid reportId);
-    
+
     Task<ReportModel> AddTweetReport(ReportModelRequest modelRequest, Guid tweetId);
     Task<ReportModel> AddCommentReport(ReportModelRequest modelRequest, Guid commentId);
 }
