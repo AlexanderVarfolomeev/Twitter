@@ -41,15 +41,15 @@ public class TwitterRolesController : ControllerBase
         return _mapper.Map<TwitterRoleResponse>(await _roleService.AddRole(model));
     }
 
-    [HttpPost("give-role-{roleId}:{userId}")]
-    public async Task<IActionResult> GiveRole([FromRoute] Guid roleId, [FromRoute] Guid userId)
+    [HttpPost("give-role")]
+    public async Task<IActionResult> GiveRole([FromQuery] Guid roleId, [FromQuery] Guid userId)
     {
         _roleService.GiveRole(roleId, userId);
         return Ok();
     }
 
-    [HttpPost("revoke-role-{roleId}:{userId}")]
-    public async Task<IActionResult> RevokeRole([FromRoute] Guid roleId, [FromRoute] Guid userId)
+    [HttpPost("revoke-role")]
+    public async Task<IActionResult> RevokeRole([FromQuery] Guid roleId, [FromQuery] Guid userId)
     {
         _roleService.RevokeRole(roleId, userId);
         return Ok();

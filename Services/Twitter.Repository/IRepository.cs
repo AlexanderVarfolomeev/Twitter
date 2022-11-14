@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Twitter.Entities.Base;
+using Twitter.Entities.Users;
 
 namespace Twitter.Repository;
 

@@ -24,9 +24,10 @@ public class TwitterAccountController : ControllerBase
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("")]
-    public async Task<IEnumerable<TwitterAccountResponse>> GetAccounts()
+    public async Task<IEnumerable<TwitterAccountResponse>> GetAccounts([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        return (await _accountService.GetAccounts()).Select(x => _mapper.Map<TwitterAccountResponse>(x));
+        return (await _accountService.GetAccounts(offset, limit))
+            .Select(x => _mapper.Map<TwitterAccountResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
@@ -61,16 +62,16 @@ public class TwitterAccountController : ControllerBase
     }
 
     [Authorize(AppScopes.TwitterWrite)]
-    [HttpPost("Subscribe-{id}")]
-    public Task<IActionResult> SubscribeTo([FromRoute] Guid id)
+    [HttpPost("Subscribe")]
+    public Task<IActionResult> SubscribeTo([FromQuery] Guid id)
     {
         _accountService.Subscribe(id);
         return Task.FromResult<IActionResult>(Ok());
     }
 
     [Authorize(AppScopes.TwitterWrite)]
-    [HttpPut("ban-user-{id}")]
-    public Task<IActionResult> BanUser([FromRoute] Guid id)
+    [HttpPut("ban-user")]
+    public Task<IActionResult> BanUser([FromQuery] Guid id)
     {
         _accountService.BanUser(id);
         return Task.FromResult<IActionResult>(Ok());

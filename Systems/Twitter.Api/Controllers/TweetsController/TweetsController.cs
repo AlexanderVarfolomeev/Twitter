@@ -24,26 +24,34 @@ public class TweetsController : ControllerBase
     }
 
     [Authorize(AppScopes.TwitterRead)]
-    [HttpGet("get-first-{limit}-tweets")]
-    public async Task<IEnumerable<TweetResponse>> GetTweets([FromRoute] int limit = 100)
+    [HttpGet("get-tweets")]
+    public async Task<IEnumerable<TweetResponse>> GetTweets([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        var tweets = await _tweetsService.GetTweets(limit);
+        var tweets = await _tweetsService.GetTweets(offset, limit);
         return tweets.Select(x => _mapper.Map<TweetResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
-    [HttpGet("get-first-{limit}-tweets-subscription")]
-    public async Task<IEnumerable<TweetResponse>> GetTweetsBySubscription([FromRoute] int limit = 100)
+    [HttpGet("get-tweets-subscription")]
+    public async Task<IEnumerable<TweetResponse>> GetTweetsBySubscription([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        var tweets = await _tweetsService.GetTweetsBySubscribes(limit);
+        var tweets = await _tweetsService.GetTweetsBySubscribes(offset, limit);
         return tweets.Select(x => _mapper.Map<TweetResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
-    [HttpGet("get-tweets-by-userId:{userId}")]
-    public async Task<IEnumerable<TweetResponse>> GetTweetsByUserId([FromRoute] Guid userId)
+    [HttpGet("get-tweets-by-user:{userId}")]
+    public async Task<IEnumerable<TweetResponse>> GetTweetsByUserId([FromRoute] Guid userId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        var tweets = await _tweetsService.GetTweetsByUserId(userId);
+        var tweets = await _tweetsService.GetTweetsByUserId(userId, offset, limit);
+        return tweets.Select(x => _mapper.Map<TweetResponse>(x));
+    }
+    
+    [Authorize(AppScopes.TwitterRead)]
+    [HttpGet("get-tweets-for-last-days")]
+    public async Task<IEnumerable<TweetResponse>> GetTweetsForLastDays([FromRoute] int days, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    {
+        var tweets = await _tweetsService.GetTweetsForLastDays(days, offset, limit);
         return tweets.Select(x => _mapper.Map<TweetResponse>(x));
     }
 
@@ -53,6 +61,13 @@ public class TweetsController : ControllerBase
     {
         var tweet = await _tweetsService.GetTweetById(id);
         return _mapper.Map<TweetResponse>(tweet);
+    }
+    
+    [Authorize(AppScopes.TwitterRead)]
+    [HttpGet("likes-{id}")]
+    public async Task<int> GetCountLikesByTweet([FromRoute] Guid id)
+    {
+        return await _tweetsService.GetCountLikesOfTweet(id);
     }
 
     [Authorize(AppScopes.TwitterWrite)]
@@ -86,4 +101,6 @@ public class TweetsController : ControllerBase
         _tweetsService.LikeTweet(id);
         return Task.FromResult<IActionResult>(Ok());
     }
+    
+    
 }

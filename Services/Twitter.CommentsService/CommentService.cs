@@ -44,11 +44,15 @@ public class CommentService : ICommentsService
         return Task.FromResult(_mapper.Map<CommentModel>(_commentsRepository.Save(model)));
     }
 
-    public Task<IEnumerable<CommentModel>> GetCommentsByTweet(Guid tweetId)
+    public Task<IEnumerable<CommentModel>> GetCommentsByTweet(Guid tweetId, int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
-        var comments = _tweetRepository.GetById(tweetId).Comments.Select(x => _mapper.Map<CommentModel>(x));
+        var comments = _tweetRepository.GetById(tweetId).Comments
+                .Skip(Math.Max(offset, 0))
+                .Take(Math.Max(0, Math.Min(limit, 1000)))
+                .Select(x => _mapper.Map<CommentModel>(x));
+        
         return Task.FromResult(comments);
     }
 

@@ -35,8 +35,7 @@ public class TwitterUser : IdentityUser<Guid>, IBaseEntity
 
     public virtual ICollection<Subscribe> Subscribes { get; set; } //подписки
 
-    public virtual ICollection<Dialog> DialogsUser1 { get; set; } // диалоги где юзер = юзер1
-    public virtual ICollection<Dialog> DialogsUser2 { get; set; }
+    public virtual ICollection<UserDialog> UserDialogs { get; set; } 
     public DateTime CreationTime { get; set; }
     public DateTime ModificationTime { get; set; }
 

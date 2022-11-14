@@ -7,6 +7,7 @@ using Shared.Exceptions;
 using Shared.Extensions;
 using Twitter.Entities.Base;
 using Twitter.Entities.Comments;
+using Twitter.Entities.Messenger;
 using Twitter.Entities.Tweets;
 using Twitter.Entities.Users;
 using Twitter.FileService.Models;
@@ -22,13 +23,15 @@ public class FileService : IFileService
     private readonly IRepository<Comment> _commentsRepository;
     private readonly IRepository<FileComment> _fileCommentRepository;
     private readonly IRepository<TwitterUser> _userRepository;
+    private readonly IRepository<Message> _messageRepository;
+    private readonly IRepository<MessageFile> _messageFileRepository;
     private readonly IRepository<TwitterFile> _filesRepository;
     private readonly Guid _currentUserId;
 
     public FileService(IRepository<TwitterFile> filesRepository, IMapper mapper, IRepository<Tweet> tweetsRepository,
         IRepository<FileTweet> fileTweetRepository, IHttpContextAccessor accessor,
         IRepository<Comment> commentsRepository, IRepository<FileComment> fileCommentRepository,
-        IRepository<TwitterUser> userRepository)
+        IRepository<TwitterUser> userRepository, IRepository<Message> messageRepository, IRepository<MessageFile> messageFileRepository)
     {
         _filesRepository = filesRepository;
         _mapper = mapper;
@@ -37,6 +40,8 @@ public class FileService : IFileService
         _commentsRepository = commentsRepository;
         _fileCommentRepository = fileCommentRepository;
         _userRepository = userRepository;
+        _messageRepository = messageRepository;
+        _messageFileRepository = messageFileRepository;
 
         var value = accessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
@@ -123,6 +128,36 @@ public class FileService : IFileService
         return createdFiles.Select(x => _mapper.Map<TwitterFileModel>(x));
     }
 
+    public async Task<IEnumerable<TwitterFileModel>> AddFileToMessage(IEnumerable<IFormFile> files, Guid messageId)
+    {
+        ProcessException.ThrowIf(() => _currentUserId != _messageRepository.GetById(messageId).SenderId,
+            "Only the creator can change a message.");
+        ProcessException.ThrowIf(() => files.Any(x => !x.IsImage()), "You can only attach pictures to a message!");
+        ProcessException.ThrowIf(() => files.Count() > 10, "You can attach maximum 10 files!");
+
+        var createdFiles = new List<TwitterFile>();
+
+        foreach (var file in files)
+            if (file.Length > 0)
+            {
+                var fileModelRequest = new TwitterFileModelRequest();
+                var name = Path.GetRandomFileName();
+
+                fileModelRequest.Name = name;
+                fileModelRequest.TypeOfFile = TypeOfFile.Message;
+
+                var createdFile = _filesRepository.Save(_mapper.Map<TwitterFile>(fileModelRequest));
+                createdFiles.Add(createdFile);
+                _messageFileRepository.Save(new MessageFile() {FileId = createdFile.Id, MessageId = messageId});
+
+                var filePath = Path.Combine(createdFile.TypeOfFile.GetPath() + '\\', name);
+                await using var stream = File.Create(filePath);
+                await file.CopyToAsync(stream);
+            }
+
+        return createdFiles.Select(x => _mapper.Map<TwitterFileModel>(x));
+    }
+
     public Task<IEnumerable<string>> GetTweetFiles(Guid tweetId)
     {
         var files = _fileTweetRepository.GetAll(x => x.TweetId == tweetId);
@@ -145,7 +180,22 @@ public class FileService : IFileService
         var result = new List<string>();
         foreach (var file in files)
         {
-            var path = TypeOfFile.Comment + '\\' + file.File.Name;
+            var path = TypeOfFile.Comment.GetPath() + '\\' + file.File.Name;
+            var bytes = File.ReadAllBytes(path);
+            result.Add(Convert.ToBase64String(bytes));
+        }
+
+        return Task.FromResult<IEnumerable<string>>(result);
+    }
+
+    public Task<IEnumerable<string>> GetMessageFiles(Guid messageId)
+    {
+        var files = _messageFileRepository.GetAll(x => x.MessageId == messageId);
+
+        var result = new List<string>();
+        foreach (var file in files)
+        {
+            var path = TypeOfFile.Message.GetPath() + '\\' + file.File.Name;
             var bytes = File.ReadAllBytes(path);
             result.Add(Convert.ToBase64String(bytes));
         }
@@ -162,11 +212,5 @@ public class FileService : IFileService
 
         return Task.FromResult<string>(Convert.ToBase64String(bytes));
     }
-
-    public Task<TwitterFileModel> UpdateFile(Guid id, TwitterFileModelRequest requestModel)
-    {
-        var model = _filesRepository.GetById(id);
-        var file = _mapper.Map(requestModel, model);
-        return Task.FromResult(_mapper.Map<TwitterFileModel>(_filesRepository.Save(file)));
-    }
+   
 }

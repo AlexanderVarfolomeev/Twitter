@@ -23,24 +23,24 @@ public class CommentsController : ControllerBase
     }
 
     [Authorize(AppScopes.TwitterRead)]
-    [HttpGet("get-comment-by-tweet-{tweetId}")]
-    public async Task<IEnumerable<CommentResponse>> GetCommentsByTweet([FromRoute] Guid tweetId)
+    [HttpGet("get-comment-by-tweet")]
+    public async Task<IEnumerable<CommentResponse>> GetCommentsByTweet([FromQuery] Guid tweetId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        var comments = await _commentsService.GetCommentsByTweet(tweetId);
+        var comments = await _commentsService.GetCommentsByTweet(tweetId, offset, limit);
         return comments.Select(x => _mapper.Map<CommentResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
-    [HttpGet("get-comment-by-user-{userId}")]
-    public async Task<IEnumerable<CommentResponse>> GetCommentsByUser([FromRoute] Guid userId)
+    [HttpGet("get-comment-by-user")]
+    public async Task<IEnumerable<CommentResponse>> GetCommentsByUser([FromQuery] Guid userId)
     {
         var comments = await _commentsService.GetCommentsByUser(userId);
         return comments.Select(x => _mapper.Map<CommentResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterWrite)]
-    [HttpPost("{tweetId}")]
-    public async Task<CommentResponse> AddComment([FromRoute] Guid tweetId, [FromBody] CommentRequest comment)
+    [HttpPost("")]
+    public async Task<CommentResponse> AddComment([FromQuery] Guid tweetId, [FromBody] CommentRequest comment)
     {
         var commentModelResponse =
             await _commentsService.AddComment(_mapper.Map<CommentModelRequest>(comment), tweetId);
@@ -48,8 +48,8 @@ public class CommentsController : ControllerBase
     }
 
     [Authorize(AppScopes.TwitterWrite)]
-    [HttpPut("{commentId}")]
-    public async Task<CommentResponse> UpdateComment([FromRoute] Guid commentId, [FromBody] CommentRequest comment)
+    [HttpPut("")]
+    public async Task<CommentResponse> UpdateComment([FromQuery] Guid commentId, [FromBody] CommentRequest comment)
     {
         var commentModelResponse =
             await _commentsService.UpdateComment(commentId, _mapper.Map<CommentModelRequest>(comment));

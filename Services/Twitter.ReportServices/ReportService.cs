@@ -37,42 +37,50 @@ public class ReportService : IReportService
         _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
     }
 
-    public Task<IEnumerable<ReportModel>> GetReportsToTweets()
+    public Task<IEnumerable<ReportModel>> GetReportsToTweets( int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights!");
 
         // Если жалоба была закрыта, то админу не нужно ее больше рассматривать
         var reportsToTweets = _reportToTweetRepository.GetAll(x => x.CloseDate == DateTime.MinValue)
-            .Select(x => _mapper.Map<ReportModel>(x)).AsEnumerable();
+                .Skip(Math.Max(offset, 0))
+                .Take(Math.Max(0, Math.Min(limit, 1000)))
+                .Select(x => _mapper.Map<ReportModel>(x)).AsEnumerable();
 
         return Task.FromResult(reportsToTweets);
     }
 
-    public Task<IEnumerable<ReportModel>> GetReportsToComments()
+    public Task<IEnumerable<ReportModel>> GetReportsToComments( int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights!");
 
         var reportsToComments = _reportToCommentRepository.GetAll(x => x.CloseDate == DateTime.MinValue)
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)))
             .Select(x => _mapper.Map<ReportModel>(x));
 
         return Task.FromResult<IEnumerable<ReportModel>>(reportsToComments);
     }
 
-    public Task<IEnumerable<ReportModel>> GetReportsByTweet(Guid tweetId)
+    public Task<IEnumerable<ReportModel>> GetReportsByTweet(Guid tweetId,  int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights!");
 
         var reportsToTweets = _reportToTweetRepository.GetAll(x => x.TweetId == tweetId)
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)))
             .Select(x => _mapper.Map<ReportModel>(x));
 
         return Task.FromResult<IEnumerable<ReportModel>>(reportsToTweets);
     }
 
-    public Task<IEnumerable<ReportModel>> GetReportsByComment(Guid commentId)
+    public Task<IEnumerable<ReportModel>> GetReportsByComment(Guid commentId,  int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights!");
 
         var reportsToComments = _reportToCommentRepository.GetAll(x => x.CommentId == commentId)
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)))
             .Select(x => _mapper.Map<ReportModel>(x));
 
         return Task.FromResult<IEnumerable<ReportModel>>(reportsToComments);

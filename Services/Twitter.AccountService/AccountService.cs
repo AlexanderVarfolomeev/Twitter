@@ -40,11 +40,14 @@ public class AccountService : IAccountService
     }
 
 
-    public async Task<IEnumerable<TwitterAccountModel>> GetAccounts()
+    public async Task<IEnumerable<TwitterAccountModel>> GetAccounts(int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
-        var accounts = _accountsRepository.GetAll();
+        var accounts = _accountsRepository.GetAll()
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)));
+        
         var result = (await accounts.ToListAsync()).Select(x => _mapper.Map<TwitterAccountModel>(x));
         return result;
     }

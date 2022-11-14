@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Text;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Twitter.Entities.Base;
 using Twitter.Entities.Comments;
@@ -14,8 +15,8 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
     {
     }
 
-    public DbSet<TwitterUser> Users { get; set; }
-    public DbSet<TwitterRole> Roles { get; set; }
+    public override DbSet<TwitterUser> Users { get; set; }
+    public override DbSet<TwitterRole> Roles { get; set; }
     public DbSet<Subscribe> Subscribes { get; set; }
     public DbSet<TwitterRoleTwitterUser> TwitterRolesTwitterUsers { get; set; }
 
@@ -35,6 +36,7 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
     public DbSet<ReasonReport> ReasonReports { get; set; }
 
     public DbSet<TwitterFile> TwitterFiles { get; set; }
+    public DbSet<UserDialog> UserDialogs { get; set; }
 
     //TODO исправить delete behavior (ошибки при удалении юзера, связаны с ролями и подписками, при удалении твита с лайками)
     protected override void OnModelCreating(ModelBuilder builder)
@@ -56,7 +58,7 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
         builder.Entity<FileComment>().HasKey(x => x.Id);
         builder.Entity<ReasonReport>().HasKey(x => x.Id);
         builder.Entity<TwitterFile>().HasKey(x => x.Id);
-
+        builder.Entity<UserDialog>().HasKey(x => x.Id);
         #region Tweets
 
         builder.Entity<Tweet>()
@@ -159,16 +161,15 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Entity<Dialog>().HasOne(x => x.FirstUser)
-            .WithMany(x => x.DialogsUser2)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasForeignKey(x => x.FirstUserId)
-            .OnDelete(DeleteBehavior.Restrict);
-        builder.Entity<Dialog>().HasOne(x => x.SecondUser)
-            .WithMany(x => x.DialogsUser1)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasForeignKey(x => x.SecondUserId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Entity<UserDialog>().HasOne(x => x.Dialog)
+            .WithMany(x => x.UserDialogs)
+            .HasForeignKey(x => x.DialogId)
+            .OnDelete(DeleteBehavior.Cascade);
+        builder.Entity<UserDialog>().HasOne(x => x.User)
+            .WithMany(x => x.UserDialogs)
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
         builder.Entity<Dialog>().HasMany(x => x.Messages)
             .WithOne(x => x.Dialog)
             .HasForeignKey(x => x.DialogId)
@@ -187,7 +188,7 @@ public class MainDbContext : IdentityDbContext<TwitterUser, TwitterRole, Guid>
             .WithMany(x => x.Files)
             .HasForeignKey(x => x.MessageId)
             .OnDelete(DeleteBehavior.Restrict);
-
+        
         builder.Entity<TwitterRoleTwitterUser>().HasOne(x => x.User)
             .WithMany(x => x.TwitterRoles)
             .HasForeignKey(x => x.UserId)

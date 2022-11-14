@@ -38,38 +38,38 @@ public class TwitterFilesController : ControllerBase
     }
 
     [Authorize(AppScopes.TwitterWrite)]
-    [HttpPost("add-files-to-tweet-{tweetId}")]
+    [HttpPost("add-files-to-tweet")]
     public async Task<IEnumerable<TwitterFileModel>> AddFilesToTweet(IEnumerable<IFormFile> files,
-        [FromRoute] Guid tweetId)
+        [FromQuery] Guid tweetId)
     {
         return (await _fileService.AddFileToTweet(files, tweetId)).Select(x => _mapper.Map<TwitterFileModel>(x));
     }
 
     [Authorize(AppScopes.TwitterWrite)]
-    [HttpPost("add-files-to-comment-{commentId}")]
+    [HttpPost("add-files-to-comment")]
     public async Task<IEnumerable<TwitterFileModel>> AddFilesToComment(IEnumerable<IFormFile> files,
-        [FromRoute] Guid commentId)
+        [FromQuery] Guid commentId)
     {
         return (await _fileService.AddFileToComment(files, commentId)).Select(x => _mapper.Map<TwitterFileModel>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
-    [HttpGet("get-tweet-files-{tweetId}")]
-    public async Task<IEnumerable<string>> GetTweetFiles([FromRoute] Guid tweetId)
+    [HttpGet("get-tweet-files")]
+    public async Task<IEnumerable<string>> GetTweetFiles([FromQuery] Guid tweetId)
     {
         return await _fileService.GetTweetFiles(tweetId);
     }
 
     [Authorize(AppScopes.TwitterRead)]
-    [HttpGet("get-comment-files-{commentId}")]
-    public async Task<IEnumerable<string>> GetCommentFiles([FromRoute] Guid commentId)
+    [HttpGet("get-comment-files")]
+    public async Task<IEnumerable<string>> GetCommentFiles([FromQuery] Guid commentId)
     {
         return await _fileService.GetCommentFiles(commentId);
     }
 
     [Authorize(AppScopes.TwitterRead)]
-    [HttpGet("get-avatar-{userId}")]
-    public async Task<string> GetAvatar([FromRoute] Guid userId)
+    [HttpGet("get-avatar")]
+    public async Task<string> GetAvatar([FromQuery] Guid userId)
     {
         return await _fileService.GetAvatar(userId);
     }
@@ -80,13 +80,5 @@ public class TwitterFilesController : ControllerBase
     {
         _fileService.DeleteFile(id);
         return Task.CompletedTask;
-    }
-
-    [Authorize(AppScopes.TwitterWrite)]
-    [HttpPut("{id}")]
-    public async Task<TwitterFileResponse> UpdateFile([FromRoute] Guid id, [FromBody] TwitterFileRequest file)
-    {
-        var model = _mapper.Map<TwitterFileModelRequest>(file);
-        return _mapper.Map<TwitterFileResponse>(await _fileService.UpdateFile(id, model));
     }
 }

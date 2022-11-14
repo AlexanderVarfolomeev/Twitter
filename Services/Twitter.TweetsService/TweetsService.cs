@@ -35,32 +35,55 @@ public class TweetsService : ITweetsService
         _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
     }
 
-    public async Task<IEnumerable<TweetModel>> GetTweets(int limit = 100)
+    public async Task<IEnumerable<TweetModel>> GetTweets(int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
-        var tweets = _tweetRepository.GetAll().Take(limit);
+        var tweets = _tweetRepository.GetAll()
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)));
         var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x));
         return result;
     }
 
-    public async Task<IEnumerable<TweetModel>> GetTweetsBySubscribes(int limit = 100)
+    public async Task<IEnumerable<TweetModel>> GetTweetsBySubscribes(int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
         var subscribes = _usersRepository.GetById(_currentUserId).Subscribes.Select(x => x.UserId);
 
-        var tweets = _tweetRepository.GetAll(x => subscribes.Contains(x.CreatorId));
+        var tweets = _tweetRepository.GetAll(x => subscribes.Contains(x.CreatorId))
+            .OrderByDescending(x => x.CreationTime)
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)));
+        
         var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x))
             .OrderByDescending(x => x.CreationTime);
 
         return result;
     }
 
-    public Task<IEnumerable<TweetModel>> GetTweetsByUserId(Guid userId)
+    public async Task<IEnumerable<TweetModel>> GetTweetsForLastDays(int days, int offset = 0, int limit = 10)
+    {
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
+        var startDate = DateTime.Now - new TimeSpan(days, 0, 0, 0);
+        var tweets = _tweetRepository.GetAll(x => x.CreationTime >= startDate)
+            .OrderByDescending(x => x.CreationTime)
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)));
+        
+        var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x))
+            .OrderByDescending(x => x.CreationTime);
+
+        return result;
+    }
+
+    public Task<IEnumerable<TweetModel>> GetTweetsByUserId(Guid userId, int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
         return Task.FromResult<IEnumerable<TweetModel>>(_tweetRepository.GetAll(x => x.CreatorId == userId)
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)))
             .Select(x => _mapper.Map<TweetModel>(x)));
     }
 
@@ -118,6 +141,11 @@ public class TweetsService : ITweetsService
         else
             _userLikeTweetsRepository.Save(new UserLikeTweet {TweetId = idTweet, UserId = _currentUserId});
         return Task.CompletedTask;
+    }
+
+    public Task<int> GetCountLikesOfTweet(Guid id)
+    {
+        return Task.FromResult(_tweetRepository.GetById(id).Likes.Count);
     }
 
     private bool IsAdmin(Guid userId)

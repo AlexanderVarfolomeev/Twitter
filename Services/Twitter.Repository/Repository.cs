@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shared.Exceptions;
 using Twitter.Context.Context;
 using Twitter.Entities.Base;
+using Twitter.Entities.Users;
 
 namespace Twitter.Repository;
 
