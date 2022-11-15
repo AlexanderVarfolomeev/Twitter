@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-
 namespace Shared.Extensions;
 
 public static class FormFileExtensions
