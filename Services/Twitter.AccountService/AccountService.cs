@@ -40,7 +40,7 @@ public class AccountService : IAccountService
     }
 
 
-    public async Task<IEnumerable<TwitterAccountModel>> GetAccounts(int offset = 0, int limit = 10)
+    public IEnumerable<TwitterAccountModel> GetAccounts(int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
@@ -48,19 +48,18 @@ public class AccountService : IAccountService
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)));
         
-        var result = (await accounts.ToListAsync()).Select(x => _mapper.Map<TwitterAccountModel>(x));
-        return result;
+        return _mapper.Map<IEnumerable<TwitterAccountModel>>(accounts);
     }
 
-    public Task<TwitterAccountModel> GetAccountById(Guid id)
+    public TwitterAccountModel GetAccountById(Guid id)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
         var account = _accountsRepository.GetById(id);
-        return Task.FromResult(_mapper.Map<TwitterAccountModel>(account));
+        return _mapper.Map<TwitterAccountModel>(account);
     }
 
-    public Task DeleteAccount(Guid id)
+    public void DeleteAccount(Guid id)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
 
@@ -70,12 +69,11 @@ public class AccountService : IAccountService
 
         var account = _accountsRepository.GetById(id);
         _accountsRepository.Delete(account);
-        return Task.CompletedTask;
     }
 
-    public async Task<TwitterAccountModel> RegisterAccount(TwitterAccountModelRequest requestModel)
+    public TwitterAccountModel RegisterAccount(TwitterAccountModelRequest requestModel)
     {
-        var user = await _userManager.FindByEmailAsync(requestModel.Email);
+        var user = _userManager.FindByEmailAsync(requestModel.Email).Result;
         ProcessException.ThrowIf(() => user is not null, "User with this email already exists!");
 
         user = _mapper.Map<TwitterUser>(requestModel);
@@ -83,7 +81,7 @@ public class AccountService : IAccountService
         user.EmailConfirmed = false;
 
         user.Init();
-        var result = await _userManager.CreateAsync(user, requestModel.Password);
+        var result =  _userManager.CreateAsync(user, requestModel.Password).Result;
         ProcessException.ThrowIf(() => !result.Succeeded, result.ToString());
         GiveUserRole(user);
 
@@ -91,7 +89,7 @@ public class AccountService : IAccountService
         return _mapper.Map<TwitterAccountModel>(user);
     }
 
-    public Task<TwitterAccountModel> UpdateAccount(Guid id, TwitterAccountModelRequest requestModel)
+    public TwitterAccountModel UpdateAccount(Guid id, TwitterAccountModelRequest requestModel)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
         ProcessException.ThrowIf(() => id != _currentUserId,
@@ -99,15 +97,15 @@ public class AccountService : IAccountService
 
         var model = _accountsRepository.GetById(id);
         var file = _mapper.Map(requestModel, model);
-        return Task.FromResult(_mapper.Map<TwitterAccountModel>(_accountsRepository.Save(file)));
+        return _mapper.Map<TwitterAccountModel>(_accountsRepository.Save(file));
     }
 
-    public Task Subscribe(Guid userId)
+    public void Subscribe(Guid userId)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
 
         // Пользователь не может подписаться сам на себя
-        if (userId == _currentUserId) return Task.CompletedTask;
+        if (userId == _currentUserId) return;
 
         var sub = _subscribesRepository.GetAll(x => x.SubscriberId == _currentUserId && x.UserId == userId);
 
@@ -116,11 +114,9 @@ public class AccountService : IAccountService
             _subscribesRepository.Delete(sub.First());
         else
             _subscribesRepository.Save(new Subscribe {SubscriberId = _currentUserId, UserId = userId});
-
-        return Task.CompletedTask;
     }
 
-    public Task BanUser(Guid userId)
+    public void BanUser(Guid userId)
     {
         ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "Only the admin can ban.");
         ProcessException.ThrowIf(() => IsAdmin(userId), "You can't ban the admin.");
@@ -128,7 +124,6 @@ public class AccountService : IAccountService
         var model = _accountsRepository.GetById(userId);
         model.IsBanned = !model.IsBanned;
         _accountsRepository.Save(model);
-        return Task.CompletedTask;
     }
 
     private void GiveUserRole(TwitterUser user)

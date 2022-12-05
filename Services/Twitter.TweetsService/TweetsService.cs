@@ -35,18 +35,17 @@ public class TweetsService : ITweetsService
         _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
     }
 
-    public async Task<IEnumerable<TweetModel>> GetTweets(int offset = 0, int limit = 10)
+    public IEnumerable<TweetModel> GetTweets(int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
         var tweets = _tweetRepository.GetAll()
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)));
-        var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x));
-        return result;
+        return _mapper.Map<IEnumerable<TweetModel>>(tweets);
     }
 
-    public async Task<IEnumerable<TweetModel>> GetTweetsBySubscribes(int offset = 0, int limit = 10)
+    public IEnumerable<TweetModel> GetTweetsBySubscribes(int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
         var subscribes = _usersRepository.GetById(_currentUserId).Subscribes.Select(x => x.UserId);
@@ -56,13 +55,10 @@ public class TweetsService : ITweetsService
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)));
         
-        var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x))
-            .OrderByDescending(x => x.CreationTime);
-
-        return result;
+        return _mapper.Map<IEnumerable<TweetModel>>(tweets).OrderByDescending(x => x.CreationTime);
     }
 
-    public async Task<IEnumerable<TweetModel>> GetTweetsForLastDays(int days, int offset = 0, int limit = 10)
+    public IEnumerable<TweetModel> GetTweetsForLastDays(int days, int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
         var startDate = DateTime.Now - new TimeSpan(days, 0, 0, 0);
@@ -71,31 +67,28 @@ public class TweetsService : ITweetsService
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)));
         
-        var result = (await tweets.ToListAsync()).Select(x => _mapper.Map<TweetModel>(x))
-            .OrderByDescending(x => x.CreationTime);
-
-        return result;
+        return _mapper.Map<IEnumerable<TweetModel>>(tweets).OrderByDescending(x => x.CreationTime);
     }
 
-    public Task<IEnumerable<TweetModel>> GetTweetsByUserId(Guid userId, int offset = 0, int limit = 10)
+    public IEnumerable<TweetModel> GetTweetsByUserId(Guid userId, int offset = 0, int limit = 10)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
-        return Task.FromResult<IEnumerable<TweetModel>>(_tweetRepository.GetAll(x => x.CreatorId == userId)
+        return _tweetRepository.GetAll(x => x.CreatorId == userId)
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)))
-            .Select(x => _mapper.Map<TweetModel>(x)));
+            .Select(x => _mapper.Map<TweetModel>(x));
     }
 
-    public Task<TweetModel> GetTweetById(Guid id)
+    public TweetModel GetTweetById(Guid id)
     {
         ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
 
         var tweet = _tweetRepository.GetById(id);
-        return Task.FromResult(_mapper.Map<TweetModel>(tweet));
+        return _mapper.Map<TweetModel>(tweet);
     }
 
-    public Task DeleteTweet(Guid id)
+    public void DeleteTweet(Guid id)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
 
@@ -104,19 +97,18 @@ public class TweetsService : ITweetsService
             "Only the creator of the tweet or admin can delete it.");
 
         _tweetRepository.Delete(_tweetRepository.GetById(id));
-        return Task.CompletedTask;
     }
 
-    public Task<TweetModel> AddTweet(TweetModelRequest requestModel)
+    public TweetModel AddTweet(TweetModelRequest requestModel)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
 
         var tweet = _mapper.Map<Tweet>(requestModel);
         tweet.CreatorId = _currentUserId;
-        return Task.FromResult(_mapper.Map<TweetModel>(_tweetRepository.Save(tweet)));
+        return _mapper.Map<TweetModel>(_tweetRepository.Save(tweet));
     }
 
-    public Task<TweetModel> UpdateTweet(Guid id, TweetModelRequest requestModel)
+    public TweetModel UpdateTweet(Guid id, TweetModelRequest requestModel)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
 
@@ -126,10 +118,10 @@ public class TweetsService : ITweetsService
         ProcessException.ThrowIf(() => tweet.CreatorId != _currentUserId,
             "Only the person who created it can change a tweet!");
 
-        return Task.FromResult(_mapper.Map<TweetModel>(_tweetRepository.Save(tweet)));
+        return _mapper.Map<TweetModel>(_tweetRepository.Save(tweet));
     }
 
-    public Task LikeTweet(Guid idTweet)
+    public void LikeTweet(Guid idTweet)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
 
@@ -140,12 +132,11 @@ public class TweetsService : ITweetsService
             _userLikeTweetsRepository.Delete(tweets.First());
         else
             _userLikeTweetsRepository.Save(new UserLikeTweet {TweetId = idTweet, UserId = _currentUserId});
-        return Task.CompletedTask;
     }
 
-    public Task<int> GetCountLikesOfTweet(Guid id)
+    public int GetCountLikesOfTweet(Guid id)
     {
-        return Task.FromResult(_tweetRepository.GetById(id).Likes.Count);
+        return _tweetRepository.GetById(id).Likes.Count;
     }
 
     private bool IsAdmin(Guid userId)

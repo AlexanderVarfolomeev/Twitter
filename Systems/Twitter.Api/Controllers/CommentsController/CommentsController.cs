@@ -24,43 +24,44 @@ public class CommentsController : ControllerBase
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-comment-by-tweet")]
-    public async Task<IEnumerable<CommentResponse>> GetCommentsByTweet([FromQuery] Guid tweetId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    public IEnumerable<CommentResponse> GetCommentsByTweet([FromQuery] Guid tweetId, [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10)
     {
-        var comments = await _commentsService.GetCommentsByTweet(tweetId, offset, limit);
+        var comments = _commentsService.GetCommentsByTweet(tweetId, offset, limit);
         return comments.Select(x => _mapper.Map<CommentResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-comment-by-user")]
-    public async Task<IEnumerable<CommentResponse>> GetCommentsByUser([FromQuery] Guid userId)
+    public IEnumerable<CommentResponse> GetCommentsByUser([FromQuery] Guid userId)
     {
-        var comments = await _commentsService.GetCommentsByUser(userId);
+        var comments = _commentsService.GetCommentsByUser(userId);
         return comments.Select(x => _mapper.Map<CommentResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPost("")]
-    public async Task<CommentResponse> AddComment([FromQuery] Guid tweetId, [FromBody] CommentRequest comment)
+    public CommentResponse AddComment([FromQuery] Guid tweetId, [FromBody] CommentRequest comment)
     {
         var commentModelResponse =
-            await _commentsService.AddComment(_mapper.Map<CommentModelRequest>(comment), tweetId);
+            _commentsService.AddComment(_mapper.Map<CommentModelRequest>(comment), tweetId);
         return _mapper.Map<CommentResponse>(commentModelResponse);
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPut("")]
-    public async Task<CommentResponse> UpdateComment([FromQuery] Guid commentId, [FromBody] CommentRequest comment)
+    public CommentResponse UpdateComment([FromQuery] Guid commentId, [FromBody] CommentRequest comment)
     {
         var commentModelResponse =
-            await _commentsService.UpdateComment(commentId, _mapper.Map<CommentModelRequest>(comment));
+             _commentsService.UpdateComment(commentId, _mapper.Map<CommentModelRequest>(comment));
         return _mapper.Map<CommentResponse>(commentModelResponse);
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteComment([FromRoute] Guid id)
+    public IActionResult DeleteComment([FromRoute] Guid id)
     {
-        await _commentsService.DeleteComment(id);
+        _commentsService.DeleteComment(id);
         return Ok();
     }
 }

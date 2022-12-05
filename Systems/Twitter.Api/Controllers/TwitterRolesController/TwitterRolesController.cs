@@ -23,49 +23,49 @@ public class TwitterRolesController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<IEnumerable<TwitterRoleResponse>> GetRoles()
+    public IEnumerable<TwitterRoleResponse> GetRoles()
     {
-        return (await _roleService.GetRoles()).Select(x => _mapper.Map<TwitterRoleResponse>(x));
+        return _roleService.GetRoles().Select(x => _mapper.Map<TwitterRoleResponse>(x));
     }
 
     [HttpGet("{id}")]
-    public async Task<TwitterRoleResponse> GetRoleById([FromRoute] Guid id)
+    public TwitterRoleResponse GetRoleById([FromRoute] Guid id)
     {
-        return _mapper.Map<TwitterRoleResponse>(await _roleService.GetRoleById(id));
+        return _mapper.Map<TwitterRoleResponse>( _roleService.GetRoleById(id));
     }
 
     [HttpPost("")]
-    public async Task<TwitterRoleResponse> AddRole([FromBody] TwitterRoleRequest role)
+    public TwitterRoleResponse AddRole([FromBody] TwitterRoleRequest role)
     {
         var model = _mapper.Map<TwitterRoleModelRequest>(role);
-        return _mapper.Map<TwitterRoleResponse>(await _roleService.AddRole(model));
+        return _mapper.Map<TwitterRoleResponse>( _roleService.AddRole(model));
     }
 
     [HttpPost("give-role")]
-    public async Task<IActionResult> GiveRole([FromQuery] Guid roleId, [FromQuery] Guid userId)
+    public IActionResult GiveRole([FromQuery] Guid roleId, [FromQuery] Guid userId)
     {
         _roleService.GiveRole(roleId, userId);
         return Ok();
     }
 
     [HttpPost("revoke-role")]
-    public async Task<IActionResult> RevokeRole([FromQuery] Guid roleId, [FromQuery] Guid userId)
+    public IActionResult RevokeRole([FromQuery] Guid roleId, [FromQuery] Guid userId)
     {
         _roleService.RevokeRole(roleId, userId);
         return Ok();
     }
 
     [HttpDelete("{id}")]
-    public Task DeleteRole([FromRoute] Guid id)
+    public IActionResult DeleteRole([FromRoute] Guid id)
     {
         _roleService.DeleteRole(id);
-        return Task.CompletedTask;
+        return Ok();
     }
 
     [HttpPut("{id}")]
-    public async Task<TwitterRoleResponse> UpdateRole([FromRoute] Guid id, [FromBody] TwitterRoleRequest role)
+    public TwitterRoleResponse UpdateRole([FromRoute] Guid id, [FromBody] TwitterRoleRequest role)
     {
         var model = _mapper.Map<TwitterRoleModelRequest>(role);
-        return _mapper.Map<TwitterRoleResponse>(await _roleService.UpdateRole(id, model));
+        return _mapper.Map<TwitterRoleResponse>( _roleService.UpdateRole(id, model));
     }
 }

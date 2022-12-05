@@ -24,56 +24,56 @@ public class TwitterAccountController : ControllerBase
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("")]
-    public async Task<IEnumerable<TwitterAccountResponse>> GetAccounts([FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    public IEnumerable<TwitterAccountResponse> GetAccounts([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        return (await _accountService.GetAccounts(offset, limit))
+        return _accountService.GetAccounts(offset, limit)
             .Select(x => _mapper.Map<TwitterAccountResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("{id}")]
-    public async Task<TwitterAccountResponse> GetAccountById([FromRoute] Guid id)
+    public TwitterAccountResponse GetAccountById([FromRoute] Guid id)
     {
-        return _mapper.Map<TwitterAccountResponse>(await _accountService.GetAccountById(id));
+        return _mapper.Map<TwitterAccountResponse>(_accountService.GetAccountById(id));
     }
 
     [HttpPost("")]
-    public async Task<TwitterAccountResponse> RegisterAccount([FromBody] TwitterAccountRequest account)
+    public TwitterAccountResponse RegisterAccount([FromBody] TwitterAccountRequest account)
     {
         var model = _mapper.Map<TwitterAccountModelRequest>(account);
-        return _mapper.Map<TwitterAccountResponse>(await _accountService.RegisterAccount(model));
+        return _mapper.Map<TwitterAccountResponse>(_accountService.RegisterAccount(model));
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpDelete("{id}")]
-    public Task DeleteAccount([FromRoute] Guid id)
+    public IActionResult DeleteAccount([FromRoute] Guid id)
     {
         _accountService.DeleteAccount(id);
-        return Task.CompletedTask;
+        return Ok();
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPut("{id}")]
-    public async Task<TwitterAccountResponse> UpdateAccount([FromRoute] Guid id,
+    public TwitterAccountResponse UpdateAccount([FromRoute] Guid id,
         [FromBody] TwitterAccountRequest account)
     {
         var model = _mapper.Map<TwitterAccountModelRequest>(account);
-        return _mapper.Map<TwitterAccountResponse>(await _accountService.UpdateAccount(id, model));
+        return _mapper.Map<TwitterAccountResponse>(_accountService.UpdateAccount(id, model));
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPost("Subscribe")]
-    public Task<IActionResult> SubscribeTo([FromQuery] Guid id)
+    public IActionResult SubscribeTo([FromQuery] Guid id)
     {
         _accountService.Subscribe(id);
-        return Task.FromResult<IActionResult>(Ok());
+        return Ok();
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPut("ban-user")]
-    public Task<IActionResult> BanUser([FromQuery] Guid id)
+    public IActionResult BanUser([FromQuery] Guid id)
     {
         _accountService.BanUser(id);
-        return Task.FromResult<IActionResult>(Ok());
+        return Ok();
     }
 }

@@ -4,11 +4,11 @@ namespace Twitter.AccountService;
 
 public interface IAccountService
 {
-    Task<IEnumerable<TwitterAccountModel>> GetAccounts(int offset = 0, int limit = 10);
-    Task<TwitterAccountModel> GetAccountById(Guid id);
-    Task DeleteAccount(Guid id);
-    Task<TwitterAccountModel> RegisterAccount(TwitterAccountModelRequest requestModel);
-    Task<TwitterAccountModel> UpdateAccount(Guid id, TwitterAccountModelRequest requestModel);
-    Task Subscribe(Guid userId);
-    Task BanUser(Guid userId);
+    IEnumerable<TwitterAccountModel> GetAccounts(int offset = 0, int limit = 10);
+    TwitterAccountModel GetAccountById(Guid id);
+    void DeleteAccount(Guid id);
+    TwitterAccountModel RegisterAccount(TwitterAccountModelRequest requestModel);
+    TwitterAccountModel UpdateAccount(Guid id, TwitterAccountModelRequest requestModel);
+    void Subscribe(Guid userId);
+    void BanUser(Guid userId);
 }

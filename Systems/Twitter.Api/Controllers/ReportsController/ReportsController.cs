@@ -25,63 +25,65 @@ public class ReportsController : ControllerBase
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-reports-to-tweets")]
-    public async Task<IEnumerable<ReportResponse>> GetReportsToTweets([FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    public IEnumerable<ReportResponse> GetReportsToTweets([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        return (await _reportService.GetReportsToTweets(offset, limit))
+        return _reportService.GetReportsToTweets(offset, limit)
             .Select(x => _mapper.Map<ReportResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-reports-to-comments")]
-    public async Task<IEnumerable<ReportResponse>> GetReportsToComments([FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    public IEnumerable<ReportResponse> GetReportsToComments([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-        return (await _reportService.GetReportsToComments(offset, limit))
+        return _reportService.GetReportsToComments(offset, limit)
             .Select(x => _mapper.Map<ReportResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-reports-by-tweet")]
-    public async Task<IEnumerable<ReportResponse>> GetReportsByTweet([FromQuery] Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    public IEnumerable<ReportResponse> GetReportsByTweet([FromQuery] Guid id, [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10)
     {
-        return (await _reportService.GetReportsByTweet(id, offset, limit)).Select(x => _mapper.Map<ReportResponse>(x));
+        return _reportService.GetReportsByTweet(id, offset, limit).Select(x => _mapper.Map<ReportResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-reports-by-comment")]
-    public async Task<IEnumerable<ReportResponse>> GetReportsByComment([FromQuery] Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    public IEnumerable<ReportResponse> GetReportsByComment([FromQuery] Guid id, [FromQuery] int offset = 0,
+        [FromQuery] int limit = 10)
     {
-        return (await _reportService.GetReportsByComment(id, offset, limit)).Select(x => _mapper.Map<ReportResponse>(x));
+        return _reportService.GetReportsByComment(id, offset, limit).Select(x => _mapper.Map<ReportResponse>(x));
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPost("post-report-to-tweet")]
-    public async Task<ReportResponse> AddReportToTweet([FromQuery] Guid tweetId, [FromBody] ReportRequest report)
+    public ReportResponse AddReportToTweet([FromQuery] Guid tweetId, [FromBody] ReportRequest report)
     {
-        var result = await _reportService.AddTweetReport(_mapper.Map<ReportModelRequest>(report), tweetId);
+        var result = _reportService.AddTweetReport(_mapper.Map<ReportModelRequest>(report), tweetId);
         return _mapper.Map<ReportResponse>(result);
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPost("post-report-to-comment")]
-    public async Task<ReportResponse> AddReportToComment([FromQuery] Guid commentId, [FromBody] ReportRequest report)
+    public ReportResponse AddReportToComment([FromQuery] Guid commentId, [FromBody] ReportRequest report)
     {
-        var result = await _reportService.AddCommentReport(_mapper.Map<ReportModelRequest>(report), commentId);
+        var result = _reportService.AddCommentReport(_mapper.Map<ReportModelRequest>(report), commentId);
         return _mapper.Map<ReportResponse>(result);
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPut("close-report-to-comment")]
-    public async Task<IActionResult> CloseReportToComment([FromQuery] Guid id)
+    public IActionResult CloseReportToComment([FromQuery] Guid id)
     {
-        await _reportService.CloseReportToComment(id);
+        _reportService.CloseReportToComment(id);
         return Ok();
     }
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPut("close-report-to-tweet")]
-    public async Task<IActionResult> CloseReportToTweet([FromQuery] Guid id)
+    public IActionResult CloseReportToTweet([FromQuery] Guid id)
     {
-        await _reportService.CloseReportToTweet(id);
+        _reportService.CloseReportToTweet(id);
         return Ok();
     }
 }

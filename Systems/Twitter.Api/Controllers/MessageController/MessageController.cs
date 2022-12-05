@@ -21,17 +21,16 @@ public class MessageController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<IEnumerable<MessageResponse>> GetMessages([FromQuery] Guid dialogId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    public IEnumerable<MessageResponse> GetMessages([FromQuery] Guid dialogId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-       var messages = (await _messageService.GetMessages(dialogId, offset, limit))
+       var messages = ( _messageService.GetMessages(dialogId, offset, limit))
            .Select(x => _mapper.Map<MessageResponse>(x));
        return messages;
     }
 
     [HttpPost("")]
-    public async Task<MessageResponse> SendMessage([FromBody] MessageAddRequest message, [FromQuery] Guid userId)
+    public MessageResponse SendMessage([FromBody] MessageAddRequest message, [FromQuery] Guid userId)
     {
-      
-        return _mapper.Map<MessageResponse>(await _messageService.SendMessage(_mapper.Map<MessageAddModelRequest>(message), userId));
+        return _mapper.Map<MessageResponse>( _messageService.SendMessage(_mapper.Map<MessageAddModelRequest>(message), userId));
     }
 }

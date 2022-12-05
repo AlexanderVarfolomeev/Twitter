@@ -4,6 +4,6 @@ namespace Twitter.MessageService;
 
 public interface IMessageService
 {
-    Task<IEnumerable<MessageModel>> GetMessages(Guid dialogId, int offset, int limit);
-    Task<MessageModel> SendMessage(MessageAddModelRequest addModelRequest, Guid userId);
+    IEnumerable<MessageModel> GetMessages(Guid dialogId, int offset, int limit);
+    MessageModel SendMessage(MessageAddModelRequest addModelRequest, Guid userId);
 }

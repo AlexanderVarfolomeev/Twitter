@@ -29,7 +29,7 @@ public class MessengerHub : Hub
     {
         var user = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         
-        var currentUserName = (await _accountService.GetAccountById(Guid.Parse(user))).UserName;
+        var currentUserName = _accountService.GetAccountById(Guid.Parse(user)).UserName;
         var connectionId = Context.ConnectionId;
         
         ConnectionList.Add(currentUserName, connectionId);
@@ -40,7 +40,7 @@ public class MessengerHub : Hub
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var user = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var currentUserName = (await _accountService.GetAccountById(Guid.Parse(user))).UserName;
+        var currentUserName = _accountService.GetAccountById(Guid.Parse(user)).UserName;
         var connectionId = Context.ConnectionId;
         
         ConnectionList.Remove(currentUserName, connectionId);
@@ -55,9 +55,9 @@ public class MessengerHub : Hub
         
         ProcessException.ThrowIf(() => senderId == userId, "You can't send a message to yourself");
         
-        var senderUserName = (await _accountService.GetAccountById(senderId)).UserName;
+        var senderUserName = _accountService.GetAccountById(senderId).UserName;
         
-        var userUserName = (await _accountService.GetAccountById(userId)).UserName;
+        var userUserName = _accountService.GetAccountById(userId).UserName;
         
         var connections = new List<string>();
         
@@ -71,7 +71,7 @@ public class MessengerHub : Hub
             connections.Add(connection);
         }
 
-        var response =_mapper.Map<MessageResponse>(await _messageService.SendMessage(_mapper.Map<MessageAddModelRequest>(message), userId));
+        var response =_mapper.Map<MessageResponse>(_messageService.SendMessage(_mapper.Map<MessageAddModelRequest>(message), userId));
         await Clients.Clients(connections).SendAsync("ReceiveMessage", response); // При получении на клиенте мы сразу вызовем запрос на получение картинок
     }
     
