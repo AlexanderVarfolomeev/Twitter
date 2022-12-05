@@ -1,5 +1,5 @@
-﻿using Twitter.Context.Context;
-using Twitter.Context.Factories;
+﻿using Microsoft.EntityFrameworkCore;
+using Twitter.Context.Context;
 using Twitter.Settings.Interfaces;
 
 namespace Twitter.DuendeServer.Configuration;
@@ -8,9 +8,11 @@ public static class DbConfig
 {
     public static IServiceCollection AddAppDbContext(this IServiceCollection services, IDbSettings settings)
     {
-        var dbOptionsDelegate = DbContextOptionsFactories.Configure(settings.GetConnectionString);
-
-        services.AddDbContextFactory<MainDbContext>(dbOptionsDelegate);
+        services.AddDbContext<MainDbContext>(options =>
+        {
+            options.UseLazyLoadingProxies();
+            options.UseSqlServer(settings.GetConnectionString);
+        });
 
         return services;
     }

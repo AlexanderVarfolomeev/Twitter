@@ -52,5 +52,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-
+app.UseTwitterDbContext();
 app.Run();
