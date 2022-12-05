@@ -10,7 +10,7 @@
         <ProjectReference Include="..\..\Data\Twitter.Context\Twitter.Context.csproj" />
         <ProjectReference Include="..\..\Data\Twitter.Entities\Twitter.Entities.csproj" />
         <ProjectReference Include="..\Twitter.FileService\Twitter.FileService.csproj" />
-        <ProjectReference Include="..\Twitter.Repository\Twitter.Repository.csproj" />
+        <ProjectReference Include="..\..\Data\Twitter.Repository\Twitter.Repository.csproj" />
     </ItemGroup>
 
     <ItemGroup>

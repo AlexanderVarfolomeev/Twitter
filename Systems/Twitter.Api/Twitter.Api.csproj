@@ -40,7 +40,7 @@
         <ProjectReference Include="..\..\Services\Twitter.FileService\Twitter.FileService.csproj" />
         <ProjectReference Include="..\..\Services\Twitter.MessageService\Twitter.MessageService.csproj" />
         <ProjectReference Include="..\..\Services\Twitter.ReportServices\Twitter.ReportServices.csproj" />
-        <ProjectReference Include="..\..\Services\Twitter.Repository\Twitter.Repository.csproj" />
+        <ProjectReference Include="..\..\Data\Twitter.Repository\Twitter.Repository.csproj" />
         <ProjectReference Include="..\..\Services\Twitter.RoleService\Twitter.RoleService.csproj" />
         <ProjectReference Include="..\..\Services\Twitter.Settings\Twitter.Settings.csproj" />
         <ProjectReference Include="..\..\Services\Twitter.TweetsService\Twitter.TweetsService.csproj" />
