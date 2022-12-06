@@ -1,38 +1,43 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared.Enum;
 using Shared.Exceptions;
+using Shared.Security;
 using Twitter.AccountService.Models;
 using Twitter.Entities.Users;
 using Twitter.Repository;
+using Twitter.Settings.Interfaces;
 
 namespace Twitter.AccountService;
 
 public class AccountService : IAccountService
 {
     private readonly IMapper _mapper;
+    private readonly SignInManager<TwitterUser> _signInManager;
+    private readonly ITwitterApiSettings _apiSettings;
     private readonly IRepository<TwitterUser> _accountsRepository;
     private readonly IRepository<Subscribe> _subscribesRepository;
     private readonly IRepository<TwitterRoleTwitterUser> _rolesUserRepository;
+    private readonly UserManager<TwitterUser> _userManager;
     private readonly IRepository<TwitterRole> _rolesRepository;
 
     private readonly Guid _currentUserId;
-    private readonly UserManager<TwitterUser> _userManager;
 
-    public AccountService(UserManager<TwitterUser> userManager,
-        IRepository<Subscribe> subscribesRepository, IRepository<TwitterRoleTwitterUser> rolesUserRepository,
-        IRepository<TwitterRole> rolesRepository,
-        IRepository<TwitterUser> accountsRepository, IMapper mapper, IHttpContextAccessor accessor)
+    public AccountService(IRepository<Subscribe> subscribesRepository, IRepository<TwitterRoleTwitterUser> rolesUserRepository, UserManager<TwitterUser> userManager,  IRepository<TwitterRole> rolesRepository,
+        IRepository<TwitterUser> accountsRepository, IMapper mapper, IHttpContextAccessor accessor,  SignInManager<TwitterUser> signInManager, ITwitterApiSettings apiSettings)
     {
-        _userManager = userManager;
         _subscribesRepository = subscribesRepository;
         _rolesUserRepository = rolesUserRepository;
+        _userManager = userManager;
         _rolesRepository = rolesRepository;
         _accountsRepository = accountsRepository;
         _mapper = mapper;
+        _signInManager = signInManager;
+        _apiSettings = apiSettings;
 
 
         var value = accessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -71,24 +76,6 @@ public class AccountService : IAccountService
         _accountsRepository.Delete(account);
     }
 
-    public TwitterAccountModel RegisterAccount(TwitterAccountModelRequest requestModel)
-    {
-        var user = _userManager.FindByEmailAsync(requestModel.Email).Result;
-        ProcessException.ThrowIf(() => user is not null, "User with this email already exists!");
-
-        user = _mapper.Map<TwitterUser>(requestModel);
-        user.PhoneNumberConfirmed = false;
-        user.EmailConfirmed = false;
-
-        user.Init();
-        var result =  _userManager.CreateAsync(user, requestModel.Password).Result;
-        ProcessException.ThrowIf(() => !result.Succeeded, result.ToString());
-        GiveUserRole(user);
-
-
-        return _mapper.Map<TwitterAccountModel>(user);
-    }
-
     public TwitterAccountModel UpdateAccount(Guid id, TwitterAccountModelRequest requestModel)
     {
         ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
@@ -115,6 +102,56 @@ public class AccountService : IAccountService
         else
             _subscribesRepository.Save(new Subscribe {SubscriberId = _currentUserId, UserId = userId});
     }
+    
+     public async Task<TwitterAccountModel> RegisterUser(TwitterAccountModelRequest requestModel)
+    {
+        var user = await _userManager.FindByEmailAsync(requestModel.Email);
+        ProcessException.ThrowIf(() => user is not null, "User with this email already exists!");
+
+        user = _mapper.Map<TwitterUser>(requestModel);
+        user.PhoneNumberConfirmed = false;
+        user.EmailConfirmed = false;
+
+        user.Init();
+        var result =  await _userManager.CreateAsync(user, requestModel.Password);
+        ProcessException.ThrowIf(() => !result.Succeeded, result.ToString());
+        GiveUserRole(user);
+
+
+        return _mapper.Map<TwitterAccountModel>(user);
+    }
+
+    public async Task<TokenResponse> LoginUser(LoginModel model)
+    {
+        var user = await _userManager.FindByNameAsync(model.Username);
+        ProcessException.ThrowIf(() => user is null, "User not found");
+
+        var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+        ProcessException.ThrowIf(() => !result.Succeeded, "Incorrect email or password");
+
+        var client = new HttpClient();
+        var disco = await client.GetDiscoveryDocumentAsync(_apiSettings.Duende.Url);
+        ProcessException.ThrowIf(() => disco.IsError, disco.Error);
+
+        var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest()
+        {
+            Address = disco.TokenEndpoint,
+            ClientId = model.ClientId,
+            ClientSecret = model.ClientSecret,
+            Password = model.Password,
+            UserName = model.Username,
+            Scope = AppScopes.TwitterRead + " " +AppScopes.TwitterWrite
+        });
+        
+        ProcessException.ThrowIf(() => tokenResponse.IsError, tokenResponse.Error);
+        return tokenResponse;
+    }
+
+    private void GiveUserRole(TwitterUser user)
+    {
+        var userRoleId = _rolesRepository.GetAll(x => x.Permissions == TwitterPermissions.User).First().Id;
+        _rolesUserRepository.Save(new TwitterRoleTwitterUser {RoleId = userRoleId, UserId = user.Id});
+    }
 
     public void BanUser(Guid userId)
     {
@@ -126,11 +163,6 @@ public class AccountService : IAccountService
         _accountsRepository.Save(model);
     }
 
-    private void GiveUserRole(TwitterUser user)
-    {
-        var userRoleId = _rolesRepository.GetAll(x => x.Permissions == TwitterPermissions.User).First().Id;
-        _rolesUserRepository.Save(new TwitterRoleTwitterUser {RoleId = userRoleId, UserId = user.Id});
-    }
 
     private bool IsAdmin(Guid userId)
     {

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Security;
 using Twitter.AccountService;
 using Twitter.AccountService.Models;
 using Twitter.Api.Controllers.AccountController.Models;
+using TwitterAccountModelRequest = Twitter.AccountService.Models.TwitterAccountModelRequest;
 
 namespace Twitter.Api.Controllers.AccountController;
 
@@ -22,6 +24,19 @@ public class TwitterAccountController : ControllerBase
         _accountService = accountService;
     }
 
+    [HttpPost("")]
+    public async Task<TwitterAccountResponse> RegisterUser([FromBody] TwitterAccountRequest account)
+    {
+        var model = _mapper.Map<TwitterAccountModelRequest>(account);
+        return _mapper.Map<TwitterAccountResponse>(await _accountService.RegisterUser(model));
+    }
+
+    [HttpPost("login")]
+    public async Task<TokenResponse> LoginUser([FromBody] LoginModelRequest model)
+    {
+        return await _accountService.LoginUser(_mapper.Map<LoginModel>(model));
+    }
+    
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("")]
     public IEnumerable<TwitterAccountResponse> GetAccounts([FromQuery] int offset = 0, [FromQuery] int limit = 10)
@@ -37,12 +52,7 @@ public class TwitterAccountController : ControllerBase
         return _mapper.Map<TwitterAccountResponse>(_accountService.GetAccountById(id));
     }
 
-    [HttpPost("")]
-    public TwitterAccountResponse RegisterAccount([FromBody] TwitterAccountRequest account)
-    {
-        var model = _mapper.Map<TwitterAccountModelRequest>(account);
-        return _mapper.Map<TwitterAccountResponse>(_accountService.RegisterAccount(model));
-    }
+  
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpDelete("{id}")]

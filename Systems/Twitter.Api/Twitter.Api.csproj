@@ -33,6 +33,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Common\Twitter.Settings\Twitter.Settings.csproj" />
         <ProjectReference Include="..\..\Common\Twitter.Shared\Twitter.Shared.csproj" />
         <ProjectReference Include="..\..\Data\Twitter.Context\Twitter.Context.csproj" />
         <ProjectReference Include="..\..\Services\Twitter.AccountService\Twitter.AccountService.csproj" />
@@ -42,7 +43,6 @@
         <ProjectReference Include="..\..\Services\Twitter.ReportServices\Twitter.ReportServices.csproj" />
         <ProjectReference Include="..\..\Data\Twitter.Repository\Twitter.Repository.csproj" />
         <ProjectReference Include="..\..\Services\Twitter.RoleService\Twitter.RoleService.csproj" />
-        <ProjectReference Include="..\..\Services\Twitter.Settings\Twitter.Settings.csproj" />
         <ProjectReference Include="..\..\Services\Twitter.TweetsService\Twitter.TweetsService.csproj" />
     </ItemGroup>
 

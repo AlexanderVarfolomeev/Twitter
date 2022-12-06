@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Services\Twitter.Settings\Twitter.Settings.csproj" />
+        <ProjectReference Include="..\..\Common\Twitter.Settings\Twitter.Settings.csproj" />
         <ProjectReference Include="..\Twitter.Entities\Twitter.Entities.csproj" />
     </ItemGroup>
 

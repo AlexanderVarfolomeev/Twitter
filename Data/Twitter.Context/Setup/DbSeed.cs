@@ -52,30 +52,32 @@ public class DbSeed
             });
 
             context.SaveChanges();
+            
+            var user = new TwitterUser()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Admin",
+                Surname = "Admin",
+                Birthday = DateTime.Now,
+                CreationTime = DateTime.Now,
+                ModificationTime = DateTime.Now,
+                UserName = "Admin",
+            };
+            manager.CreateAsync(user, "pass");
+
+            context.SaveChanges();
+
+            context.TwitterRolesTwitterUsers.Add(new TwitterRoleTwitterUser()
+            {
+                RoleId = context.Roles.First(x => x.Permissions == TwitterPermissions.FullAccessAdmin).Id,
+                UserId = user.Id,
+                CreationTime = DateTime.Now,
+                ModificationTime = DateTime.Now
+            });
+
+            context.SaveChanges();
         }
 
-        var user = new TwitterUser()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Admin",
-            Surname = "Admin",
-            Birthday = DateTime.Now,
-            CreationTime = DateTime.Now,
-            ModificationTime = DateTime.Now,
-            UserName = "Admin",
-        };
-        manager.CreateAsync(user, "pass");
-
-        context.SaveChanges();
-
-        context.TwitterRolesTwitterUsers.Add(new TwitterRoleTwitterUser()
-        {
-            RoleId = context.Roles.First(x => x.Permissions == TwitterPermissions.FullAccessAdmin).Id,
-            UserId = user.Id,
-            CreationTime = DateTime.Now,
-            ModificationTime = DateTime.Now
-        });
-
-        context.SaveChanges();
+       
     }
 }
