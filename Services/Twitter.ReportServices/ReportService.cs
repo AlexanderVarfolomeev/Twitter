@@ -39,7 +39,7 @@ public class ReportService : IReportService
 
     public IEnumerable<ReportModel> GetReportsToTweets( int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), MessageError.AccessRightsError);
 
         // Если жалоба была закрыта, то админу не нужно ее больше рассматривать
         var reportsToTweets = _reportToTweetRepository.GetAll(x => x.CloseDate == DateTime.MinValue)
@@ -51,7 +51,7 @@ public class ReportService : IReportService
 
     public IEnumerable<ReportModel> GetReportsToComments( int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), MessageError.AccessRightsError);
 
         var reportsToComments = _reportToCommentRepository.GetAll(x => x.CloseDate == DateTime.MinValue)
             .Skip(Math.Max(offset, 0))
@@ -61,7 +61,7 @@ public class ReportService : IReportService
 
     public IEnumerable<ReportModel> GetReportsByTweet(Guid tweetId,  int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), MessageError.AccessRightsError);
 
         var reportsToTweets = _reportToTweetRepository.GetAll(x => x.TweetId == tweetId)
             .Skip(Math.Max(offset, 0))
@@ -72,7 +72,7 @@ public class ReportService : IReportService
 
     public IEnumerable<ReportModel> GetReportsByComment(Guid commentId,  int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), "No access rights!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && !IsAdmin(_currentUserId), MessageError.AccessRightsError);
 
         var reportsToComments = _reportToCommentRepository.GetAll(x => x.CommentId == commentId)
             .Skip(Math.Max(offset, 0))
@@ -83,7 +83,7 @@ public class ReportService : IReportService
 
     public void CloseReportToTweet(Guid reportId)
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), "No access rights!");
+        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), MessageError.AccessRightsError);
 
         var report = _reportToTweetRepository.GetById(reportId);
         report.CloseDate = DateTime.Now;
@@ -104,7 +104,7 @@ public class ReportService : IReportService
 
     public ReportModel AddTweetReport(ReportModelRequest modelRequest, Guid tweetId)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned.");
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
 
         var model = _mapper.Map<ReportToTweet>(modelRequest);
         model.CreatorId = _currentUserId;
@@ -115,7 +115,7 @@ public class ReportService : IReportService
 
     public ReportModel AddCommentReport(ReportModelRequest modelRequest, Guid commentId)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned.");
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
 
         var model = _mapper.Map<ReportToComment>(modelRequest);
         model.CreatorId = _currentUserId;

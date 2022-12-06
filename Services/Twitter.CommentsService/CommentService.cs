@@ -35,7 +35,7 @@ public class CommentService : ICommentsService
 
     public CommentModel AddComment(CommentModelRequest modelRequest, Guid tweetId)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
 
         var model = _mapper.Map<Comment>(modelRequest);
         model.CreatorId = _currentUserId;
@@ -46,7 +46,7 @@ public class CommentService : ICommentsService
 
     public IEnumerable<CommentModel> GetCommentsByTweet(Guid tweetId, int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
 
         var comments = _tweetRepository.GetById(tweetId).Comments
             .Skip(Math.Max(offset, 0))
@@ -57,7 +57,7 @@ public class CommentService : ICommentsService
 
     public void DeleteComment(Guid id)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
 
         var comment = _commentsRepository.GetById(id);
         if (comment.Creator.Id != _currentUserId)
@@ -66,7 +66,7 @@ public class CommentService : ICommentsService
                 .Any(x => x.Role.Permissions is TwitterPermissions.Admin or TwitterPermissions.FullAccessAdmin);
 
             ProcessException.ThrowIf(() => !isAdmin,
-                "Either the user who created it or the admin can delete the comment");
+                MessageError.OnlyAdminOrAccountOwnerCanDoIdError);
         }
 
         _commentsRepository.Delete(_commentsRepository.GetById(id));
@@ -74,20 +74,20 @@ public class CommentService : ICommentsService
 
     public CommentModel UpdateComment(Guid id, CommentModelRequest modelRequest)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
 
         var model = _commentsRepository.GetById(id);
         var comment = _mapper.Map(modelRequest, model);
 
         ProcessException.ThrowIf(() => comment.CreatorId != _currentUserId,
-            "Only the person who created it can change a comment!");
+            MessageError.OnlyAccountOwnerCanDoIdError);
 
         return _mapper.Map<CommentModel>(_commentsRepository.Save(comment));
     }
 
     public IEnumerable<CommentModel> GetCommentsByUser(Guid userId)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), "You are banned!");
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
 
         _accountsRepository.GetById(userId);
         var commentsByUser = _commentsRepository.GetAll(x => x.Creator.Id == userId);

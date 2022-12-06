@@ -37,7 +37,7 @@ public class MessageService : IMessageService
     {
         var dialog = _dialogRepository.GetById(dialogId);
         
-        ProcessException.ThrowIf(() => dialog.UserDialogs.All(x => x.UserId != _currentUserId), "You don't have access to this dialog.");
+        ProcessException.ThrowIf(() => dialog.UserDialogs.All(x => x.UserId != _currentUserId), MessageError.AccessRightsError);
 
         var messages = dialog.Messages
             .Skip(Math.Max(offset, 0))
