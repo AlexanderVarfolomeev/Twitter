@@ -9,7 +9,9 @@ using System.Windows;
 using System.Windows.Shapes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Twitter.WPF.Services;
+using Twitter.WPF.Services.AccountService;
+using Twitter.WPF.Services.AccountService.Models;
+using Twitter.WPF.Services.UserDialogService;
 using Twitter.WPF.ViewModels;
 using Path = System.IO.Path;
 
@@ -42,8 +44,12 @@ namespace Twitter.WPF
 
         public static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
-            services.AddSingleton<MainViewModel>();
-            services.AddScoped<IService, ServiceImp>();
+            services.AddScoped<MainViewModel>();
+            services.AddTransient<LoginViewModel>();
+
+            services.AddScoped<IUserDialogService, UserDialogService>();
+            services.AddSingleton<HttpClient>();
+            services.AddScoped<IAccountService, AccountService>();
 
         }
 

@@ -123,7 +123,7 @@ public class AccountService : IAccountService
 
     public async Task<TokenResponse> LoginUser(LoginModel model)
     {
-        var user = await _userManager.FindByNameAsync(model.Username);
+        var user = await _userManager.FindByEmailAsync(model.Email);
         ProcessException.ThrowIf(() => user is null, ErrorMessage.NotFoundError);
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
@@ -139,7 +139,7 @@ public class AccountService : IAccountService
             ClientId = model.ClientId,
             ClientSecret = model.ClientSecret,
             Password = model.Password,
-            UserName = model.Username,
+            UserName = user.UserName,
             Scope =  "offline_access " + AppScopes.TwitterRead + " " + AppScopes.TwitterWrite
         });
         

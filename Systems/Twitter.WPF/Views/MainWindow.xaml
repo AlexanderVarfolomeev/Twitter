@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Twitter.WPF"
         xmlns:vm="clr-namespace:Twitter.WPF.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -11,6 +10,11 @@
         <x:Static Member="vm:ViewModelLocator.MainViewModel" x:Key="Locator"></x:Static>
     </Window.Resources>
     <Grid>
-        <TextBlock Text="{Binding Text, Source={StaticResource Locator}}"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="addsf" Command="{Binding LoginCommand, Source={StaticResource Locator}}"></Button>
+        <TextBlock Grid.Row="1" Text="{Binding Token, Source={StaticResource Locator}}"></TextBlock>
     </Grid>
 </Window>
