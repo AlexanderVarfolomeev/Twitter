@@ -47,7 +47,7 @@ public class AccountService : IAccountService
 
     public IEnumerable<TwitterAccountModel> GetAccounts(int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         var accounts = _accountsRepository.GetAll()
             .Skip(Math.Max(offset, 0))
@@ -58,7 +58,7 @@ public class AccountService : IAccountService
 
     public TwitterAccountModel GetAccountById(Guid id)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         var account = _accountsRepository.GetById(id);
         return _mapper.Map<TwitterAccountModel>(account);
@@ -66,11 +66,11 @@ public class AccountService : IAccountService
 
     public void DeleteAccount(Guid id)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         if (id != _currentUserId)
             ProcessException.ThrowIf(() => !IsAdmin(_currentUserId),
-                MessageError.OnlyAdminOrAccountOwnerCanDoIdError);
+                ErrorMessage.OnlyAdminOrAccountOwnerCanDoIdError);
 
         var account = _accountsRepository.GetById(id);
         _accountsRepository.Delete(account);
@@ -78,9 +78,9 @@ public class AccountService : IAccountService
 
     public TwitterAccountModel UpdateAccount(Guid id, TwitterAccountModelRequest requestModel)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
         ProcessException.ThrowIf(() => id != _currentUserId,
-            MessageError.OnlyAccountOwnerCanDoIdError);
+            ErrorMessage.OnlyAccountOwnerCanDoIdError);
 
         var model = _accountsRepository.GetById(id);
         var file = _mapper.Map(requestModel, model);
@@ -89,7 +89,7 @@ public class AccountService : IAccountService
 
     public void Subscribe(Guid userId)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         // Пользователь не может подписаться сам на себя
         if (userId == _currentUserId) return;
@@ -106,7 +106,7 @@ public class AccountService : IAccountService
      public async Task<TwitterAccountModel> RegisterUser(TwitterAccountModelRequest requestModel)
     {
         var user = await _userManager.FindByEmailAsync(requestModel.Email);
-        ProcessException.ThrowIf(() => user is not null, MessageError.UserWithThisEmailExistsError);
+        ProcessException.ThrowIf(() => user is not null, ErrorMessage.UserWithThisEmailExistsError);
 
         user = _mapper.Map<TwitterUser>(requestModel);
         user.PhoneNumberConfirmed = false;
@@ -124,10 +124,10 @@ public class AccountService : IAccountService
     public async Task<TokenResponse> LoginUser(LoginModel model)
     {
         var user = await _userManager.FindByNameAsync(model.Username);
-        ProcessException.ThrowIf(() => user is null, MessageError.NotFoundError);
+        ProcessException.ThrowIf(() => user is null, ErrorMessage.NotFoundError);
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-        ProcessException.ThrowIf(() => !result.Succeeded, MessageError.IncorrectEmailOrPasswordError);
+        ProcessException.ThrowIf(() => !result.Succeeded, ErrorMessage.IncorrectEmailOrPasswordError);
 
         var client = new HttpClient();
         var disco = await client.GetDiscoveryDocumentAsync(_apiSettings.Duende.Url);
@@ -140,7 +140,7 @@ public class AccountService : IAccountService
             ClientSecret = model.ClientSecret,
             Password = model.Password,
             UserName = model.Username,
-            Scope = AppScopes.TwitterRead + " " +AppScopes.TwitterWrite
+            Scope =  "offline_access " + AppScopes.TwitterRead + " " + AppScopes.TwitterWrite
         });
         
         ProcessException.ThrowIf(() => tokenResponse.IsError, tokenResponse.Error);
@@ -155,14 +155,13 @@ public class AccountService : IAccountService
 
     public void BanUser(Guid userId)
     {
-        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), MessageError.OnlyAdminCanDoItError);
-        ProcessException.ThrowIf(() => IsAdmin(userId), MessageError.CantBanAdminError);
+        ProcessException.ThrowIf(() => !IsAdmin(_currentUserId), ErrorMessage.OnlyAdminCanDoItError);
+        ProcessException.ThrowIf(() => IsAdmin(userId), ErrorMessage.CantBanAdminError);
 
         var model = _accountsRepository.GetById(userId);
         model.IsBanned = !model.IsBanned;
         _accountsRepository.Save(model);
     }
-
 
     private bool IsAdmin(Guid userId)
     {

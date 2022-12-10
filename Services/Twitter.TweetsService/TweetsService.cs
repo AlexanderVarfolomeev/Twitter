@@ -37,7 +37,7 @@ public class TweetsService : ITweetsService
 
     public IEnumerable<TweetModel> GetTweets(int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         var tweets = _tweetRepository.GetAll()
             .Skip(Math.Max(offset, 0))
@@ -47,7 +47,7 @@ public class TweetsService : ITweetsService
 
     public IEnumerable<TweetModel> GetTweetsBySubscribes(int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
         var subscribes = _usersRepository.GetById(_currentUserId).Subscribes.Select(x => x.UserId);
 
         var tweets = _tweetRepository.GetAll(x => subscribes.Contains(x.CreatorId))
@@ -60,7 +60,7 @@ public class TweetsService : ITweetsService
 
     public IEnumerable<TweetModel> GetTweetsForLastDays(int days, int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
         var startDate = DateTime.Now - new TimeSpan(days, 0, 0, 0);
         var tweets = _tweetRepository.GetAll(x => x.CreationTime >= startDate)
             .OrderByDescending(x => x.CreationTime)
@@ -72,7 +72,7 @@ public class TweetsService : ITweetsService
 
     public IEnumerable<TweetModel> GetTweetsByUserId(Guid userId, int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         return _tweetRepository.GetAll(x => x.CreatorId == userId)
             .Skip(Math.Max(offset, 0))
@@ -82,7 +82,7 @@ public class TweetsService : ITweetsService
 
     public TweetModel GetTweetById(Guid id)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         var tweet = _tweetRepository.GetById(id);
         return _mapper.Map<TweetModel>(tweet);
@@ -90,7 +90,7 @@ public class TweetsService : ITweetsService
 
     public void DeleteTweet(Guid id)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         var model = _tweetRepository.GetById(id);
         ProcessException.ThrowIf(() => _currentUserId != model.CreatorId && !IsAdmin(_currentUserId),
@@ -101,7 +101,7 @@ public class TweetsService : ITweetsService
 
     public TweetModel AddTweet(TweetModelRequest requestModel)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         var tweet = _mapper.Map<Tweet>(requestModel);
         tweet.CreatorId = _currentUserId;
@@ -110,20 +110,20 @@ public class TweetsService : ITweetsService
 
     public TweetModel UpdateTweet(Guid id, TweetModelRequest requestModel)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         var model = _tweetRepository.GetById(id);
         var tweet = _mapper.Map(requestModel, model);
 
         ProcessException.ThrowIf(() => tweet.CreatorId != _currentUserId,
-            MessageError.OnlyAccountOwnerCanDoIdError);
+            ErrorMessage.OnlyAccountOwnerCanDoIdError);
 
         return _mapper.Map<TweetModel>(_tweetRepository.Save(tweet));
     }
 
     public void LikeTweet(Guid idTweet)
     {
-        ProcessException.ThrowIf(() => IsBanned(_currentUserId), MessageError.YouBannedError);
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
 
         var tweets = _userLikeTweetsRepository.GetAll(x => x.TweetId == idTweet && x.UserId == _currentUserId);
 

@@ -4,16 +4,16 @@ using Microsoft.IdentityModel.Tokens;
 using Shared.Security;
 using Twitter.Context.Context;
 using Twitter.Entities.Users;
+using Twitter.Settings.Interfaces;
 
 namespace Twitter.Api.Configuration.ServicesExtensions;
 
 public static class AuthConfiguration
 {
-    public static IServiceCollection AddTwitterAuth(this IServiceCollection services)
+    public static IServiceCollection AddTwitterAuth(this IServiceCollection services, ITwitterApiSettings apiSettings)
     {
         services.AddIdentity<TwitterUser, TwitterRole>(options =>
             {
-                //TODO исправить требования
                 options.Password.RequiredLength = 0;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -38,7 +38,7 @@ public static class AuthConfiguration
             .AddJwtBearer(IdentityServerAuthenticationDefaults.AuthenticationScheme, options =>
             {
                 options.RequireHttpsMetadata = false;
-                options.Authority = "https://localhost:5001"; //TODO settings
+                options.Authority = apiSettings.Duende.Url;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = false,

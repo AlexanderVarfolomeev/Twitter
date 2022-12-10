@@ -6,12 +6,12 @@ using Twitter.Settings.Source;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-
+var settings = new TwitterApiSettings(new SettingSource());
 builder.AddTwitterSerilog();
 
 services.AddTwitterCors();
 
-services.AddTwitterDbContext(new TwitterApiSettings(new SettingSource()));
+services.AddTwitterDbContext(settings);
 
 services.AddAppServices();
 
@@ -21,11 +21,11 @@ services.AddTwitterVersions();
 
 services.AddHttpContextAccessor();
 
-services.AddTwitterAuth();
+services.AddTwitterAuth(settings);
 
 services.AddControllers().AddTwitterValidator();
 
-services.AddTwitterSwagger();
+services.AddTwitterSwagger(settings);
 
 services.AddTwitterAutomapper();
 

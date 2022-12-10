@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
 using Shared.Security;
+using Twitter.Settings.Interfaces;
 
 namespace Twitter.Api.Configuration.ServicesExtensions;
 
 public static class SwaggerConfiguration
 {
-    public static IServiceCollection AddTwitterSwagger(this IServiceCollection services)
+    public static IServiceCollection AddTwitterSwagger(this IServiceCollection services, ITwitterApiSettings apiSettings)
     {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(opts =>
@@ -38,7 +39,7 @@ public static class SwaggerConfiguration
                 {
                     Password = new OpenApiOAuthFlow
                     {
-                        TokenUrl = new Uri("https://localhost:5001/connect/token"), //TODO заменить на настройки
+                        TokenUrl = new Uri(apiSettings.Duende.Url + "/connect/token"), 
                         Scopes = new Dictionary<string, string>
                         {
                             {AppScopes.TwitterRead, "Twitter API read data."},
@@ -47,7 +48,7 @@ public static class SwaggerConfiguration
                     },
                     ClientCredentials = new OpenApiOAuthFlow
                     {
-                        TokenUrl = new Uri("https://localhost:5001/connect/token"),
+                        TokenUrl = new Uri(apiSettings.Duende.Url + "/connect/token"),
                         Scopes = new Dictionary<string, string>
                         {
                             {AppScopes.TwitterRead, "Twitter API read data."}

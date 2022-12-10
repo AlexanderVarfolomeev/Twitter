@@ -1,6 +1,6 @@
 ﻿namespace Shared.Exceptions;
 
-public static class MessageError
+public static class ErrorMessage
 {
     public const string NotFoundError = "Object not found.";
     public const string YouBannedError = "You are banned.";
