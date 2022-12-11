@@ -4,17 +4,302 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Twitter.WPF.ViewModels"
+        xmlns:models="clr-namespace:Twitter.WPF.Services.TweetsService.Models"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="920" Width="1600">
     <Window.Resources>
-        <x:Static Member="vm:ViewModelLocator.MainViewModel" x:Key="Locator"></x:Static>
+        <x:Static Member="vm:ViewModelLocator.MainViewModel" x:Key="MainVM"></x:Static>
+        <vm:Base64ImageConverter x:Key="Base64ImageConverter" />
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Button Grid.Row="0" Content="addsf" Command="{Binding LoginCommand, Source={StaticResource Locator}}"></Button>
-        <TextBlock Grid.Row="1" Text="{Binding Token, Source={StaticResource Locator}}"></TextBlock>
-    </Grid>
+
+    <DockPanel>
+        <TabControl DockPanel.Dock="Top">
+
+            <TabItem Header="Моя страница"
+                     FontSize="26">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="0.8*" />
+                        <RowDefinition Height="10*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Описание аккаунта -->
+                    <DockPanel Grid.ColumnSpan="3"
+                               Grid.Row="0"
+                               HorizontalAlignment="Stretch">
+
+                        <Image DockPanel.Dock="Left"
+                               Source="{Binding CurrentUser.AvatarBase64, Converter={StaticResource Base64ImageConverter} , Source={StaticResource MainVM}}" />
+
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                            <TextBlock Background="Aqua"
+                                       Text="{Binding CurrentUser.UserName, Source={StaticResource MainVM}, StringFormat='@\{0\}'}" />
+                            <TextBlock Background="Aqua"
+                                       Text="{Binding CurrentUser.Birthday, Source={StaticResource MainVM}, StringFormat='Birthday : {0:D}'}" />
+
+                            <TextBlock Background="Bisque"
+                                       Text="{Binding CurrentUser.PageDescription, Source={StaticResource MainVM}}" />
+                            <UniformGrid Background="Azure"  >
+                                <Button DockPanel.Dock="Left" Content="{Binding CountOfSubscribers, Source={StaticResource MainVM}}"
+                                        ContentStringFormat="Подписчики: {0}" 
+                                        Command="{Binding ViewSubscribersListCommand, Source={StaticResource MainVM}}"/>
+                                <Button DockPanel.Dock="Right" Content="{Binding CountOfSubscriptions, Source={StaticResource MainVM}}"
+                                        ContentStringFormat="Подписки: {0}"
+                                        Command="{Binding ViewSubscriptionsListCommand, Source={StaticResource MainVM}}"/>
+                            </UniformGrid>
+                        </StackPanel>
+
+                    </DockPanel>
+                    
+                    <!-- Написать твит -->
+                    <Button Grid.Column="1"
+                            Grid.Row="1" 
+                            Content="Написать твит"
+                            Command="{Binding AddTweetCommand, Source={StaticResource MainVM}}"/>
+                    
+                    <!-- Поменять аватар -->
+                    <Button Grid.Column="0"
+                            Grid.Row="1" 
+                            Content="Изменить аватар"
+                            Command="{Binding AddAvatarCommand, Source={StaticResource MainVM}}"/> 
+                    
+                    <!-- Изменить свои данные-->
+                    <Button Grid.Column="2"
+                            Grid.Row="1" 
+                            Content="Изменить данные (потом)"/>
+
+                    <Grid Grid.ColumnSpan="3"
+                          Grid.Column="0"
+                          Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="10*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Лента твитов -->
+                        <ListBox Grid.Column="1"
+                                 Grid.Row="1"
+                                 HorizontalContentAlignment="Stretch"
+                                 ItemsSource="{Binding CurrentUserTweets, Source={StaticResource MainVM}}"
+                                 SelectedItem="{Binding SelectedTweet, Source={StaticResource MainVM}}"
+                                 IsSynchronizedWithCurrentItem="True">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="3*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="10*" />
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="1*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Image Grid.Column="0"
+                                               Grid.Row="0"
+                                               Grid.RowSpan="2"
+                                               Width="96"
+                                               Height="96"
+                                               Source="{Binding CurrentUser.AvatarBase64, Converter={StaticResource Base64ImageConverter} , Source={StaticResource MainVM}}">
+                                        </Image>
+
+                                        <TextBlock Grid.Column="1"
+                                                   Grid.Row="0"
+                                                   Grid.ColumnSpan="3"
+                                                   Background="Aqua"
+                                                   FontSize="14"
+                                                   FontWeight="DemiBold"
+                                                   Text="{Binding Creator.UserName, StringFormat='Author:@\{0\}'}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Grid.Row="1"
+                                                   Grid.ColumnSpan="3"
+                                                   Background="Azure"
+                                                   FontSize="13"
+                                                   Text="{Binding Text}" />
+                                        <TextBlock Grid.Column="0"
+                                                   Grid.Row="2"
+                                                   Grid.ColumnSpan="2"
+                                                   FontSize="12"
+                                                   Text="{Binding CreationTime}" />
+                                        <Button Grid.Column="2"
+                                                Grid.Row="2"
+                                                FontSize="12"
+                                                Content="{Binding CountOfLikes}"
+                                                ContentStringFormat="Лайки: {0}" 
+                                                Command="{Binding LikeTweetCommand, Source={StaticResource MainVM}}"/>
+                                        <Button Grid.Column="3"
+                                                Grid.Row="2"
+                                                FontSize="12"
+                                                Content="{Binding CountOfComments}"
+                                                ContentStringFormat="Комменты: {0}" 
+                                                Command="{Binding OpenCommentsCommand, Source={StaticResource MainVM}}"/>
+                                        
+                                        <StackPanel Grid.Column="1"
+                                                    Grid.Row="3"
+                                                    Orientation="Horizontal"
+                                                    VerticalAlignment="Bottom">
+                                            <TextBlock FontSize="12" Text="Фото: "/>
+                                            <Expander
+                                                FontSize="12"
+                                                Header="{Binding Attachments.Count}"
+                                                ExpandDirection="Right">
+                                                <StackPanel>
+                                                    <ListBox ItemsSource="{Binding Attachments}">
+                                                        <ListBox.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel IsItemsHost="True"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ListBox.ItemsPanel>
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Image MaxHeight="160"
+                                                                       MaxWidth="192"
+                                                                       Source="{Binding Path=., Converter={StaticResource Base64ImageConverter}}">
+                                                                </Image>
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                    </ListBox>
+                                                </StackPanel>
+                                            </Expander>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+
+                    </Grid>
+
+                </Grid>
+
+
+            </TabItem>
+
+            <TabItem Header="Подписки"
+                     FontSize="26">
+                 <ListBox HorizontalContentAlignment="Stretch"
+                          ItemsSource="{Binding SubscriptionsTweets, Source={StaticResource MainVM}}"
+                          SelectedItem="{Binding SelectedTweet, Source={StaticResource MainVM}}"
+                          IsSynchronizedWithCurrentItem="True">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="3*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="10*" />
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="1*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Image Grid.Column="0"
+                                               Grid.Row="0"
+                                               Grid.RowSpan="2"
+                                               Width="96"
+                                               Height="96"
+                                               Source="{Binding Creator.AvatarBase64, Converter={StaticResource Base64ImageConverter} }">
+                                        </Image>
+
+                                        <TextBlock Grid.Column="1"
+                                                   Grid.Row="0"
+                                                   Grid.ColumnSpan="3"
+                                                   Background="Aqua"
+                                                   FontSize="14"
+                                                   FontWeight="DemiBold"
+                                                   Text="{Binding Creator.UserName, StringFormat='Author:@\{0\}'}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Grid.Row="1"
+                                                   Grid.ColumnSpan="3"
+                                                   Background="Azure"
+                                                   FontSize="13"
+                                                   Text="{Binding Text}" />
+                                        <TextBlock Grid.Column="0"
+                                                   Grid.Row="2"
+                                                   Grid.ColumnSpan="2"
+                                                   FontSize="12"
+                                                   Text="{Binding CreationTime}" />
+                                        <Button Grid.Column="2"
+                                                Grid.Row="2"
+                                                FontSize="12"
+                                                Content="{Binding CountOfLikes}"
+                                                ContentStringFormat="Лайки: {0}" 
+                                                Command="{Binding LikeTweetCommand, Source={StaticResource MainVM}}"/>
+                                        <Button Grid.Column="3"
+                                                Grid.Row="2"
+                                                FontSize="12"
+                                                Content="{Binding CountOfComments}"
+                                                ContentStringFormat="Комменты: {0}" 
+                                                Command="{Binding OpenCommentsCommand, Source={StaticResource MainVM}}"/>
+                                        
+                                        <StackPanel Grid.Column="1"
+                                                    Grid.Row="3"
+                                                    Orientation="Horizontal"
+                                                    VerticalAlignment="Bottom">
+                                            <TextBlock FontSize="12" Text="Фото: "/>
+                                            <Expander
+                                                FontSize="12"
+                                                Header="{Binding Attachments.Count}"
+                                                ExpandDirection="Right">
+                                                <StackPanel>
+                                                    <ListBox ItemsSource="{Binding Attachments}">
+                                                        <ListBox.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel IsItemsHost="True"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ListBox.ItemsPanel>
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Image MaxHeight="160"
+                                                                       MaxWidth="192"
+                                                                       Source="{Binding Path=., Converter={StaticResource Base64ImageConverter}}">
+                                                                </Image>
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                    </ListBox>
+                                                </StackPanel>
+                                            </Expander>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+            </TabItem>
+
+            <TabItem Header="Глобальная лента"
+                     FontSize="26">
+                <Grid>
+                    <!-- Тут будут кнопки фильтрации и такая же лента твитов -->
+                </Grid>
+            </TabItem>
+
+
+        </TabControl>
+    </DockPanel>
+
+    <!-- <Grid DataContext="{StaticResource ImageData}"> -->
+    <!--     <Image Source="{Binding Base64ImageData, Converter={StaticResource Base64ImageConverter}}"/> -->
+    <!-- </Grid> -->
 </Window>

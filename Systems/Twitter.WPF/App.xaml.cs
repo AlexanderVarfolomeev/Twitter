@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Twitter.WPF.Services.AccountService;
 using Twitter.WPF.Services.AccountService.Models;
+using Twitter.WPF.Services.CommentsService;
+using Twitter.WPF.Services.CommentsService.Models;
+using Twitter.WPF.Services.TweetsService;
+using Twitter.WPF.Services.TweetsService.Models;
 using Twitter.WPF.Services.UserDialogService;
 using Twitter.WPF.ViewModels;
 using Path = System.IO.Path;
@@ -46,11 +50,14 @@ namespace Twitter.WPF
         {
             services.AddScoped<MainViewModel>();
             services.AddTransient<LoginViewModel>();
-
+            services.AddTransient<AddTweetViewModel>();
+            services.AddTransient<AddCommentViewModel>();
+            
             services.AddScoped<IUserDialogService, UserDialogService>();
             services.AddSingleton<HttpClient>();
             services.AddScoped<IAccountService, AccountService>();
-
+            services.AddScoped<ITweetsService, TweetService>();
+            services.AddScoped<ICommentsService, CommentsService>();
         }
 
         public static string CurrentDirectory => IsDesignMode ? Path.GetDirectoryName(GetSourceCodePath()) : Environment.CurrentDirectory;

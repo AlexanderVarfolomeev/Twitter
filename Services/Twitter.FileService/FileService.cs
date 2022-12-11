@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -128,6 +129,29 @@ public class FileService : IFileService
         return createdFiles.Select(x => _mapper.Map<TwitterFileModel>(x));
     }
 
+    public async Task<TwitterFileModel> AddAvatar(IFormFile file)
+    {
+        var user = _userRepository.GetById(_currentUserId);
+        if (file.Length > 0)
+        {
+            var fileModelRequest = new TwitterFileModelRequest();
+            var name = Path.GetRandomFileName();
+
+            fileModelRequest.Name = name;
+            fileModelRequest.TypeOfFile = TypeOfFile.Avatar;
+
+            var createdFile = _filesRepository.Save(_mapper.Map<TwitterFile>(fileModelRequest));
+            user.AvatarId = createdFile.Id;
+            _userRepository.Save(user);
+            var filePath = Path.Combine(createdFile.TypeOfFile.GetPath() + '\\', name);
+            await using var stream = File.Create(filePath);
+            await file.CopyToAsync(stream);
+            return _mapper.Map<TwitterFileModel>(createdFile);
+        }
+        
+        throw new ProcessException(ErrorMessage.NotFoundError);
+    }
+
     public async Task<IEnumerable<TwitterFileModel>> AddFileToMessage(IEnumerable<IFormFile> files, Guid messageId)
     {
         ProcessException.ThrowIf(() => _currentUserId != _messageRepository.GetById(messageId).SenderId,
@@ -203,14 +227,111 @@ public class FileService : IFileService
         return Task.FromResult<IEnumerable<string>>(result);
     }
 
-    public Task<string> GetAvatar(Guid userId)
+    public string GetAvatar(Guid userId)
     {
-        var file = _userRepository.GetById(userId).Avatar;
+        try
+        {
+            var file = _userRepository.GetById(userId).Avatar;
 
-        var path = TypeOfFile.Avatar + '\\' + file.Name;
-        var bytes = File.ReadAllBytes(path);
+            var path = TypeOfFile.Avatar.GetPath() + '\\' + file.Name;
+            var bytes = File.ReadAllBytes(path);
 
-        return Task.FromResult<string>(Convert.ToBase64String(bytes));
+            return Convert.ToBase64String(bytes);
+        }
+        catch (Exception exception)
+        {
+            return "";
+        }
     }
-   
+
+    public async Task<IEnumerable<TwitterFileModel>> AddFileToTweet(IEnumerable<string> files, Guid tweetId)
+    {
+        ProcessException.ThrowIf(() => _currentUserId != _tweetsRepository.GetById(tweetId).CreatorId,
+            "Only the creator can change a tweet.");
+        ProcessException.ThrowIf(() => files.Count() > 10, "You can attach maximum 10 files!");
+
+        var createdFiles = new List<TwitterFile>();
+
+        foreach (var file in files)
+            if (file.Length > 0)
+            {
+                var fileModelRequest = new TwitterFileModelRequest();
+                var name = Path.GetRandomFileName();
+
+                fileModelRequest.Name = name;
+                fileModelRequest.TypeOfFile = TypeOfFile.Tweet;
+
+
+                var mapFile = _mapper.Map<TwitterFile>(fileModelRequest);
+                var createdFile = _filesRepository.Save(mapFile);
+                createdFiles.Add(createdFile);
+                _fileTweetRepository.Save(new FileTweet() {FileId = createdFile.Id, TweetId = tweetId});
+
+                var filePath = Path.Combine(createdFile.TypeOfFile.GetPath() + '\\', name);
+                await using var stream = File.Create(filePath); 
+                var bytes = Convert.FromBase64String(file);
+                stream.Write(bytes);
+            }
+
+        return createdFiles.Select(x => _mapper.Map<TwitterFileModel>(x));
+    }
+
+    public async Task<IEnumerable<TwitterFileModel>> AddFileToComment(IEnumerable<string> files, Guid commentId)
+    {
+        ProcessException.ThrowIf(() => _currentUserId != _commentsRepository.GetById(commentId).CreatorId,
+            "Only the creator can change a comment.");
+        ProcessException.ThrowIf(() => files.Count() > 10, "You can attach maximum 10 files!");
+
+        var createdFiles = new List<TwitterFile>();
+
+        foreach (var file in files)
+            if (file.Length > 0)
+            {
+                var fileModelRequest = new TwitterFileModelRequest();
+                var name = Path.GetRandomFileName();
+
+                fileModelRequest.Name = name;
+                fileModelRequest.TypeOfFile = TypeOfFile.Comment;
+
+                var createdFile = _filesRepository.Save(_mapper.Map<TwitterFile>(fileModelRequest));
+                createdFiles.Add(createdFile);
+                _fileCommentRepository.Save(new FileComment() {FileId = createdFile.Id, CommentId = commentId});
+
+                var filePath = Path.Combine(createdFile.TypeOfFile.GetPath() + '\\', name);
+                await using var stream = File.Create(filePath); 
+                var bytes = Convert.FromBase64String(file);
+                stream.Write(bytes);
+            }
+
+        return createdFiles.Select(x => _mapper.Map<TwitterFileModel>(x));
+    }
+
+    public async Task<TwitterFileModel> AddAvatar(string file)
+    {
+        var user = _userRepository.GetById(_currentUserId);
+        if (file.Length > 0)
+        {
+            var fileModelRequest = new TwitterFileModelRequest();
+            var name = Path.GetRandomFileName();
+
+            fileModelRequest.Name = name;
+            fileModelRequest.TypeOfFile = TypeOfFile.Avatar;
+
+            var createdFile = _filesRepository.Save(_mapper.Map<TwitterFile>(fileModelRequest));
+            user.AvatarId = createdFile.Id;
+            _userRepository.Save(user);
+            var filePath = Path.Combine(createdFile.TypeOfFile.GetPath() + '\\', name);
+            await using var stream = File.Create(filePath); 
+            var bytes = Convert.FromBase64String(file);
+            stream.Write(bytes);
+            return _mapper.Map<TwitterFileModel>(createdFile);
+        }
+        
+        throw new ProcessException(ErrorMessage.NotFoundError);
+    }
+
+    public Task<IEnumerable<TwitterFileModel>> AddFileToMessage(IEnumerable<string> files, Guid messageId)
+    {
+        throw new NotImplementedException();
+    }
 }

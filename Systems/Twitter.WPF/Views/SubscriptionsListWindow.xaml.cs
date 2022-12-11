@@ -2,9 +2,9 @@
 
 namespace Twitter.WPF.Views;
 
-public partial class AccountInfoWindow : Window
+public partial class SubscriptionsListWindow : Window
 {
-    public AccountInfoWindow()
+    public SubscriptionsListWindow()
     {
         InitializeComponent();
     }

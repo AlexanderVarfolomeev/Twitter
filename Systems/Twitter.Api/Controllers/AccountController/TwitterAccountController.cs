@@ -36,12 +36,29 @@ public class TwitterAccountController : ControllerBase
     {
         return await _accountService.LoginUser(_mapper.Map<LoginModel>(model));
     }
-    
+
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("")]
     public IEnumerable<TwitterAccountResponse> GetAccounts([FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
         return _accountService.GetAccounts(offset, limit)
+            .Select(x => _mapper.Map<TwitterAccountResponse>(x));
+    }
+    
+    
+    [Authorize(AppScopes.TwitterRead)]
+    [HttpGet("get-subscribers-{userId}")]
+    public IEnumerable<TwitterAccountResponse> GetSubsribers([FromRoute] Guid userId,[FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    {
+        return _accountService.GetSubscribers(userId,offset, limit)
+            .Select(x => _mapper.Map<TwitterAccountResponse>(x));
+    } 
+    
+    [Authorize(AppScopes.TwitterRead)]
+    [HttpGet("get-subscriptions-{userId}")]
+    public IEnumerable<TwitterAccountResponse> GetSubsriptions([FromRoute] Guid userId,[FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    {
+        return _accountService.GetSubscriptions(userId,offset, limit)
             .Select(x => _mapper.Map<TwitterAccountResponse>(x));
     }
 
@@ -51,8 +68,6 @@ public class TwitterAccountController : ControllerBase
     {
         return _mapper.Map<TwitterAccountResponse>(_accountService.GetAccountById(id));
     }
-
-  
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpDelete("{id}")]

@@ -16,10 +16,13 @@ public partial class LoginViewModel : ObservableObject
     {
         _accountService = accountService;
         _userDialogService = userDialogService;
+        
+        Email = "test@mail.ru";
+        Password = "testtest";
     }
 
-    [ObservableProperty] private string email;
-    [ObservableProperty] private string password;
+    [ObservableProperty] private string _email;
+    [ObservableProperty] private string _password;
 
     public string CurrentUserId { get; private set; }
     
@@ -37,6 +40,7 @@ public partial class LoginViewModel : ObservableObject
         if (result.Successful)
         {
             CurrentUserId = result.Id;
+            await ViewModelLocator.MainViewModel.RefreshInfo();
             _userDialogService.OpenMainWindow();
         }
         else

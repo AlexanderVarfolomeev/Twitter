@@ -27,8 +27,11 @@ public class AccountService : IAccountService
 
     private readonly Guid _currentUserId;
 
-    public AccountService(IRepository<Subscribe> subscribesRepository, IRepository<TwitterRoleTwitterUser> rolesUserRepository, UserManager<TwitterUser> userManager,  IRepository<TwitterRole> rolesRepository,
-        IRepository<TwitterUser> accountsRepository, IMapper mapper, IHttpContextAccessor accessor,  SignInManager<TwitterUser> signInManager, ITwitterApiSettings apiSettings)
+    public AccountService(IRepository<Subscribe> subscribesRepository,
+        IRepository<TwitterRoleTwitterUser> rolesUserRepository, UserManager<TwitterUser> userManager,
+        IRepository<TwitterRole> rolesRepository,
+        IRepository<TwitterUser> accountsRepository, IMapper mapper, IHttpContextAccessor accessor,
+        SignInManager<TwitterUser> signInManager, ITwitterApiSettings apiSettings)
     {
         _subscribesRepository = subscribesRepository;
         _rolesUserRepository = rolesUserRepository;
@@ -47,18 +50,44 @@ public class AccountService : IAccountService
 
     public IEnumerable<TwitterAccountModel> GetAccounts(int offset = 0, int limit = 10)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId),
+            ErrorMessage.YouBannedError);
 
         var accounts = _accountsRepository.GetAll()
             .Skip(Math.Max(offset, 0))
             .Take(Math.Max(0, Math.Min(limit, 1000)));
-        
+
         return _mapper.Map<IEnumerable<TwitterAccountModel>>(accounts);
+    }
+
+    public IEnumerable<TwitterAccountModel> GetSubscribers(Guid userId, int offset = 0, int limit = 10)
+    {
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
+
+        var subs = _subscribesRepository.GetAll(x => x.UserId == userId)
+            .Select(x => x.Subscriber)
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)));
+
+        return _mapper.Map<IEnumerable<TwitterAccountModel>>(subs);
+    }
+
+    public IEnumerable<TwitterAccountModel> GetSubscriptions(Guid userId, int offset = 0, int limit = 10)
+    {
+        ProcessException.ThrowIf(() => IsBanned(_currentUserId), ErrorMessage.YouBannedError);
+
+        var subs = _subscribesRepository.GetAll(x => x.SubscriberId == userId)
+            .Select(x => x.User)
+            .Skip(Math.Max(offset, 0))
+            .Take(Math.Max(0, Math.Min(limit, 1000)));
+
+        return _mapper.Map<IEnumerable<TwitterAccountModel>>(subs);
     }
 
     public TwitterAccountModel GetAccountById(Guid id)
     {
-        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId), ErrorMessage.YouBannedError);
+        ProcessException.ThrowIf(() => _currentUserId != Guid.Empty && IsBanned(_currentUserId),
+            ErrorMessage.YouBannedError);
 
         var account = _accountsRepository.GetById(id);
         return _mapper.Map<TwitterAccountModel>(account);
@@ -102,8 +131,8 @@ public class AccountService : IAccountService
         else
             _subscribesRepository.Save(new Subscribe {SubscriberId = _currentUserId, UserId = userId});
     }
-    
-     public async Task<TwitterAccountModel> RegisterUser(TwitterAccountModelRequest requestModel)
+
+    public async Task<TwitterAccountModel> RegisterUser(TwitterAccountModelRequest requestModel)
     {
         var user = await _userManager.FindByEmailAsync(requestModel.Email);
         ProcessException.ThrowIf(() => user is not null, ErrorMessage.UserWithThisEmailExistsError);
@@ -113,7 +142,7 @@ public class AccountService : IAccountService
         user.EmailConfirmed = false;
 
         user.Init();
-        var result =  await _userManager.CreateAsync(user, requestModel.Password);
+        var result = await _userManager.CreateAsync(user, requestModel.Password);
         ProcessException.ThrowIf(() => !result.Succeeded, result.ToString());
         GiveUserRole(user);
 
@@ -140,9 +169,9 @@ public class AccountService : IAccountService
             ClientSecret = model.ClientSecret,
             Password = model.Password,
             UserName = user.UserName,
-            Scope =  "offline_access " + AppScopes.TwitterRead + " " + AppScopes.TwitterWrite
+            Scope = "offline_access " + AppScopes.TwitterRead + " " + AppScopes.TwitterWrite
         });
-        
+
         ProcessException.ThrowIf(() => tokenResponse.IsError, tokenResponse.Error);
         return tokenResponse;
     }

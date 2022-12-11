@@ -39,7 +39,15 @@ public class TwitterFilesController : ControllerBase
 
     [Authorize(AppScopes.TwitterWrite)]
     [HttpPost("add-files-to-tweet")]
-    public async Task<IEnumerable<TwitterFileModel>> AddFilesToTweet(IEnumerable<IFormFile> files,
+    public async Task<IEnumerable<TwitterFileModel>> AddFilesToTweet( IEnumerable<IFormFile> files,
+        [FromQuery] Guid tweetId)
+    {
+        return (await _fileService.AddFileToTweet(files, tweetId)).Select(x => _mapper.Map<TwitterFileModel>(x));
+    }
+
+    [Authorize(AppScopes.TwitterWrite)]
+    [HttpPost("add-base64Files-to-tweet")]
+    public async Task<IEnumerable<TwitterFileModel>> AddBase64FilesToTweet([FromBody] IEnumerable<string> files,
         [FromQuery] Guid tweetId)
     {
         return (await _fileService.AddFileToTweet(files, tweetId)).Select(x => _mapper.Map<TwitterFileModel>(x));
@@ -52,6 +60,29 @@ public class TwitterFilesController : ControllerBase
     {
         return (await _fileService.AddFileToComment(files, commentId)).Select(x => _mapper.Map<TwitterFileModel>(x));
     }
+
+    [Authorize(AppScopes.TwitterWrite)]
+    [HttpPost("add-base64Files-to-comment")]
+    public async Task<IEnumerable<TwitterFileModel>> AddBase64FilesToComment([FromBody] IEnumerable<string> files,
+        [FromQuery] Guid commentId)
+    {
+        return (await _fileService.AddFileToComment(files, commentId)).Select(x => _mapper.Map<TwitterFileModel>(x));
+    }
+
+    [Authorize(AppScopes.TwitterWrite)]
+    [HttpPost("add-avatar")]
+    public async Task<TwitterFileModel> AddAvatar( IFormFile file)
+    {
+        return _mapper.Map<TwitterFileModel>(await _fileService.AddAvatar(file));
+    }
+    
+    [Authorize(AppScopes.TwitterWrite)]
+    [HttpPost("add-base64Avatar")]
+    public async Task<TwitterFileModel> AddBase64Avatar([FromBody] string file)
+    {
+        return _mapper.Map<TwitterFileModel>(await _fileService.AddAvatar(file));
+    }
+
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-tweet-files")]
@@ -69,9 +100,9 @@ public class TwitterFilesController : ControllerBase
 
     [Authorize(AppScopes.TwitterRead)]
     [HttpGet("get-avatar")]
-    public async Task<string> GetAvatar([FromQuery] Guid userId)
+    public string GetAvatar([FromQuery] Guid userId)
     {
-        return await _fileService.GetAvatar(userId);
+        return _fileService.GetAvatar(userId);
     }
 
     [Authorize(AppScopes.TwitterWrite)]
