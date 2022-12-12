@@ -33,7 +33,7 @@ public class MessageService : IMessageService
         _currentUserId = value != null ? Guid.Parse(value) : Guid.Empty;
     }
     
-    public IEnumerable<MessageModel> GetMessages(Guid dialogId, int offset, int limit)
+    public IEnumerable<MessageModel> GetMessagesByDialog(Guid dialogId, int offset = 0, int limit = 10)
     {
         var dialog = _dialogRepository.GetById(dialogId);
         
@@ -46,6 +46,16 @@ public class MessageService : IMessageService
             .OrderBy(x => x.CreationTime);
 
         return messages;
+    }
+
+    public IEnumerable<MessageModel> GetMessagesByUser(Guid userId, int offset, int limit)
+    {
+        var dialogs = _usersDialogsRepository.GetAll(x => x.UserId == _currentUserId).Select(x => x.DialogId);
+        var dialog = _usersDialogsRepository.GetAll(x => dialogs.Contains(x.DialogId))
+            .FirstOrDefault(x => x.UserId == userId);
+        
+        ProcessException.ThrowIf(() => dialog is null, ErrorMessage.NotFoundError); // диалога еще нет
+        return GetMessagesByDialog(dialog.DialogId, offset, limit);
     }
 
     public MessageModel SendMessage(MessageAddModelRequest addModelRequest, Guid userId)
@@ -62,7 +72,6 @@ public class MessageService : IMessageService
         if (dialog is null)
         {
             Dialog newDialog = new Dialog();
-            newDialog.Init();
             _dialogRepository.Save(newDialog);
 
             UserDialog userDialog1 = new UserDialog()

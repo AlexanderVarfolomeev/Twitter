@@ -9,6 +9,7 @@ using Twitter.WPF.Services.AccountService;
 using Twitter.WPF.Services.AccountService.Models;
 using Twitter.WPF.Services.CommentsService;
 using Twitter.WPF.Services.CommentsService.Models;
+using Twitter.WPF.Services.MessageService;
 using Twitter.WPF.Services.TweetsService;
 using Twitter.WPF.Services.TweetsService.Models;
 using Twitter.WPF.Services.UserDialogService;
@@ -21,20 +22,25 @@ public partial class MainViewModel : ObservableObject
     private readonly ITweetsService _tweetsService;
     private readonly IUserDialogService _userDialogService;
     private readonly ICommentsService _commentsService;
+    private readonly IMessageService _messageService;
+
 
     public MainViewModel(IAccountService accountService, ITweetsService tweetsService,
-        IUserDialogService userDialogService, ICommentsService commentsService)
+        IUserDialogService userDialogService, ICommentsService commentsService, IMessageService messageService)
     {
         _accountService = accountService;
         _tweetsService = tweetsService;
         _userDialogService = userDialogService;
         _commentsService = commentsService;
+        _messageService = messageService;
 
         CountOfSubscribers = 0;
         CountOfSubscriptions = 0;
     }
 
     [ObservableProperty] private AccountModel _currentUser;
+    [ObservableProperty] private ObservableCollection<AccountModel> _allAccounts;
+    [ObservableProperty] private AccountModel _selectedAccount;
     [ObservableProperty] private ObservableCollection<TweetView> _currentUserTweets;
     [ObservableProperty] private TweetView _selectedTweet;
     [ObservableProperty] private ObservableCollection<CommentView> _currentTweetComments;
@@ -59,6 +65,8 @@ public partial class MainViewModel : ObservableObject
         CountOfSubscriptions = Subscriptions.Count;
         CountOfSubscribers = Subscribers.Count;
         SubscriptionsTweets = new ObservableCollection<TweetView>(await _tweetsService.GetTweetsBySubscriptions(0, 100000));
+        AllAccounts = new ObservableCollection<AccountModel> (await _accountService.GetUsers(0, 100000));
+        AllAccounts.Remove(CurrentUser);
         foreach (var tweet in CurrentUserTweets)
         {
             tweet.Creator = CurrentUser;
@@ -116,5 +124,11 @@ public partial class MainViewModel : ObservableObject
     private void ViewSubscriptionsList()
     {
         _userDialogService.OpenSubscriptionsListWindow();
+    }
+
+    [RelayCommand]
+    private void OpenDialogWithSelectedUser()
+    {
+        _userDialogService.OpenChatWindow();
     }
 }

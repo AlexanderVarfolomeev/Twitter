@@ -9,7 +9,7 @@ using Twitter.MessageService;
 using Twitter.MessageService.Models;
 
 namespace Twitter.Api.Hubs.MessengerHub;
-//TODO зарегать в DI
+
 public class MessengerHub : Hub
 {
     private readonly IAccountService _accountService;
@@ -46,9 +46,8 @@ public class MessengerHub : Hub
         ConnectionList.Remove(currentUserName, connectionId);
         await base.OnDisconnectedAsync(exception);
     }
-
-    // отправляем только текст, и отдельно запросом сразу картинки, получаем только ответ и сразу делаем запрос на картинки
-    // При вызове метода на клиента мы сразу вызовем запрос на присоединение картинок
+    
+    
     public async void SendMessage(MessageAddRequest message, Guid userId)
     {
         var senderId = Guid.Parse(Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -75,6 +74,5 @@ public class MessengerHub : Hub
         await Clients.Clients(connections).SendAsync("ReceiveMessage", response); // При получении на клиенте мы сразу вызовем запрос на получение картинок
     }
     
-    //метод делающий сообщения прочитанными или запросом?
     
 }

@@ -13,6 +13,7 @@ using Twitter.WPF.Services.AccountService;
 using Twitter.WPF.Services.AccountService.Models;
 using Twitter.WPF.Services.CommentsService;
 using Twitter.WPF.Services.CommentsService.Models;
+using Twitter.WPF.Services.MessageService;
 using Twitter.WPF.Services.TweetsService;
 using Twitter.WPF.Services.TweetsService.Models;
 using Twitter.WPF.Services.UserDialogService;
@@ -52,11 +53,13 @@ namespace Twitter.WPF
             services.AddTransient<LoginViewModel>();
             services.AddTransient<AddTweetViewModel>();
             services.AddTransient<AddCommentViewModel>();
+            services.AddTransient<MessengerViewModel>();
             
             services.AddScoped<IUserDialogService, UserDialogService>();
             services.AddSingleton<HttpClient>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITweetsService, TweetService>();
+            services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<ICommentsService, CommentsService>();
         }
 

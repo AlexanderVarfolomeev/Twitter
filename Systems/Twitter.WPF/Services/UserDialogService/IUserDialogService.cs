@@ -6,6 +6,7 @@ namespace Twitter.WPF.Services.UserDialogService;
 public interface IUserDialogService
 {
     void OpenMainWindow();
+    void OpenChatWindow();
     void OpenCommentsWindow();
     void OpenAddTweetWindow();
     void OpenAddCommentWindow();

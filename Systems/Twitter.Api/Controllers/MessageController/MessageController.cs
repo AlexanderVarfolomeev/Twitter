@@ -20,12 +20,20 @@ public class MessageController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("")]
-    public IEnumerable<MessageResponse> GetMessages([FromQuery] Guid dialogId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    [HttpGet("get-by-dialog")]
+    public IEnumerable<MessageResponse> GetMessagesByDialog([FromQuery] Guid dialogId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
     {
-       var messages = ( _messageService.GetMessages(dialogId, offset, limit))
+       var messages = ( _messageService.GetMessagesByDialog(dialogId, offset, limit))
            .Select(x => _mapper.Map<MessageResponse>(x));
        return messages;
+    }
+    
+    [HttpGet("get-by-user")]
+    public IEnumerable<MessageResponse> GetMessagesByUser([FromQuery] Guid userId, [FromQuery] int offset = 0, [FromQuery] int limit = 10)
+    {
+        var messages = ( _messageService.GetMessagesByUser(userId, offset, limit))
+            .Select(x => _mapper.Map<MessageResponse>(x));
+        return messages;
     }
 
     [HttpPost("")]

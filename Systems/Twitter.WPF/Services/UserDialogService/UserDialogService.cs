@@ -3,6 +3,7 @@ using System.Windows;
 using Microsoft.VisualBasic;
 using Twitter.WPF.Views;
 using Microsoft.Win32;
+using Twitter.WPF.ViewModels;
 
 namespace Twitter.WPF.Services.UserDialogService;
 
@@ -11,6 +12,13 @@ public class UserDialogService : IUserDialogService
     public void OpenMainWindow()
     {
         var dialog = new MainWindow();
+        dialog.ShowDialog();
+    }
+
+    public async void OpenChatWindow()
+    {
+        var dialog = new DialogWindow();
+        await ViewModelLocator.MessengerViewModel.Connect();
         dialog.ShowDialog();
     }
 

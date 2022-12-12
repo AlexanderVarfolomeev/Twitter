@@ -330,8 +330,33 @@ public class FileService : IFileService
         throw new ProcessException(ErrorMessage.NotFoundError);
     }
 
-    public Task<IEnumerable<TwitterFileModel>> AddFileToMessage(IEnumerable<string> files, Guid messageId)
+    public async Task<IEnumerable<TwitterFileModel>> AddFileToMessage(IEnumerable<string> files, Guid messageId)
     {
-        throw new NotImplementedException();
+        ProcessException.ThrowIf(() => _currentUserId != _messageRepository.GetById(messageId).SenderId,
+            "Only the creator can change a message.");
+        ProcessException.ThrowIf(() => files.Count() > 10, "You can attach maximum 10 files!");
+
+        var createdFiles = new List<TwitterFile>();
+
+        foreach (var file in files)
+            if (file.Length > 0)
+            {
+                var fileModelRequest = new TwitterFileModelRequest();
+                var name = Path.GetRandomFileName();
+
+                fileModelRequest.Name = name;
+                fileModelRequest.TypeOfFile = TypeOfFile.Message;
+
+                var createdFile = _filesRepository.Save(_mapper.Map<TwitterFile>(fileModelRequest));
+                createdFiles.Add(createdFile);
+                _messageFileRepository.Save(new MessageFile() {FileId = createdFile.Id, MessageId = messageId});
+
+                var filePath = Path.Combine(createdFile.TypeOfFile.GetPath() + '\\', name);
+                await using var stream = File.Create(filePath); 
+                var bytes = Convert.FromBase64String(file);
+                stream.Write(bytes);
+            }
+
+        return createdFiles.Select(x => _mapper.Map<TwitterFileModel>(x));
     }
 }

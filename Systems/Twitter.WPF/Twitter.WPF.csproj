@@ -17,6 +17,7 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
         <PackageReference Include="IdentityModel" Version="6.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.8" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />

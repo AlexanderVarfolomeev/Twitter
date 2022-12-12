@@ -50,7 +50,7 @@ public class AccountService : IAccountService
 
         _httpClient.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("bearer", loginResult.AccessToken);
-
+        Settings.AccessToken = loginResult.AccessToken ?? "";
         JwtSecurityToken jwt = new JwtSecurityToken(loginResult.AccessToken);
         loginResult.Id = jwt.Subject;
         return loginResult;

@@ -1,6 +1,7 @@
 using Twitter.Api;
 using Twitter.Api.Configuration.ApplicationExtensions;
 using Twitter.Api.Configuration.ServicesExtensions;
+using Twitter.Api.Hubs.MessengerHub;
 using Twitter.Settings.Settings;
 using Twitter.Settings.Source;
 
@@ -29,6 +30,8 @@ services.AddTwitterSwagger(settings);
 
 services.AddTwitterAutomapper();
 
+services.AddTwitterSignalR();
+
 var app = builder.Build();
 
 app.UseTwitterMiddlewares();
@@ -50,6 +53,7 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+    endpoints.MapHub<MessengerHub>("/Chat");
 });
 
 app.UseTwitterDbContext();
